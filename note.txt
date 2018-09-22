@@ -1,0 +1,6 @@
+npm install
+npm uninstall webpack-dev-middleware ng2-table ngx-chips ng2-img-cropper ng2-dnd karma-webpack css-to-string-loader @agm/core aspnet-webpack
+npm audit fix --force
+npm install webpack-dev-middleware ng2-table ngx-chips ng2-img-cropper ng2-dnd karma-webpack css-to-string-loader @agm/core aspnet-webpack
+npm run install
+
