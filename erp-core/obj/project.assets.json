@@ -13602,23 +13602,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ttp.thao\\.nuget\\packages\\": {},
+    "C:\\Users\\thai.th\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "0.3.0",
     "restore": {
-      "projectUniqueName": "C:\\erp\\erp-core\\erp-core.csproj",
+      "projectUniqueName": "D:\\Data\\01.Projects\\erp\\erp-core\\erp-core.csproj",
       "projectName": "erp-core",
-      "projectPath": "C:\\erp\\erp-core\\erp-core.csproj",
-      "packagesPath": "C:\\Users\\ttp.thao\\.nuget\\packages\\",
-      "outputPath": "C:\\erp\\erp-core\\obj\\",
+      "projectPath": "D:\\Data\\01.Projects\\erp\\erp-core\\erp-core.csproj",
+      "packagesPath": "C:\\Users\\thai.th\\.nuget\\packages\\",
+      "outputPath": "D:\\Data\\01.Projects\\erp\\erp-core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ttp.thao\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\thai.th\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

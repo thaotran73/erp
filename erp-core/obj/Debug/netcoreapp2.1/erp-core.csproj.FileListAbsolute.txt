@@ -51,3 +51,4 @@ C:\erp\erp-core\obj\Debug\netcoreapp2.1\erp-core.Views.pdb
 C:\erp\erp-core\obj\Debug\netcoreapp2.1\erp-core.dll
 C:\erp\erp-core\obj\Debug\netcoreapp2.1\erp-core.pdb
 C:\erp\erp-core\obj\Debug\netcoreapp2.1\erp-core.csproj.CopyComplete
+D:\Data\01.Projects\erp\erp-core\obj\Debug\netcoreapp2.1\erp-core.csprojAssemblyReference.cache
