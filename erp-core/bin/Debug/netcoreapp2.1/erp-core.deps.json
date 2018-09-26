@@ -14,7 +14,7 @@
     "platform": "",
     "allowUnsafe": false,
     "warningsAsErrors": false,
-    "optimize": true,
+    "optimize": false,
     "keyFile": "",
     "emitEntryPoint": true,
     "xmlDoc": false,
@@ -22,7 +22,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "erp-core/0.3.0": {
+      "erp-core/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.1.4",
           "Microsoft.AspNetCore.AngularServices": "1.1.0-beta-000002",
@@ -3724,7 +3724,7 @@
     }
   },
   "libraries": {
-    "erp-core/0.3.0": {
+    "erp-core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

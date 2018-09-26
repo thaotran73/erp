@@ -23,7 +23,7 @@ var SettingsService = /** @class */ (function () {
         // -----------------------------------
         this.app = {
             name: 'ERP',
-            description: 'ERP - Angular Bootstrap Admin Template',
+            description: 'Angular Bootstrap Admin Template',
             year: ((new Date()).getFullYear())
         };
         // Layout Settings
@@ -37,8 +37,8 @@ var SettingsService = /** @class */ (function () {
             isFloat: false,
             asideHover: false,
             theme: null,
-            asideScrollbar: false,
-            isCollapsedText: false,
+            asideScrollbar: true,
+            isCollapsedText: true,
             useFullLayout: false,
             hiddenFooter: false,
             offsidebarOpen: false,

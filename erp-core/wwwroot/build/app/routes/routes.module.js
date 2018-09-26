@@ -14,7 +14,6 @@ var router_1 = require("@angular/router");
 var translator_service_1 = require("../core/translator/translator.service");
 var menu_service_1 = require("../core/menu/menu.service");
 var shared_module_1 = require("../shared/shared.module");
-var pages_module_1 = require("./pages/pages.module");
 var menu_1 = require("./menu");
 var routes_1 = require("./routes");
 var RoutesModule = /** @class */ (function () {
@@ -26,8 +25,7 @@ var RoutesModule = /** @class */ (function () {
         core_1.NgModule({
             imports: [
                 shared_module_1.SharedModule,
-                router_1.RouterModule.forRoot(routes_1.routes),
-                pages_module_1.PagesModule
+                router_1.RouterModule.forRoot(routes_1.routes)
             ],
             declarations: [],
             exports: [

@@ -20,7 +20,7 @@ var themeG = require('../../shared/styles/themes/theme-g.scss');
 var themeH = require('../../shared/styles/themes/theme-h.scss');
 var ThemesService = /** @class */ (function () {
     function ThemesService() {
-        this.defaultTheme = 'A';
+        this.defaultTheme = 'E';
         this.createStyle();
         this.setTheme(this.defaultTheme);
     }

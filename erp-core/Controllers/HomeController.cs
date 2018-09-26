@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ERP.Controllers
+namespace Angle.Controllers
 {
     public class HomeController : Controller
     {

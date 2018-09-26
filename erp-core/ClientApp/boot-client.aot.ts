@@ -1,6 +1,6 @@
 /*!
  *
- * ERP - Bootstrap Admin Template
+ * Angle - Bootstrap Admin Template
  *
  * Version: 4.0
  * Author: @themicon_co

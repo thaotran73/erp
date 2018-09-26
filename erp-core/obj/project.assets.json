@@ -13606,7 +13606,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "0.3.0",
+    "version": "1.0.0",
     "restore": {
       "projectUniqueName": "D:\\Data\\01.Projects\\erp\\erp-core\\erp-core.csproj",
       "projectName": "erp-core",
