@@ -1,8 +1,8 @@
 {
-    "name": "angle",
-    "version": "0.0.0",
-    "description": "Angle - Bootstrap Admin Template",
-    "author": "@themicon_co",
+    "name": "ERP",
+    "version": "1.0.0",
+    "description": "ERP - Bootstrap Admin Template",
+    "author": "Thai Tran",
     "license": "https://wrapbootstrap.com/help/licenses",
     "private": true,
     "scripts": {

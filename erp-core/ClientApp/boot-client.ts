@@ -1,11 +1,11 @@
 /*!
  *
- * Angle - Bootstrap Admin Template
+ * ERP - Bootstrap Admin Template
  *
  * Version: 4.0
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: https://wrapbootstrap.com/help/licenses
+ * Author: Thai Tran
+ * Website: https://www.thaithao.net
+ * License: https://www.thaithao.net/help/licenses
  *
  */
 

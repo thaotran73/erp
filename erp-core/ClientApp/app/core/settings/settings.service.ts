@@ -7,14 +7,16 @@ export class SettingsService {
     private user: any;
     private app: any;
     private layout: any;
+    private isCollapsedTextPrev: any;
+    private isCollapsedPrev: any;
 
     constructor() {
 
         // User Settings
         // -----------------------------------
         this.user = {
-            name: 'John',
-            job: 'ng-developer',
+            name: 'ERP User',
+            job: 'ERP developer',
             picture: 'assets/img/user/02.jpg'
         };
 
@@ -23,7 +25,7 @@ export class SettingsService {
         this.app = {
             name: 'ERP',
             description: 'Angular Bootstrap Admin Template',
-            year: ((new Date()).getFullYear())
+            year: '2017'
         };
 
         // Layout Settings
@@ -39,12 +41,15 @@ export class SettingsService {
             theme: null,
             asideScrollbar: true,
             isCollapsedText: true,
-            useFullLayout: false,
+            useFullLayout: true,
             hiddenFooter: false,
             offsidebarOpen: false,
             asideToggled: false,
             viewAnimation: 'ng-fadeInUp'
         };
+
+        this.isCollapsedPrev = this.layout['isCollapsed'];
+        this.isCollapsedTextPrev = this.layout['isCollapsedText'];
 
     }
 
@@ -73,9 +78,59 @@ export class SettingsService {
             return this.layout[name] = value;
         }
     }
-
+    setLayoutSettingCollapsed(value) {
+        this.setLayoutSetting('isCollapsed', value);
+        if (this.layout['isCollapsed']) {
+            this.isCollapsedTextPrev = this.getLayoutSetting('isCollapsedText');
+            this.setLayoutSetting('isCollapsedText', false);
+        }
+        else {
+            this.setLayoutSetting('isCollapsedText', this.isCollapsedTextPrev);
+        }
+            
+        return value;    
+    }
+    setLayoutSettingCollapsedText(value) {
+        this.setLayoutSetting('isCollapsedText', value);
+        if (this.layout['isCollapsedText']) {
+            this.isCollapsedPrev = this.getLayoutSetting('isCollapsed');
+            this.setLayoutSetting('isCollapsed', false);
+        }
+        else {
+            this.setLayoutSetting('isCollapsed', this.isCollapsedPrev);
+        }
+            
+        return value;    
+    }
     toggleLayoutSetting(name) {
         return this.setLayoutSetting(name, !this.getLayoutSetting(name));
+    }
+    toggleLayoutSideabar() {
+        if (this.getLayoutSetting('isCollapsed') || this.getLayoutSetting('isCollapsedText')) {
+            this.isCollapsedPrev = false;
+            this.isCollapsedTextPrev = false;
+            
+            if (this.getLayoutSetting('isCollapsed')) {
+                this.isCollapsedPrev = this.getLayoutSetting('isCollapsed');
+            }
+            if (this.getLayoutSetting('isCollapsedText')) {
+                this.isCollapsedTextPrev = this.getLayoutSetting('isCollapsedText');
+            }
+            this.setLayoutSetting('isCollapsedText', false);
+            this.setLayoutSetting('isCollapsed', false);
+
+            return false;
+        }
+        else
+        {
+            if (this.isCollapsedPrev) {
+                this.setLayoutSetting('isCollapsed', true);
+            }
+            if (this.isCollapsedTextPrev) {
+                this.setLayoutSetting('isCollapsedText', true);
+            }
+            return true;
+        }
     }
 
 }

@@ -159,8 +159,7 @@
                     <label class="switch">
                         <input type="checkbox"
                             [ngModel]="settings.getLayoutSetting('isCollapsed')"
-                            (ngModelChange)="settings.setLayoutSetting('isCollapsed', $event)"
-                            [disabled]="settings.getLayoutSetting('isCollapsedText')" />
+                            (ngModelChange)="settings.setLayoutSettingCollapsed($event)"/>
                         <span></span>
                     </label>
                 </div>
@@ -171,8 +170,7 @@
                     <label class="switch">
                         <input type="checkbox"
                             [ngModel]="settings.getLayoutSetting('isCollapsedText')"
-                            (ngModelChange)="settings.setLayoutSetting('isCollapsedText', $event)"
-                            [disabled]="settings.getLayoutSetting('isCollapsed')" />
+                            (ngModelChange)="settings.setLayoutSettingCollapsedText($event)"/>
                         <span></span>
                     </label>
                 </div>
