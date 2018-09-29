@@ -101,9 +101,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 // add class to manage animation
                 ul.addClass('opening');
             }
-
         }
-
     }
 
     // Close menu collapsing height
@@ -132,10 +130,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 return; // if not submenu return
             }
 
+            // any child menu should start closed
+            ul.find('li').each((idx, el) => {
+                let $el = $(el);
+console.log($el);
+            });
+
             let $aside = $('.aside-container');
             let $asideInner = $aside.children('.aside-inner'); // for top offset calculation
             let $sidebar = $asideInner.children('.sidebar');
             let mar = parseInt($asideInner.css('padding-top'), 0) + parseInt($aside.css('padding-top'), 0);
+
             let itemTop = ((anchor.parent().position().top) + mar) - $sidebar.scrollTop();
 
             let floatingNav = ul.clone().appendTo($aside);
