@@ -1,0 +1,24 @@
+{
+    "header": {
+        "search": {
+            "PLACEHOLDER": "Nhập dữ liệu và nhấn enter.."
+        }
+    },
+    "offsidebar": {
+        "setting": {
+            "SETTINGS": "Cấu hình"
+        }
+    },
+    "sidebar": {
+        "WELCOME": "Xin chào",
+        "heading": {
+            "HEADER": "Menu Heading"
+        },
+        "nav": {
+            "SINGLEVIEW": "Single View"
+        }
+    },
+    "dashboard": {
+        "WELCOME": "Xin chào"
+    }
+}
