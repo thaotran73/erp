@@ -130,17 +130,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 return; // if not submenu return
             }
 
-            // any child menu should start closed
+            // Count li submenu
+            var $countMenu = 0;
             ul.find('li').each((idx, el) => {
-                let $el = $(el);
-console.log($el);
+                $countMenu = $countMenu + 1;
             });
-
+console.log($countMenu);
             let $aside = $('.aside-container');
             let $asideInner = $aside.children('.aside-inner'); // for top offset calculation
             let $sidebar = $asideInner.children('.sidebar');
             let mar = parseInt($asideInner.css('padding-top'), 0) + parseInt($aside.css('padding-top'), 0);
 
+            var $itemTop = ((anchor.parent().position().top) + mar) - $sidebar.scrollTop();
             let itemTop = ((anchor.parent().position().top) + mar) - $sidebar.scrollTop();
 
             let floatingNav = ul.clone().appendTo($aside);
