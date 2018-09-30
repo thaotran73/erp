@@ -10,32 +10,32 @@ const Home = {
 };
 const WHMainMaterial = {
     text: 'Main Material Warehouse',
-    link: '/WHMainMaterial',
+    link: '/mainmaterial',
     icon: 'icon-home',
 };
 const WHAuxiliaryMaterial = {
     text: 'Auxiliary Material Warehouse',
-    link: '/WHAuxiliaryMaterial',
+    link: '/auxiliarymaterial',
     icon: 'icon-home',
 }
 const WHFinishedProduct = {
     text: 'Finished Product Warehouse',
-    link: '/WHFinishedProduct',
+    link: '/wh_finished_product',
     icon: 'icon-home',
     submenu: [
         {
             text: 'Master Category',
-            link: '/WHFinishedProduct/MasterCategory',
+            link: '/wh_finished_product/master_category',
             icon: 'icon-home',
          	submenu: [
          		{
 		            text: 'Inventory List',
-        		    link: '/WHFinishedProduct/MasterCategory/InventoryList',
+                      link: '/wh_finished_product/master_category/inventory_list',
                     icon: 'icon-home',
          		},
          		{
 		            text: 'Product Code Catalog',
-        		    link: '/WHFinishedProduct/MasterCategory/ProductCodeCatalog',
+                        link: '/wh_finished_product/master_category/product_code_catalog',
                     icon: 'icon-home',
          		}
          	],
