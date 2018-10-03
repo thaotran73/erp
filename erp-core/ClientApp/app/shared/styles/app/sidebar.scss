@@ -212,6 +212,7 @@ $tablet-landscape: 1025px;
 } // @media @desktop
 // Collapsed state styles
 .aside-collapsed,
+.aside-collapsed-hide,
 .aside-collapsed-text {
 
     .sidebar {
@@ -256,6 +257,7 @@ $tablet-landscape: 1025px;
         }
     } // .sidebar
 } // .aside-collapsed/text
+
 .aside-collapsed-text {
 
     .sidebar {

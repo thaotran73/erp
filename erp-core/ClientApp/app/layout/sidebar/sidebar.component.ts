@@ -131,18 +131,25 @@ export class SidebarComponent implements OnInit, OnDestroy {
             }
 
             // Count li submenu
-            var $countMenu = 0;
+            var $topSubMenu = 10000;
+            var $topRowMenu;
             ul.find('li').each((idx, el) => {
-                $countMenu = $countMenu + 1;
+                $topRowMenu = this.getPosition($(el)).top;
+                if ($topRowMenu < $topSubMenu) {
+                    $topSubMenu = $topRowMenu;
+                }
+                console.log('$topSubMenu=' + $topSubMenu + ', $topRowMenu=' + $topRowMenu);
+                console.log($(el));
             });
-console.log($countMenu);
+
             let $aside = $('.aside-container');
             let $asideInner = $aside.children('.aside-inner'); // for top offset calculation
             let $sidebar = $asideInner.children('.sidebar');
             let mar = parseInt($asideInner.css('padding-top'), 0) + parseInt($aside.css('padding-top'), 0);
 
-            var $itemTop = ((anchor.parent().position().top) + mar) - $sidebar.scrollTop();
             let itemTop = ((anchor.parent().position().top) + mar) - $sidebar.scrollTop();
+
+            var $itemTop = $topSubMenu + mar;
 
             let floatingNav = ul.clone().appendTo($aside);
             let vwHeight = $(window).height();
@@ -154,8 +161,8 @@ console.log($countMenu);
                 .addClass('nav-floating')
                 .css({
                     position: this.settings.getLayoutSetting('isFixed') ? 'fixed' : 'absolute',
-                    top: itemTop,
-                    bottom: (floatingNav.outerHeight(true) + itemTop > vwHeight) ? 0 : 'auto'
+                    top: $itemTop,
+                    bottom: (floatingNav.outerHeight(true) + $itemTop > vwHeight) ? 0 : 'auto'
                 });
 
             floatingNav
@@ -194,5 +201,22 @@ console.log($countMenu);
     }
     isEnabledHover() {
         return this.settings.getLayoutSetting('asideHover');
+    }
+
+    getPosition(el) {
+        var x = 0;
+        var y = 0;
+
+        while( el && !isNaN(el.position().left) && !isNaN(el.position().top) && (!el.is('body')) ) {
+            if (el.is('li')) {
+                x += el.position().left - el.scrollLeft();
+                y += el.position().top - el.scrollTop();
+            }
+
+            if (el.parent())
+                el = el.parent();
+console.log('x=' + x + ', y=' + y);                
+        }
+        return { top: y, left: x };
     }
 }
