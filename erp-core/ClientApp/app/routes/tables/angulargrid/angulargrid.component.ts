@@ -1,21 +1,66 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 declare var $: any;
 
 @Component({
-    selector: 'app-mainmaterial',
-    templateUrl: './mainmaterial.component.html',
-    styleUrls: ['./mainmaterial.component.scss']
+    selector: 'app-angulargrid',
+    templateUrl: './angulargrid.component.html',
+    styleUrls: ['./angulargrid.component.scss']
 })
-
-export class MainmaterialComponent implements OnInit, OnDestroy {
+export class AngulargridComponent implements OnInit, OnDestroy {
 
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
 
+    gridOptions: GridOptions;
     gridOptions1: GridOptions;
+    gridOptions2: GridOptions;
+
+    // Basic example
+    columnDefs = [
+        {
+            headerName: 'Athlete',
+            field: 'athlete',
+            width: 150
+        }, {
+            headerName: 'Age',
+            field: 'age',
+            width: 90
+        }, {
+            headerName: 'Country',
+            field: 'country',
+            width: 120
+        }, {
+            headerName: 'Year',
+            field: 'year',
+            width: 90
+        }, {
+            headerName: 'Date',
+            field: 'date',
+            width: 110
+        }, {
+            headerName: 'Sport',
+            field: 'sport',
+            width: 110
+        }, {
+            headerName: 'Gold',
+            field: 'gold',
+            width: 100
+        }, {
+            headerName: 'Silver',
+            field: 'silver',
+            width: 100
+        }, {
+            headerName: 'Bronze',
+            field: 'bronze',
+            width: 100
+        }, {
+            headerName: 'Total',
+            field: 'total',
+            width: 100
+        }];
 
     // Filter Example
     irishAthletes = ['John Joe Nevin', 'Katie Taylor', 'Paddy Barnes', 'Kenny Egan', 'Darren Sutherland', 'Margaret Thatcher', 'Tony Blair', 'Ronald Regan', 'Barack Obama'];
@@ -72,7 +117,18 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         filter: 'number'
     }];
 
+    // Pinned example
+    columnDefsPinned: any;
+
     constructor(http: HttpClient) {
+        // Basic example
+        this.gridOptions = <GridOptions>{
+            headerHeight: 40,
+            columnDefs: this.columnDefs,
+            rowData: null,
+        };
+
+
         // Filter example
         this.gridOptions1 = <GridOptions>{
             headerHeight: 40,
@@ -80,12 +136,28 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             rowData: null,
             enableFilter: true,
         };
+
+        // Pinned Example
+        this.columnDefsPinned = _.cloneDeep(this.columnDefs);
+        this.columnDefsPinned[0].pinned = 'left';
+        this.gridOptions2 = <GridOptions>{
+            headerHeight: 40,
+            columnDefs: this.columnDefsPinned,
+            rowData: null
+        };
+
         // Load from JSON
         http.get<any>('assets/server/ag-owinners.json')
             .subscribe((data) => {
 
+                this.gridOptions.api.setRowData(data);
+                this.gridOptions.api.sizeColumnsToFit();
+
                 this.gridOptions1.api.setRowData(data);
                 this.gridOptions1.api.sizeColumnsToFit();
+
+                this.gridOptions2.api.setRowData(data);
+                this.gridOptions2.api.sizeColumnsToFit();
 
             });
     }

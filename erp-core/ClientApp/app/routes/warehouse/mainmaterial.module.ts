@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { MainmaterialComponent } from './mainmaterial/mainmaterial.component';
 
 const routes: Routes = [
-    { path: 'mainmaterial', component: MainmaterialComponent }
+    { path: '', component: MainmaterialComponent }
 ];
 
 @NgModule({

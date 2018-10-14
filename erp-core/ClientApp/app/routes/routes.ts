@@ -13,6 +13,7 @@ export const routes : Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'mainmaterial', loadChildren: './warehouse/mainmaterial.module#MainmaterialModule' },
+            { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
         ]
     },
 
