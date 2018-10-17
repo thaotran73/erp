@@ -7,14 +7,17 @@ export class SettingsService {
     private user: any;
     private app: any;
     private layout: any;
+    private isCollapsedHidePrev: any;
+    private isCollapsedTextPrev: any;
+    private isCollapsedPrev: any;
 
     constructor() {
 
         // User Settings
         // -----------------------------------
         this.user = {
-            name: 'John',
-            job: 'ng-developer',
+            name: 'ERP User',
+            job: 'ERP developer',
             picture: 'assets/img/user/02.jpg'
         };
 
@@ -23,13 +26,14 @@ export class SettingsService {
         this.app = {
             name: 'ERP',
             description: 'Angular Bootstrap Admin Template',
-            year: ((new Date()).getFullYear())
+            year: '2017'
         };
 
         // Layout Settings
         // -----------------------------------
         this.layout = {
             isFixed: true,
+            isCollapsedHide: false,
             isCollapsed: false,
             isBoxed: false,
             isRTL: false,
@@ -37,14 +41,17 @@ export class SettingsService {
             isFloat: false,
             asideHover: false,
             theme: null,
-            asideScrollbar: false,
+            asideScrollbar: true,
             isCollapsedText: false,
-            useFullLayout: false,
+            useFullLayout: true,
             hiddenFooter: false,
             offsidebarOpen: false,
             asideToggled: false,
             viewAnimation: 'ng-fadeInUp'
         };
+
+        this.isCollapsedPrev = this.layout['isCollapsed'];
+        this.isCollapsedTextPrev = this.layout['isCollapsedText'];
 
     }
 
@@ -73,9 +80,90 @@ export class SettingsService {
             return this.layout[name] = value;
         }
     }
-
+    setLayoutSettingCollapsedHide(value) {
+        this.setLayoutSetting('isCollapsedHide', value);
+        if (this.layout['isCollapsedHide']) {
+            this.isCollapsedTextPrev = this.getLayoutSetting('isCollapsedText');
+            this.setLayoutSetting('isCollapsedText', false);
+            this.isCollapsedPrev = this.getLayoutSetting('isCollapsed');
+            this.setLayoutSetting('isCollapsed', false);
+        }
+        else {
+            this.setLayoutSetting('isCollapsedText', this.isCollapsedTextPrev);
+            this.setLayoutSetting('isCollapsed', this.isCollapsedPrev);
+        }
+            
+        return value;    
+    }
+    setLayoutSettingCollapsed(value) {
+        this.setLayoutSetting('isCollapsed', value);
+        if (this.layout['isCollapsed']) {
+            this.isCollapsedTextPrev = this.getLayoutSetting('isCollapsedText');
+            this.setLayoutSetting('isCollapsedText', false);
+            this.isCollapsedHidePrev = this.getLayoutSetting('isCollapsedHide');
+            this.setLayoutSetting('isCollapsedHide', false);
+        }
+        else {
+            this.setLayoutSetting('isCollapsedText', this.isCollapsedTextPrev);
+            this.setLayoutSetting('isCollapsedHide', this.isCollapsedHidePrev);
+        }
+            
+        return value;    
+    }
+    setLayoutSettingCollapsedText(value) {
+        this.setLayoutSetting('isCollapsedText', value);
+        if (this.layout['isCollapsedText']) {
+            this.isCollapsedPrev = this.getLayoutSetting('isCollapsed');
+            this.setLayoutSetting('isCollapsed', false);
+            this.isCollapsedHidePrev = this.getLayoutSetting('isCollapsedHide');
+            this.setLayoutSetting('isCollapsedHide', false);            
+        }
+        else {
+            this.setLayoutSetting('isCollapsed', this.isCollapsedPrev);
+            this.setLayoutSetting('isCollapsedHide', this.isCollapsedHidePrev);
+        }
+            
+        return value;    
+    }
     toggleLayoutSetting(name) {
         return this.setLayoutSetting(name, !this.getLayoutSetting(name));
+    }
+    toggleLayoutSideabar() {
+        if (this.getLayoutSetting('isCollapsed') || this.getLayoutSetting('isCollapsedText') || this.getLayoutSetting('isCollapsedHide')) {
+            this.isCollapsedPrev = false;
+            this.isCollapsedTextPrev = false;
+            this.isCollapsedHidePrev = false;
+            
+            if (this.getLayoutSetting('isCollapsed')) {
+                this.isCollapsedPrev = this.getLayoutSetting('isCollapsed');
+            }
+            if (this.getLayoutSetting('isCollapsedText')) {
+                this.isCollapsedTextPrev = this.getLayoutSetting('isCollapsedText');
+            }
+            if (this.getLayoutSetting('isCollapsedHide')) {
+                this.isCollapsedHidePrev = this.getLayoutSetting('isCollapsedHide');
+            }
+
+            this.setLayoutSetting('isCollapsedText', false);
+            this.setLayoutSetting('isCollapsed', false);
+            this.setLayoutSetting('isCollapsedHide', false);
+
+            return false;
+        }
+        else
+        {
+            if (this.isCollapsedPrev) {
+                this.setLayoutSetting('isCollapsed', true);
+            }
+            if (this.isCollapsedTextPrev) {
+                this.setLayoutSetting('isCollapsedText', true);
+            }
+            if (this.isCollapsedHidePrev || !(this.isCollapsedTextPrev || this.isCollapsedPrev)) {
+                this.setLayoutSetting('isCollapsedHide', true);
+            }
+
+            return true;
+        }
     }
 
 }

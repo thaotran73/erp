@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
     }
 
     toggleCollapsedSideabar() {
-        this.settings.toggleLayoutSetting('isCollapsed');
+        this.settings.toggleLayoutSideabar();
     }
 
     isCollapsedText() {

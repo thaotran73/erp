@@ -22,6 +22,7 @@
 }
 
 .aside-collapsed .sidebar>.sidebar-nav .badge,
+.aside-collapsed-hide .sidebar>.sidebar-nav .badge,
 .aside-collapsed-text .sidebar>.sidebar-nav .badge {
     animation: fadeIn 1s;
 }
@@ -43,6 +44,7 @@
 }
 
 .aside-collapsed,
+.aside-collapsed-hide,
 .aside-collapsed-text {
     .user-block-picture {
         transition: width .2s cubic-bezier(0.35, 0, 0.25, 1);

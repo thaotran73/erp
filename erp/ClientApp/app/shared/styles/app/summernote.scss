@@ -27,6 +27,14 @@
     }
 }
 
+.aside-collapsed-hide  {
+    .summernote + .note-editor.note-frame.fullscreen {
+        @include media-breakpoint-up(md) {
+            left: $aside-wd-collapsed-hide;
+        }
+    }
+}
+
 .aside-collapsed-text  {
     .summernote + .note-editor.note-frame.fullscreen {
         @include media-breakpoint-up(md) {

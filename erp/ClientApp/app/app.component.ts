@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     @HostBinding('class.offsidebar-open') get offsidebarOpen() { return this.settings.getLayoutSetting('offsidebarOpen'); };
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.getLayoutSetting('asideToggled'); };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.getLayoutSetting('isCollapsedText'); };
+    @HostBinding('class.aside-collapsed-hide') get isCollapsedHide() { return this.settings.getLayoutSetting('isCollapsedHide'); };
 
     constructor(public settings: SettingsService) { }
 

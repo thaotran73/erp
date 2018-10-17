@@ -146,6 +146,9 @@ $float-space: 15px;
         &.aside-collapsed .topnavbar .navbar-header {
             width: $aside-wd-collapsed + ($float-space * 2);
         }
+        &.aside-collapsed-hide .topnavbar .navbar-header {
+            width: $aside-wd-collapsed-hide;
+        }       
         &.aside-collapsed-text .topnavbar .navbar-header {
             width: $aside-wd-collapsed-text + ($float-space * 2);
         }

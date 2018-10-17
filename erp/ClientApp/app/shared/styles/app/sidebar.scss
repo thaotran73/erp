@@ -211,6 +211,7 @@ $tablet-landscape: 1025px;
 } // @media @desktop
 // Collapsed state styles
 .aside-collapsed,
+.aside-collapsed-hide,
 .aside-collapsed-text {
 
     .sidebar {
@@ -268,6 +269,29 @@ $tablet-landscape: 1025px;
 
             >li {
                 width: $aside-wd-collapsed-text - 2;
+                >a {
+                    padding: 14px 0;
+                    >em {
+                        font-size: 1.4em;
+                    }
+                }
+            }
+        }
+    }
+}
+.aside-collapsed-hide {
+
+    .sidebar {
+        >.sidebar-nav {
+
+            >li>.nav-item>span,
+            >li>a>span {
+                display: block !important;
+                font-size: 12px;
+            }
+
+            >li {
+                width: $aside-wd-collapsed-hide - 2;
                 >a {
                     padding: 14px 0;
                     >em {

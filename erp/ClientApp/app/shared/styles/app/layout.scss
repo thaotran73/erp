@@ -15,6 +15,7 @@
 // -------------------------------------------------------------
 $aside-wd:                                220px;
 $aside-wd-collapsed:                      70px;
+$aside-wd-collapsed-hide:                  0px;
 $aside-wd-collapsed-text:                 90px;
 $aside-bg:                                #fff;
 
@@ -342,6 +343,62 @@ body {
             .section-container,
             .footer-container {
                 margin-left: $aside-wd-collapsed;
+            }
+        }
+    }
+}
+
+// ------------------------------
+// Collapsed variation with hide
+// ------------------------------
+@include media-breakpoint-down(sm) {
+
+    .aside-collapsed-hide .wrapper {
+        .aside-container {
+            margin-left: -$aside-wd-collapsed-hide;
+        }
+    }
+
+    .aside-collapsed-hide.aside-toggled {
+        .wrapper {
+            .section-container,
+            .footer-container {
+                margin-left: $aside-wd-collapsed-hide;
+            }
+
+            .aside-container {
+                margin-left: 0;
+            }
+        }
+    }
+
+
+    .csstransforms3d {
+
+        .aside-collapsed-hide .wrapper {
+            backface-visibility: hidden;
+            .section-container,
+            .footer-container {
+                margin-left: 0;
+                transform: translate3d(0, 0, 0);
+                transition: transform .3s ease;
+            }
+            .aside-container {
+                margin-left: 0;
+                transform: translate3d(-$aside-wd-collapsed-hide, 0, 0);
+                transition: transform .3s ease;
+            }
+        }
+
+        .aside-collapsed-hide.aside-toggled {
+            .wrapper {
+                .section-container,
+                .footer-container {
+                    transform: translate3d($aside-wd-collapsed-hide, 0, 0);
+                }
+                .aside-container {
+                    transform: translate3d(0, 0, 0);
+                }
             }
         }
     }
