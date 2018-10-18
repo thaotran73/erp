@@ -43,7 +43,7 @@ export class SettingsService {
             theme: null,
             asideScrollbar: true,
             isCollapsedText: false,
-            useFullLayout: true,
+            useFullLayout: false,
             hiddenFooter: false,
             offsidebarOpen: false,
             asideToggled: false,
