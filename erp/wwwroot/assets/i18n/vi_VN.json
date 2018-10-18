@@ -1,16 +1,16 @@
 {
     "header": {
         "search": {
-            "PLACEHOLDER": "Type and hit enter.."
+            "PLACEHOLDER": "Nhập dữ liệu và nhấn enter.."
         }
     },
     "offsidebar": {
         "setting": {
-            "SETTINGS": "Settings"
+            "SETTINGS": "Cấu hình"
         }
     },
     "sidebar": {
-        "WELCOME": "Welcome",
+        "WELCOME": "Xin chào",
         "heading": {
             "HEADER": "Menu Heading"
         },
@@ -19,6 +19,6 @@
         }
     },
     "dashboard": {
-        "WELCOME": "Welcome"
+        "WELCOME": "Xin chào"
     }
 }
