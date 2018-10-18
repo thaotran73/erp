@@ -324,3 +324,27 @@ $nav-top-item-desktop-active:   $nav-top-item-mobile-active;
         }
     }
 }
+
+// Header on aside collapsed with Hide
+@include media-breakpoint-up(md) {
+    .aside-collapsed-hide {
+        .topnavbar {
+            .navbar-header {
+                .brand-logo {
+                    display: none;
+                }
+                .brand-logo-collapsed {
+                    display: block;
+                }
+            }
+
+            .navbar-header {
+                width: $nav-header-wd-toggled;
+            }
+
+            .navbar-form {
+                left: $nav-header-wd-toggled;
+            }
+        }
+    }
+}

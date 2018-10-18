@@ -35,12 +35,14 @@
 .sidebar>.sidebar-nav>li>a>span,
 .navbar-brand .brand-logo {
     animation: fadeIn 1s;
+    font-weight: bold;
+    white-space: normal;
 }
 
 .sidebar li>a,
 .sidebar li>.nav-item,
 .sidebar>.sidebar-nav>.nav-heading {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .aside-collapsed,

@@ -7,8 +7,8 @@ export class TranslatorService {
     private defaultLanguage: string = 'en';
 
     private availablelangs = [
-        { code: 'vi', text: 'Tiếng việt' },
-        { code: 'en', text: 'English' },
+        { code: 'vi_VN', text: 'Tiếng việt' },
+        { code: 'en',    text: 'English' },
         { code: 'es_AR', text: 'Spanish' }
     ];
 

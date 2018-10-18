@@ -478,6 +478,21 @@ body {
     }
 }
 
+.aside-collapsed-hide {
+    overflow-y: auto;
+    .wrapper {
+        .aside-container {
+            &,
+            .aside-inner {
+                width: $aside-wd-collapsed-hide;
+            }
+            .nav-floating {
+                margin-left: $aside-wd-collapsed-hide;
+            }
+        }
+    }
+}
+
 // Margin only exists above tablet
 @include media-breakpoint-up(md) {
     // Aside status toggled via JS
@@ -486,6 +501,14 @@ body {
             .section-container,
             .footer-container {
                 margin-left: $aside-wd-collapsed-text;
+            }
+        }
+    }
+    .aside-collapsed-hide {
+        .wrapper {
+            .section-container,
+            .footer-container {
+                margin-left: $aside-wd-collapsed-hide;
             }
         }
     }

@@ -137,6 +137,7 @@ $tablet-landscape: 1025px;
 
     >li {
         border-left: 0 !important;
+        padding-left: 27px;
         >a,
         >.nav-item {
             display: block;
@@ -168,7 +169,7 @@ $tablet-landscape: 1025px;
             }
         } // Nested levels
         .sidebar-nav>li {
-            padding-left: 5px;
+            padding-left: 27px;
         }
     } // li
     // This only happend when sidebar is collapsed and the submenu
@@ -265,33 +266,12 @@ $tablet-landscape: 1025px;
             >li>a>span {
                 display: block !important;
                 font-size: 12px;
+                font-weight: bold;
+                white-space: normal;
             }
 
             >li {
                 width: $aside-wd-collapsed-text - 2;
-                >a {
-                    padding: 14px 0;
-                    >em {
-                        font-size: 1.4em;
-                    }
-                }
-            }
-        }
-    }
-}
-.aside-collapsed-hide {
-
-    .sidebar {
-        >.sidebar-nav {
-
-            >li>.nav-item>span,
-            >li>a>span {
-                display: block !important;
-                font-size: 12px;
-            }
-
-            >li {
-                width: $aside-wd-collapsed-hide - 2;
                 >a {
                     padding: 14px 0;
                     >em {
