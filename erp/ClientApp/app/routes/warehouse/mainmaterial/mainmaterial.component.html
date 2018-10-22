@@ -1,201 +1,72 @@
 ﻿<div class="content-heading">Danh sách nhân viên</div>
-    <div class="container-fluid grid-example">
+    <div class="container-fluid">
         <div class="card mb-3">
             <div class="card-body">
-                <form class="form-inline">
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Ngày vào làm việc từ</div>
-                        </div>
-                        <input class="form-control" type="text" placeholder="Username" />
-                    </div>
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Đến ngày</div>
-                        </div>
-                        <input class="form-control" type="text" placeholder="Username" />
-                    </div>
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Thôi việc</div>
-                        </div>
-                        <input class="form-control" type="text" placeholder="Username" />
-                    </div>
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Mã CN</div>
-                        </div>
-                    </div>
-                    <div class="form-check mb-2 mr-sm-2">
-                        <div class="checkbox c-checkbox">
-                            <label>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                    </div>
-                    <!-- <button class="btn btn-primary mb-2" type="submit">Submit</button> -->
-                </form>
-
                 <fieldset>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <form>
-                                <div class="form-group row">
-                                    <label class="col-xl-2 col-form-label">Ngày vào làm việc từ</label>
-                                    <div class="col-xl-2">
-                                        <input class="form-control" type="email" placeholder="Email" />
-                                    </div>
-                                    <label class="col-xl col-form-label">Đến ngày</label>
-                                    <div class="col-xl-2">
-                                        <input class="form-control" type="password" placeholder="Password" />
-                                    </div>
-                                    <label class="col-xl col-form-label">Thôi việc</label>
-                                    <div class="col-xl-2">
-                                        <input class="form-control" type="password" placeholder="Password" />
-                                    </div>
-                                    <label class="col-xl col-form-label">Mã CN</label>
-                                    <div class="col-xl">
-                                        <input type="checkbox" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-xl-2 col-form-label">Đơn vị</label>
-                                    <div class="col-xl-3">
-                                        <ngx-select (data)="value" [multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No city selected"></ngx-select>
-                                    </div>
-                                    <div class="col-xl-3">
-                                        <input class="form-control" type="password" placeholder="Password" />
-                                    </div>
-                                    <label class="col-xl-2 col-form-label">Nhân viên</label>
-                                    <div class="col-xl-2">
-                                        <input class="form-control" type="password" placeholder="Password" />
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Ngày vào làm việc từ</span>
-                                            </div>
-                                            <input class="form-control" type="text" placeholder="Username" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Đến ngày</span>
-                                            </div>
-                                            <input class="form-control" type="text" placeholder="Username" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Thôi việc</span>
-                                            </div>
-                                            <input class="form-control" type="text" placeholder="Username" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Mã CN</span>
-                                            </div>
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Đơn vị</span>
-                                            </div>
-                                            <ngx-select (data)="value" [multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No city selected"></ngx-select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 mb-4">
-                                        <div class="input-group">
-                                            <input class="form-control" type="text" placeholder="Username" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 mb-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend3">Nhân viên</span>
-                                            </div>
-                                            <input class="form-control" type="text" placeholder="Username" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <div class="checkbox c-checkbox">
-                                            <label>
-                                                <input type="checkbox" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary" type="submit">Submit form</button>
-                            </form>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Ngày vào làm việc từ</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" type="Date" placeholder="dd/mm/yyyy" />
+                            </div>
+                            <label class="col-xl col-form-label">Đến ngày</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" type="Date" placeholder="dd/mm/yyyy" />
+                            </div>
+                            <label class="col-xl col-form-label">Mã CN</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" placeholder="Mã CN" />
+                            </div>
+                            <label class="col-xl col-form-label">Thôi việc</label>
+                            <div class="col-xl-1">
+                                <label class="switch switch-lg m-0 col-form-label">
+                                    <input type="checkbox" checked="checked" />
+                                    <span></span>
+                                </label>
+                            </div>                            
                         </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Đơn vị</label>
+                            <div class="col-xl-5">
+                                <ngx-select (data)="value" [multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No city selected"></ngx-select>
+                            </div>
+                            <label class="col-xl-1 col-form-label">Nhân viên</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" type="password" placeholder="Password" />
+                            </div>
+                            <div class="col-xl-1">
+                                <button class="mr-1 btn btn-pill-right btn-primary mb-1" type="button">Primary</button>
+                            </div>
+                            <div class="col-xl-1">
+                                <button class="mr-1 btn btn-pill-right btn-primary mb-1" type="button">Second</button>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Single</label>
+                            <div class="col-xl-2">
+                                <ngx-select (data)="value" [multiple]="false" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No city selected"></ngx-select>
+                            </div>
+                            <label class="col-xl col-form-label">Đến ngày</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" type="password" placeholder="Password" />
+                            </div>
+                            <label class="col-xl col-form-label">Thôi việc</label>
+                            <div class="col-xl-2">
+                                <input class="form-control" type="password" placeholder="Password" />
+                            </div>
+                            <label class="col-xl col-form-label">Mã CN</label>
+                            <div class="col-xl">
+                                <input class="form-control" type="checkbox" />
+                            </div>
+                        </div>
+
                     </div>
                 </fieldset>
             </div>
-            <div class="card-body">
-                <p class="my-4 text-bold" id="stacked-to-horizontal">Stacked to horizontal</p>
-                <div class="row">
-                    <div class="col-md-2">Ngày vào làm việc từ</div>
-                    <div class="col-md-2"><input class="form-control" type="email" placeholder="Email" /></div>
-                    <div class="col-md">Đến ngày</div>
-                    <div class="col-md-2"><input class="form-control" type="email" placeholder="Email" /></div>
-                    <div class="col-md">Thôi việc</div>
-                    <div class="col-md-2"><input class="form-control" type="email" placeholder="Email" /></div>
-                    <div class="col-md">Mã CN</div>
-                    <div class="col-md"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8">col-sm-8</div>
-                    <div class="col-md-4">col-sm-4</div>
-                </div>
-                <div class="row">
-                    <div class="col-md">col-sm</div>
-                    <div class="col-md">col-sm</div>
-                    <div class="col-md">col-sm</div>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="table-ext-1">
-                    <tbody>
-                        <tr>
-                            <td>Ngày vào làm việc từ</td>
-                            <td><input class="form-control" type="email" placeholder="Email" /></td>
-                            <td>Đến ngày</td>
-                            <td><input class="form-control" type="password" placeholder="Password" /></td>
-                            <td>Thôi việc</td>
-                            <td><input class="form-control" type="password" placeholder="Password" /></td>
-                            <td>Mã CN</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Đơn vị</td>
-                            <td>
-                                <ngx-select (data)="value" [multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No city selected"></ngx-select>
-                            </td>
-                            <td colspan="2"><input class="form-control" type="email" placeholder="Email" /></td>
-                            <td>Nhân viên</td>
-                            <td colspan="2"><input class="form-control" type="email" placeholder="Email" /></td>
-                            <td><input type="checkbox" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
+    </div>
+    <div class="grid-fluid">
         <h4 class="page-header">Filter Example</h4>
         <div class="row">
             <div class="col-xl-4 col-lg-6">
