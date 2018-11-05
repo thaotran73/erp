@@ -32,10 +32,99 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public _disabledV: string = '0';
     public disabled: boolean = false;
 
+    static COUNTRY_CODES = {
+        Ireland: "ie",
+        Spain: "es",
+        "United Kingdom": "gb",
+        France: "fr",
+        Germany: "de",
+        Sweden: "se",
+        Italy: "it",
+        Greece: "gr",
+        Iceland: "is",
+        Portugal: "pt",
+        Malta: "mt",
+        Norway: "no",
+        Brazil: "br",
+        Argentina: "ar",
+        Colombia: "co",
+        Peru: "pe",
+        Venezuela: "ve",
+        Uruguay: "uy"
+    };
+
     // Filter Example
     irishAthletes = ['John Joe Nevin', 'Katie Taylor', 'Paddy Barnes', 'Kenny Egan', 'Darren Sutherland', 'Margaret Thatcher', 'Tony Blair', 'Ronald Regan', 'Barack Obama'];
 
-    columnDefsFilter: any;
+    columnDefsFilter = [{
+        headerName: 'Athlete',
+        field: 'athlete',
+        width: 150,
+        filter: 'set',
+        filterParams: {
+            cellHeight: 20,
+            values: this.irishAthletes
+        }
+    }, {
+        headerName: 'Age',
+        field: 'age',
+        width: 90,
+        filter: 'number',
+
+    }, {
+        headerName: 'Country',
+        field: 'country',
+        width: 120,
+            cellRenderer: countryCellRenderer,
+            //pinned: true,
+            filter: 'set',
+            filterParams: {
+                cellRenderer: countryCellRenderer,
+                cellHeight: 20
+            },
+            cellEditor: 'agRichSelectCellEditor',
+            cellEditorParams: {
+                values: ["Argentina", "Brazil", "Colombia", "France", "Germany", "Greece", "Iceland", "Ireland",
+                    "Italy", "Malta", "Portugal", "Norway", "Peru", "Spain", "Sweden", "United Kingdom",
+                    "Uruguay", "Venezuela", "Belgium", "Luxembourg"],
+                cellRenderer: countryCellRenderer,
+            },
+            editable: true
+    }, {
+        headerName: 'Year',
+        field: 'year',
+        width: 90,
+        filter: 'text',
+        editable: true
+    }, {
+        headerName: 'Date',
+        field: 'date',
+        width: 110
+    }, {
+        headerName: 'Sport',
+        field: 'sport',
+        width: 110
+    }, {
+        headerName: 'Gold',
+        field: 'gold',
+        width: 100,
+        filter: 'number'
+    }, {
+        headerName: 'Silver',
+        field: 'silver',
+        width: 100,
+        filter: 'number'
+    }, {
+        headerName: 'Bronze',
+        field: 'bronze',
+        width: 100,
+        filter: 'number'
+    }, {
+        headerName: 'Total',
+        field: 'total',
+        width: 100,
+        filter: 'number'
+    }];
 
     constructor(http: HttpClient) {
 
@@ -52,6 +141,8 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             columnDefs: this.columnDefsFilter,
             rowData: null,
             enableFilter: true,
+            defaultColDef: { editable: true },
+            singleClickEdit: true
         };
         // Load from JSON
         http.get<any>('assets/server/ag-owinners.json')
@@ -79,4 +170,8 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         this.$win.off(this.resizeEvent);
     }
 
+}
+function countryCellRenderer(params) {
+    const flag = "<img border='0' width='15' height='10' style='margin-bottom: 2px' src='https://www.ag-grid.com/images/flags/" + MainmaterialComponent.COUNTRY_CODES[params.value] + ".png'>";
+    return flag + " " + params.value;
 }
