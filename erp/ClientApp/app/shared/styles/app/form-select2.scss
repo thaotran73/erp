@@ -2,6 +2,8 @@
    Component: form-select2
  ========================================================================== */
 
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 .ngx-select__toggle {
     border: 1px solid $input-border-color !important;
     border-radius: $input-border-radius;

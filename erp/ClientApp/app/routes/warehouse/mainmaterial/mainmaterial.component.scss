@@ -1,5 +1,4 @@
-﻿
-fieldset {
+﻿fieldset {
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 }
@@ -23,3 +22,9 @@ fieldset {
     background-color: rgba(241, 242, 243, .15);
     border: 1px dashed rgba(0, 0, 0, .15);
 }
+
+.ng-select.ng-select-multiple {
+    position: absolute;
+    width: 100%;
+}
+
