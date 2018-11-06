@@ -35,8 +35,15 @@
                                         [closeOnSelect]="false"
                                         bindValue="id"
                                         placeholder="No people selected">
+                                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                        <div class="ng-value-wrapper default">
+                                            <span class="ng-value-icon left" (click)="clear(item)" *ngIf="item.disabled !== true">×</span>
+                                            <span class="ng-value-label" title="{{item.email}}">{{item.name}}</span>
+                                         </div>
+                                    </ng-template>                                                                             
                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" *ngIf="item$.disabled !== true"/>
+                                        {{item.name}}
                                     </ng-template>
                                     <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
                                         <div class="ng-option disabled">
