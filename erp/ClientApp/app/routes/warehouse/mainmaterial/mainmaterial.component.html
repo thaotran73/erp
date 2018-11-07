@@ -3,22 +3,22 @@
         <div class="card mb-3">
             <div class="card-body">
                 <fieldset>
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="form-group row">
-                            <label class="col-xl-2 col-form-label">Ngày vào làm việc từ</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" value="{{date | date:dd/MM/yyyy}}" ng-model="date" name="id" validatedateformat data-date-format="dd/mm/yyyy" maxlength="10" id="id" calendar maxdate="todays">
+                            </div>
+                            <label class="col-sm-1 col-form-label">Đến ngày</label>
+                            <div class="col-sm-2">
                                 <input class="form-control" type="Date" placeholder="dd/mm/yyyy" />
                             </div>
-                            <label class="col-xl col-form-label">Đến ngày</label>
-                            <div class="col-xl-2">
-                                <input class="form-control" type="Date" placeholder="dd/mm/yyyy" />
-                            </div>
-                            <label class="col-xl col-form-label">Mã CN</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-1 col-form-label">Mã CN</label>
+                            <div class="col-sm-2">
                                 <input class="form-control" placeholder="Mã CN" />
                             </div>
-                            <label class="col-xl col-form-label">Thôi việc</label>
-                            <div class="col-xl-1">
+                            <label class="col-sm-1 col-form-label">Thôi việc</label>
+                            <div class="col-sm-1">
                                 <label class="switch switch-lg m-0 col-form-label">
                                     <input type="checkbox" checked="checked" />
                                     <span></span>
@@ -26,8 +26,8 @@
                             </div>                            
                         </div>
                         <div class="form-group row">
-                            <label class="col-xl-2 col-form-label">Đơn vị</label>
-                            <div class="col-xl-5">
+                            <label class="col-sm-2 col-form-label">Đơn vị</label>
+                            <div class="col-sm-5">
                                 <ng-select 
                                         [items]="items"
                                         [multiple]="true"
@@ -36,11 +36,11 @@
                                         bindValue="id"
                                         placeholder="No people selected">
                                     <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                        <div class="ng-value-wrapper default">
+                                        <div class="ng-value-wrapper default" title="{{item.email}}">
                                             <span class="ng-value-icon left" (click)="clear(item)" *ngIf="item.disabled !== true">×</span>
-                                            <span class="ng-value-label" title="{{item.email}}">{{item.name}}</span>
+                                            <span class="ng-value-label">{{item.name}}</span>
                                          </div>
-                                    </ng-template>                                                                             
+                                    </ng-template>           
                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                         <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" *ngIf="item$.disabled !== true"/>
                                         {{item.name}}
@@ -52,20 +52,20 @@
                                     </ng-template>
                                 </ng-select>
                             </div>
-                            <label class="col-xl-1 col-form-label">Nhân viên</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-1 col-form-label">Nhân viên</label>
+                            <div class="col-sm-2">
                                 <input class="form-control" type="password" placeholder="Password" />
                             </div>
-                            <div class="col-xl-1">
+                            <div class="col-sm-1">
                                 <button class="mr-1 btn btn-pill-right btn-primary mb-1" type="button">Primary</button>
                             </div>
-                            <div class="col-xl-1">
+                            <div class="col-sm-1">
                                 <button class="mr-1 btn btn-pill-right btn-primary mb-1" type="button">Second</button>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xl-2 col-form-label">Single</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-2 col-form-label">Single</label>
+                            <div class="col-sm-2">
                                 <ng-select 
                                         [items]="items"
                                         bindLabel="name"
@@ -78,16 +78,16 @@
                                     </ng-template>
                                 </ng-select>
                             </div>
-                            <label class="col-xl col-form-label">Đến ngày</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-1 col-form-label">Đến ngày</label>
+                            <div class="col-sm-2">
                                 <input class="form-control" type="password" placeholder="Password" />
                             </div>
-                            <label class="col-xl col-form-label">Thôi việc</label>
-                            <div class="col-xl-2">
+                            <label class="col-sm-1 col-form-label">Thôi việc</label>
+                            <div class="col-sm-2">
                                 <input class="form-control" type="password" placeholder="Password" />
                             </div>
-                            <label class="col-xl col-form-label">Mã CN</label>
-                            <div class="col-xl">
+                            <label class="col-sm-1 col-form-label">Mã CN</label>
+                            <div class="col-sm-1">
                                 <input class="form-control" type="checkbox" />
                             </div>
                         </div>
