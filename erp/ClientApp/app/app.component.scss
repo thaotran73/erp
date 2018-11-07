@@ -55,3 +55,17 @@ fieldset {
 .col-form-label {
 	white-space: nowrap;
 }
+
+.btn-pill-right, .btn-oval {
+    padding-right: calc(100% - 60px);
+}
+
+@media (max-width: 576px) {
+	.ng-select.ng-select-multiple {
+    	position: relative;
+	}
+
+	.ng-select.ng-select-multiple .ng-select-container {
+    	width: 100%;
+	}   
+}
