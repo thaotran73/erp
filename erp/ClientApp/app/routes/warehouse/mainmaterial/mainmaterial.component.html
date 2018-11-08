@@ -7,11 +7,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
                             <div class="col-sm-2">
-                                <input type="date" class="form-control" value="{{date | date:dd/MM/yyyy}}" ng-model="date" name="id" validatedateformat data-date-format="dd/mm/yyyy" maxlength="10" id="id" calendar maxdate="todays">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
-                                <input class="form-control" type="Date" placeholder="dd/mm/yyyy" />
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
                             </div>
                             <label class="col-sm-1 col-form-label">Mã CN</label>
                             <div class="col-sm-2">

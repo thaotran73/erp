@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,7 +17,8 @@ interface Person {
 @Component({
     selector: 'app-mainmaterial',
     templateUrl: './mainmaterial.component.html',
-    styleUrls: ['./mainmaterial.component.scss']
+    styleUrls: ['./mainmaterial.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class MainmaterialComponent implements OnInit, OnDestroy {
@@ -27,6 +28,13 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     gridOptions: GridOptions;
 
+    // Datepicker
+    bsConfig = {
+        containerClass: 'theme-angle',
+        dateInputFormat: 'DD/MM/YYYY'
+    }
+
+    maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
     // ng2Select
     public items: Person[] = [];
 
@@ -103,7 +111,6 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         // Load from JSON
         http.get<any>('assets/server/people.json')
             .subscribe((data) => {
-                console.log(data);                
                 this.items = data;
             });
 

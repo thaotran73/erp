@@ -9,6 +9,7 @@ import { SettingsService } from './core/settings/settings.service';
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
+
 export class AppComponent implements OnInit {
 
     @HostBinding('class.layout-fixed') get isFixed() { return this.settings.getLayoutSetting('isFixed'); };
