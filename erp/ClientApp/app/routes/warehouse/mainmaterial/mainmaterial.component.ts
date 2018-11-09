@@ -83,7 +83,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         }, {
             headerName: 'Date',
             field: 'date',
-            width: 110
+            width: 110, 
         }, {
             headerName: 'Sport',
             field: 'sport',
@@ -121,7 +121,9 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             rowData: null,
             enableFilter: true,
             defaultColDef: { editable: true },
-            singleClickEdit: true
+            singleClickEdit: true,
+            enableSorting: true,
+            enableColResize: true,
         };
 
         // Load from JSON
