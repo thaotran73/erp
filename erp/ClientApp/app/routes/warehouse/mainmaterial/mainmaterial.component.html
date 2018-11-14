@@ -29,7 +29,7 @@
                             <label class="col-sm-2 col-form-label">Đơn vị</label>
                             <div class="col-sm-5">
                                 <ng-select 
-                                        [items]="items"
+                                        [items]="people"
                                         [multiple]="true"
                                         bindLabel="name"
                                         [closeOnSelect]="false"
@@ -67,7 +67,7 @@
                             <label class="col-sm-2 col-form-label">Single</label>
                             <div class="col-sm-2">
                                 <ng-select 
-                                        [items]="items"
+                                        [items]="people"
                                         bindLabel="name"
                                         bindValue="id"
                                         placeholder="No people selected">
@@ -99,5 +99,15 @@
     </div>
     <div class="grid-fluid">
         <h4 class="page-header">ag-grid Example</h4>
-        <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 400px" [gridOptions]="gridOptions" (gridReady)="gridReady($event)" enableFilter></ag-grid-angular>
+        <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 400px" [gridOptions]="gridOptions" (gridReady)="gridReady($event)" enableFilter  [components]="components"></ag-grid-angular>
+        <div id="col_template">
+            <input id="col_template_date" type="text" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+            <ng-select id="col_template_country" [items]="country" placeholder="No country selected">
+                <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+                    <div class="ng-option disabled">
+                        No data found for search "{{searchTerm}}"
+                    </div>
+                </ng-template>
+            </ng-select>
+        </div>        
     </div>

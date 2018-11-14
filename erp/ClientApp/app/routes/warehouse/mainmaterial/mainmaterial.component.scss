@@ -1,1 +1,13 @@
-﻿
+﻿#col_template_country {
+	position: fixed;
+}
+
+#col_template_country.ng-select .ng-select-container {
+	height: 100%;
+	min-height: 20px;
+}
+
+#col_template_country.ng-select .ng-select-container .ng-value-container .ng-input {
+	top: 0px;
+}
+

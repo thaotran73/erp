@@ -1,4 +1,4 @@
-﻿import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient } from '@angular/common/http';
 
@@ -35,47 +35,30 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     }
 
     maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
-    // ng2Select
-    public items: Person[] = [];
+
+    public people: Person[] = [];
+    public country: any = [];
 
     public value: any = {};
     public _disabledV: string = '0';
     public disabled: boolean = false;
 
-    static COUNTRY_CODES = {
-        Ireland: "ie",
-        Spain: "es",
-        "United Kingdom": "gb",
-        France: "fr",
-        Germany: "de",
-        Sweden: "se",
-        Italy: "it",
-        Greece: "gr",
-        Iceland: "is",
-        Portugal: "pt",
-        Malta: "mt",
-        Norway: "no",
-        Brazil: "br",
-        Argentina: "ar",
-        Colombia: "co",
-        Peru: "pe",
-        Venezuela: "ve",
-        Uruguay: "uy"
-    };
-
     columnHeader = 
         [{
             headerName: 'Athlete',
             field: 'athlete',
-            width: 150
+            width: 150,
+            pinned: 'left'
         }, {
             headerName: 'Age',
             field: 'age',
-            width: 90
+            width: 90,
+            pinned: 'left'
         }, {
             headerName: 'Country',
             field: 'country',
-            width: 120
+            width: 120,
+            cellEditor: 'countrySelect',
         }, {
             headerName: 'Year',
             field: 'year',
@@ -84,6 +67,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             headerName: 'Date',
             field: 'date',
             width: 110, 
+            cellEditor: 'datePicker',
         }, {
             headerName: 'Sport',
             field: 'sport',
@@ -103,15 +87,26 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         }, {
             headerName: 'Total',
             field: 'total',
-            width: 100
+            width: 100,
+            pinned: 'right'
         }];
 
+    components = {
+        datePicker: getDatePicker(),
+        countrySelect: getCountrySelect()
+    };
+
     constructor(http: HttpClient) {
+
+        http.get<any>('assets/server/country.json')
+            .subscribe((data) => {
+                this.country = data;
+            });
 
         // Load from JSON
         http.get<any>('assets/server/people.json')
             .subscribe((data) => {
-                this.items = data;
+                this.people = data;
             });
 
         // Filter example
@@ -149,10 +144,76 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         this.$win.off(this.resizeEvent);
     }
 
-
-
 }
-function countryCellRenderer(params) {
-    const flag = "<img border='0' width='15' height='10' style='margin-bottom: 2px' src='https://www.ag-grid.com/images/flags/" + MainmaterialComponent.COUNTRY_CODES[params.value] + ".png'>";
-    return flag + " " + params.value;
+
+function getDatePicker() {
+    function DatePicker() {}
+
+    DatePicker.prototype.init = function(params) {
+        this.eInput = document.createElement("INPUT");
+        this.eInput = document.getElementById('col_template_date');
+
+        this.eInput.value = params.value;
+    };
+
+    DatePicker.prototype.getGui = function() {
+        return this.eInput;
+    };
+
+    DatePicker.prototype.afterGuiAttached = function() {
+        this.eInput.focus();
+        this.eInput.select();
+    };
+
+    DatePicker.prototype.getValue = function() {
+        return this.eInput.value;
+    };
+
+    DatePicker.prototype.destroy = function() {
+        var col_template = document.querySelector('#col_template');
+        col_template.appendChild(this.eInput);
+        return true;
+    };
+
+    DatePicker.prototype.isPopup = function() {
+        return false;
+    };
+
+    return DatePicker;
+}
+
+function getCountrySelect() {
+    function CountrySelect() {}
+
+    CountrySelect.prototype.init = function(params) {
+        this.eInput = document.createElement("ng-select");
+        this.eInput = document.getElementById('col_template_country');
+
+        this.eInput.value = params.value;
+    };
+
+    CountrySelect.prototype.getGui = function() {
+        return this.eInput;
+    };
+
+    CountrySelect.prototype.afterGuiAttached = function() {
+        this.eInput.focus();
+        this.eInput.select();
+    };
+
+    CountrySelect.prototype.getValue = function() {
+        return this.eInput.value;
+    };
+
+    CountrySelect.prototype.destroy = function() {
+        var col_template = document.querySelector('#col_template');
+        col_template.appendChild(this.eInput);
+        return true;
+    };
+
+    CountrySelect.prototype.isPopup = function() {
+        return false;
+    };
+
+    return CountrySelect;
 }
