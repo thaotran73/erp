@@ -104,8 +104,9 @@
             <input id="col_template_date" type="text" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
             <ng-select id="col_template_country"
                 [items]="country"
-                bindLabel="countryName"
-                bindValue="countryName"
+                [bindLabel]="countryName"
+                [bindValue]="countryName"
+                [dropdownPosition]="bottom"
                 placeholder="No country selected">
                 <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
                     <div class="ng-option disabled">

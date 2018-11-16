@@ -38,12 +38,42 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     public people: Person[] = [];
     public country: any = [];
+    public sport: any = [];
+    public columnHeader: any = [];
 
     public value: any = {};
     public _disabledV: string = '0';
     public disabled: boolean = false;
 
-    columnHeader = 
+    public selectedCountry: any;
+
+    components = {
+        datePicker: getDatePicker(),
+        countrySelect: getCountrySelect()
+    };
+
+    constructor(http: HttpClient) {
+
+        http.get<any>('assets/server/sport.json')
+            .subscribe((data) => {
+                console.log(data);
+                this.sport = data;
+            });
+
+        http.get<any>('assets/server/country.json')
+            .subscribe((data) => {
+                this.country = data;
+            });
+
+        // Load from JSON
+        http.get<any>('assets/server/people.json')
+            .subscribe((data) => {
+                this.people = data;
+            });
+
+console.log(this.sport);
+
+        this.columnHeader = 
         [{
             headerName: 'Athlete',
             field: 'athlete',
@@ -71,7 +101,9 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         }, {
             headerName: 'Sport',
             field: 'sport',
-            width: 110
+            width: 110,
+            cellEditor: 'agSelectCellEditor',
+            cellEditorParams: {values: ["Swimming", "Gymnastics", "Speed Skating", "Cross Country Skiing", "Short-Track Speed Skating", "Diving", "Cycling", "Biathlon", "Alpine Skiing", "Ski Jumping", "Nordic Combined", "Athletics", "Table Tennis", "Tennis", "Synchronized Swimming", "Shooting", "Rowing", "Fencing", "Equestrian", "Canoeing", "Bobsleigh", "Badminton", "Archery", "Wrestling", "Weightlifting", "Waterpolo", "Volleyball", "Triathlon", "Trampoline", "Taekwondo"]},
         }, {
             headerName: 'Gold',
             field: 'gold',
@@ -91,23 +123,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             pinned: 'right'
         }];
 
-    components = {
-        datePicker: getDatePicker(),
-        countrySelect: getCountrySelect()
-    };
-
-    constructor(http: HttpClient) {
-
-        http.get<any>('assets/server/country.json')
-            .subscribe((data) => {
-                this.country = data;
-            });
-
-        // Load from JSON
-        http.get<any>('assets/server/people.json')
-            .subscribe((data) => {
-                this.people = data;
-            });
+        console.log(this.columnHeader);
 
         // Filter example
         this.gridOptions = <GridOptions>{
@@ -153,6 +169,9 @@ function getDatePicker() {
         this.eInput = document.createElement("INPUT");
         this.eInput = document.getElementById('col_template_date');
 
+        $('#col_template_date').width($('.ag-cell-focus').width() - 4);
+        $('#col_template_date').height($('.ag-cell-focus').height() - 4);
+
         this.eInput.value = params.value;
     };
 
@@ -176,7 +195,7 @@ function getDatePicker() {
     };
 
     DatePicker.prototype.isPopup = function() {
-        return false;
+        return true;
     };
 
     return DatePicker;
@@ -186,33 +205,46 @@ function getCountrySelect() {
     function CountrySelect() {}
 
     CountrySelect.prototype.init = function(params) {
+    console.log("CountrySelect.prototype.init");
+console.log(params.value);    
         this.eInput = document.createElement("ng-select");
         this.eInput = document.getElementById('col_template_country');
 
-        this.eInput.value = params.value;
+        $('#col_template_country').width($('.ag-cell-focus').width());
+        $('#col_template_country').height($('.ag-cell-focus').height());
+        
+        this.selectedCountry = params.value;
+console.log(this.selectedCountry);
     };
 
     CountrySelect.prototype.getGui = function() {
+        console.log("CountrySelect.prototype.getGui");
         return this.eInput;
     };
 
     CountrySelect.prototype.afterGuiAttached = function() {
-        this.eInput.focus();
-        this.eInput.select();
+        console.log("CountrySelect.prototype.afterGuiAttached");
+        $('#col_template_country').focus();
+        $('#col_template_country').select();
     };
 
     CountrySelect.prototype.getValue = function() {
-        return this.eInput.value;
+        console.log("CountrySelect.prototype.getValue");
+        console.log(this.eInput);
+        console.log(this.selectedCountry);
+        return this.selectedCountry;
     };
 
     CountrySelect.prototype.destroy = function() {
+        console.log("CountrySelect.prototype.destroy");
         var col_template = document.querySelector('#col_template');
         col_template.appendChild(this.eInput);
         return true;
     };
 
     CountrySelect.prototype.isPopup = function() {
-        return false;
+        console.log("CountrySelect.prototype.isPopup");    
+        return true;
     };
 
     return CountrySelect;
