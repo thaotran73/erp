@@ -2,24 +2,12 @@ import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient } from '@angular/common/http';
 
-interface Person {
-    id: string;
-    isActive: boolean;
-    age: number;
-    name: string;
-    gender: string;
-    company: string;
-    email: string;
-    phone: string;
-    disabled?: boolean;
-}
-
 @Component({
     selector: 'app-mainmaterial',
     templateUrl: './mainmaterial.component.html',
     styleUrls: ['./mainmaterial.component.scss'],
     encapsulation: ViewEncapsulation.None
-})
+}) 
 
 export class MainmaterialComponent implements OnInit, OnDestroy {
 
@@ -36,42 +24,24 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
 
-    public people: Person[] = [];
+    public people: any = [];
     public country: any = [];
     public sport: any = [];
     public columnHeader: any = [];
+
 
     public value: any = {};
     public _disabledV: string = '0';
     public disabled: boolean = false;
 
-    public selectedCountry: any;
+    public selectedCountry: any = {};
 
     components = {
         datePicker: getDatePicker(),
-        countrySelect: getCountrySelect()
+        countrySelect: getCountrySelect(this)
     };
 
-    constructor(http: HttpClient) {
-
-        http.get<any>('assets/server/sport.json')
-            .subscribe((data) => {
-                console.log(data);
-                this.sport = data;
-            });
-
-        http.get<any>('assets/server/country.json')
-            .subscribe((data) => {
-                this.country = data;
-            });
-
-        // Load from JSON
-        http.get<any>('assets/server/people.json')
-            .subscribe((data) => {
-                this.people = data;
-            });
-
-console.log(this.sport);
+    constructor(private http: HttpClient) {
 
         this.columnHeader = 
         [{
@@ -84,6 +54,10 @@ console.log(this.sport);
             field: 'age',
             width: 90,
             pinned: 'left'
+        }, {
+            headerName: 'Country ID',
+            field: 'country_id',
+            width: 80
         }, {
             headerName: 'Country',
             field: 'country',
@@ -136,16 +110,37 @@ console.log(this.sport);
             enableSorting: true,
             enableColResize: true,
         };
-
-        // Load from JSON
-        http.get<any>('assets/server/ag-owinners.json')
-            .subscribe((data) => {
-                this.gridOptions.api.setRowData(data);
-                this.gridOptions.api.sizeColumnsToFit();
-            });
     }
 
-    ngOnInit() { }
+    async ngOnInit() {
+        await this.http.get('assets/server/country.json')
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                this.country = data;
+            });
+
+        await this.http.get<any>('assets/server/sport.json')
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                this.sport = data;
+            });
+
+        await this.http.get<any>('assets/server/people.json')
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                this.people = data;
+            });
+
+        await this.http.get<any>('assets/server/ag-owinners.json')
+            .toPromise()
+            .then(data => {
+                this.gridOptions.api.setRowData(data);
+                this.gridOptions.api.sizeColumnsToFit();
+              });
+    }
 
     gridReady(params) {
         params.api.sizeColumnsToFit();
@@ -159,10 +154,10 @@ console.log(this.sport);
     ngOnDestroy() {
         this.$win.off(this.resizeEvent);
     }
-
 }
 
 function getDatePicker() {
+
     function DatePicker() {}
 
     DatePicker.prototype.init = function(params) {
@@ -201,20 +196,25 @@ function getDatePicker() {
     return DatePicker;
 }
 
-function getCountrySelect() {
-    function CountrySelect() {}
+function getCountrySelect(screen: any) {
+    var paramsRecord: any;
+
+    function CountrySelect() {
+    }
 
     CountrySelect.prototype.init = function(params) {
-    console.log("CountrySelect.prototype.init");
-console.log(params.value);    
+        console.log("CountrySelect.prototype.init");
+        screen.selectedCountry = {
+            countryCode: params.node.data['country_id'],
+            countryName: params.node.data['country']
+        }
+        paramsRecord = params;
+        console.log(screen.selectedCountry);
         this.eInput = document.createElement("ng-select");
         this.eInput = document.getElementById('col_template_country');
 
         $('#col_template_country').width($('.ag-cell-focus').width());
         $('#col_template_country').height($('.ag-cell-focus').height());
-        
-        this.selectedCountry = params.value;
-console.log(this.selectedCountry);
     };
 
     CountrySelect.prototype.getGui = function() {
@@ -230,15 +230,19 @@ console.log(this.selectedCountry);
 
     CountrySelect.prototype.getValue = function() {
         console.log("CountrySelect.prototype.getValue");
-        console.log(this.eInput);
-        console.log(this.selectedCountry);
-        return this.selectedCountry;
+        if (screen.selectedCountry == null)
+            return '';
+        return screen.selectedCountry.countryName;
     };
 
     CountrySelect.prototype.destroy = function() {
         console.log("CountrySelect.prototype.destroy");
         var col_template = document.querySelector('#col_template');
         col_template.appendChild(this.eInput);
+        if (screen.selectedCountry == null)
+            paramsRecord.node.data['country_id'] = '';
+        else
+            paramsRecord.node.data['country_id'] = screen.selectedCountry.countryCode;
         return true;
     };
 

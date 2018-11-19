@@ -80,7 +80,19 @@
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
-                                <input class="form-control" type="password" placeholder="Password" />
+                                <ng-select
+                                    [items]="country"
+                                    bindLabel="countryName"
+                                    bindValue="countryCode"
+                                    dropdownPosition="bottom"
+                                    [(ngModel)]="selectedCountry"
+                                    placeholder="No country selected">
+                                    <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+                                        <div class="ng-option disabled">
+                                            No data found for search "{{searchTerm}}"
+                                        </div>
+                                    </ng-template>
+                                </ng-select>
                             </div>
                             <label class="col-sm-1 col-form-label">Thôi việc</label>
                             <div class="col-sm-2">
@@ -99,14 +111,19 @@
     </div>
     <div class="grid-fluid">
         <h4 class="page-header">ag-grid Example</h4>
-        <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 400px" [gridOptions]="gridOptions" (gridReady)="gridReady($event)" enableFilter  [components]="components"></ag-grid-angular>
+        <ag-grid-angular id="agGrid" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="gridOptions" 
+            [components]="components"
+            (gridReady)="gridReady($event)"
+            enableFilter>
+        </ag-grid-angular>
         <div id="col_template">
             <input id="col_template_date" type="text" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
             <ng-select id="col_template_country"
                 [items]="country"
-                [bindLabel]="countryName"
-                [bindValue]="countryName"
-                [dropdownPosition]="bottom"
+                bindLabel="countryName"
+                dropdownPosition="bottom"
+                [(ngModel)]="selectedCountry"
                 placeholder="No country selected">
                 <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
                     <div class="ng-option disabled">

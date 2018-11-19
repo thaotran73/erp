@@ -75,7 +75,7 @@
         "popper.js": "1.14.3",
         "preboot": "4.5.2",
         "reflect-metadata": "0.1.10",
-        "rxjs": "6.0.0",
+        "rxjs": "^6.0.0",
         "rxjs-compat": "6.1.0",
         "screenfull": "3.3.2",
         "simple-line-icons": "2.4.1",
