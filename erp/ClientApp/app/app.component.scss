@@ -105,6 +105,11 @@ fieldset {
     margin-left: 0px;
 }
 
+.ag-angle .ag-header {
+    border-top: 2px solid #e4eaec;
+    border-bottom: 2px solid #e4eaec;
+}
+
 .ag-angle .ag-row-hover{
     background-color: #1adbea;
 }
@@ -115,4 +120,9 @@ fieldset {
 
 .ag-row-focus {
     z-index: 0;
+}
+
+.btn-lg {
+    padding: 0.625rem 0.625rem;
+    width: 100%
 }
