@@ -4,3 +4,60 @@ npm audit fix --force
 npm install webpack-dev-middleware ng2-table ngx-chips ng2-img-cropper ng2-dnd karma-webpack css-to-string-loader @agm/core aspnet-webpack
 npm run install
 
+
+executeEvent
+INPUT:
+	- eventID : Mỗi eventIDắn liền với một màn hình (screen), widget, và một sự kiện (event) như onclick, onchange
+	- json : chứa các thông tin trên màn hình
+	- typeMessage: Hình thức xuất message sau khi thực hiện như dialog hay toast message
+	- typeAction: Thực hiện chạy nền hay chạy liền
+OUTPUT
+	- json: kết quả bao gồm
+		- messagetype: Hình thức xuất message sau khi thực hiện như dialog hay toast
+		- messageerror: Hình thức xuất message sau khi thực hiện như error, wanning, info
+		- message: Thông báo
+		- data: Theo từng phần của component tương ứng.
+CÁCH THỰC HIỆN
+	- Căn cứ vào COOKIE và SESSION lấy UserID tương ứng.
+	- Lấy thuộc tính xem có quyền thực hiện không
+	- Thực hiện ... tra kết quả như định dạng.
+
+Login screen
+	- Xóa cookie
+	- Get Submit <> empty
+		THEN
+		- Get USERNAME + PASSWORD
+		- Check đúng USERNAME + PASSWORD
+			THEN
+				- Tao cookie
+				- Get man hinh truoc do
+				- Goto den man hinh set
+			ELSE
+				- Tao message loi
+			END
+		END
+	- Hien thi man hinh login, kèm USERNAME và message loi
+
+Tạo cookie
+	- USERNAME
+	- SEESION
+	- Ngày giờ quá hạn.
+
+Vào một page
+	- Kiểm tra SEESION hợp lệ 
+		THEN
+			thì goto page
+		ELSE
+			- Get cookie
+			- Phân tích cookie thanh USERNAME, SESSION, Ngày quá hán
+			- Check ngày quá hạn, SEESION và USERNAME có hợp lệ: 
+				+ Ngày quá hạn lớn hơn hiện hành
+				+ So sánh USERNAME với trong DB
+				+ SEESION: giống hiện tại
+				THEN
+				---> Page login hợp lệ
+		END
+		GOTO LOGIN
+
+	
+	
