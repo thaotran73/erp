@@ -11,13 +11,13 @@ namespace ERP.Controllers
 {
     public class DataController : Controller
     {
-        DataAccessLayer  = new DataAccessLayer();
+        MDataAccessLayer oDataAccessLayer = new MDataAccessLayer();
 
         [HttpPost]
         [Route("api/executeEvent")]
-        public int executeEvent([FromBody])
+        public int executeEvent(String eventData)
         {
-            return true;
+            return 1;
         }
     }
 }
