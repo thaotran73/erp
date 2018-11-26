@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using ERP.Models;
+using Newtonsoft;
 
 namespace ERP.Controllers
 {
@@ -15,7 +16,7 @@ namespace ERP.Controllers
 
         [HttpPost]
         [Route("api/executeEvent")]
-        public int executeEvent(String eventData)
+        public int executeEvent([FromBody] Object eventData)
         {
             return 1;
         }

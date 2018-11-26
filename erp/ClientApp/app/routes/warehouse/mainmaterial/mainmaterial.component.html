@@ -7,11 +7,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="tungay">
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="denngay">
                             </div>
                             <label class="col-sm-1 col-form-label">Mã CN</label>
                             <div class="col-sm-2">
@@ -110,7 +110,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Lọc</button>
+                        <button class="mr-1 btn btn-primary btn-lg" type="button" (click)="loc_click()">Lọc</button>
                     </div>
                     <div class="col">
                         <button class="mr-1 btn btn-primary btn-lg" type="button">Ghi</button>

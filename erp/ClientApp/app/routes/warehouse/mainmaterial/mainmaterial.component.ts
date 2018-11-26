@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-mainmaterial',
@@ -9,7 +9,24 @@ import { HttpClient } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None
 }) 
 
+interface type_test_main {
+    public tungay: Date;
+    public denngay: Date;
+}
+
 export class MainmaterialComponent implements OnInit, OnDestroy {
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Authorization': 'my-auth-token'
+        }),
+        data: ''
+    }
+
+    public value_test_main: type_test_main
+
+    public selectPeople: any = [];
 
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
@@ -41,8 +58,9 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         countrySelect: getCountrySelect(this)
     };
 
-    constructor(private http: HttpClient) {
+    myAppUrl: string = '';
 
+    constructor(private http: HttpClient) {
         this.columnHeader = 
         [{
             headerName: 'Athlete',
@@ -110,9 +128,11 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             enableSorting: true,
             enableColResize: true,
         };
+        console.log('End constructor');
     }
 
     async ngOnInit() {
+        console.log('Goto ngOnInit');
         await this.http.get('assets/server/country.json')
             .toPromise()
             .then(data => {
@@ -153,6 +173,19 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.$win.off(this.resizeEvent);
+    }
+
+    async loc_click() {
+        console.log(this.tungay);
+        console.log(this.denngay);
+        var eventID = 10;
+        var params = {tungay: this.tungay, denngay: this.denngay, selectPeople: this.selectPeople};
+        console.log(params);
+        await this.http.post('api/executeEvent', params, this.httpOptions)
+            .toPromise()
+            .then(data => {
+                console.log(data);
+            });
     }
 }
 
