@@ -9,29 +9,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None
 }) 
 
-interface type_test_main {
-    public tungay: Date;
-    public denngay: Date;
-}
-
 export class MainmaterialComponent implements OnInit, OnDestroy {
+
+    resizeEvent = 'resize.ag-grid';
+    $win = $(window);
 
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type':  'application/json',
             'Authorization': 'my-auth-token'
-        }),
-        data: ''
+        })
     }
-
-    public value_test_main: type_test_main
-
-    public selectPeople: any = [];
-
-    resizeEvent = 'resize.ag-grid';
-    $win = $(window);
-
-    gridOptions: GridOptions;
 
     // Datepicker
     bsConfig = {
@@ -40,6 +28,24 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     }
 
     maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
+
+    public value_test_main: any = {
+        tungay: null,
+        denngay: null,
+    }
+
+    public selectPeople: any = [];
+
+    gridOptions: GridOptions = 
+        {
+            headerHeight: 40,
+            columnDefs: null,
+            rowData: null,
+            enableFilter: true,
+            singleClickEdit: true,
+            enableSorting: true,
+            enableColResize: true,
+        };
 
     public people: any = [];
     public country: any = [];
@@ -61,73 +67,6 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     myAppUrl: string = '';
 
     constructor(private http: HttpClient) {
-        this.columnHeader = 
-        [{
-            headerName: 'Athlete',
-            field: 'athlete',
-            width: 150,
-            pinned: 'left'
-        }, {
-            headerName: 'Age',
-            field: 'age',
-            width: 90,
-            pinned: 'left'
-        }, {
-            headerName: 'Country ID',
-            field: 'country_id',
-            width: 80
-        }, {
-            headerName: 'Country',
-            field: 'country',
-            width: 120,
-            cellEditor: 'countrySelect',
-        }, {
-            headerName: 'Year',
-            field: 'year',
-            width: 90
-        }, {
-            headerName: 'Date',
-            field: 'date',
-            width: 110, 
-            cellEditor: 'datePicker',
-        }, {
-            headerName: 'Sport',
-            field: 'sport',
-            width: 110,
-            cellEditor: 'agSelectCellEditor',
-            cellEditorParams: {values: ["Swimming", "Gymnastics", "Speed Skating", "Cross Country Skiing", "Short-Track Speed Skating", "Diving", "Cycling", "Biathlon", "Alpine Skiing", "Ski Jumping", "Nordic Combined", "Athletics", "Table Tennis", "Tennis", "Synchronized Swimming", "Shooting", "Rowing", "Fencing", "Equestrian", "Canoeing", "Bobsleigh", "Badminton", "Archery", "Wrestling", "Weightlifting", "Waterpolo", "Volleyball", "Triathlon", "Trampoline", "Taekwondo"]},
-        }, {
-            headerName: 'Gold',
-            field: 'gold',
-            width: 100
-        }, {
-            headerName: 'Silver',
-            field: 'silver',
-            width: 100
-        }, {
-            headerName: 'Bronze',
-            field: 'bronze',
-            width: 100
-        }, {
-            headerName: 'Total',
-            field: 'total',
-            width: 100,
-            pinned: 'right'
-        }];
-
-        console.log(this.columnHeader);
-
-        // Filter example
-        this.gridOptions = <GridOptions>{
-            headerHeight: 40,
-            columnDefs: this.columnHeader,
-            rowData: null,
-            enableFilter: true,
-            defaultColDef: { editable: true },
-            singleClickEdit: true,
-            enableSorting: true,
-            enableColResize: true,
-        };
         console.log('End constructor');
     }
 
@@ -144,7 +83,70 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             .toPromise()
             .then(data => {
                 console.log(data);
-                this.sport = data;
+                this.columnHeader = 
+                [{
+                    headerName: 'Athlete',
+                    field: 'athlete',
+                    width: 150,
+                    pinned: 'left',
+                    editable: true,
+                }, {
+                    headerName: 'Age',
+                    field: 'age',
+                    width: 90,
+                    pinned: 'left',
+                    editable: true,
+                }, {
+                    headerName: 'Country ID',
+                    field: 'country_id',
+                    width: 80,
+                    editable: true,
+                }, {
+                    headerName: 'Country',
+                    field: 'country',
+                    width: 120,
+                    cellEditor: 'countrySelect',
+                    editable: true,
+                }, {
+                    headerName: 'Year',
+                    field: 'year',
+                    width: 90,
+                    editable: true,
+                }, {
+                    headerName: 'Date',
+                    field: 'date',
+                    width: 110, 
+                    cellEditor: 'datePicker',
+                    editable: true,
+                }, {
+                    headerName: 'Sport',
+                    field: 'sport',
+                    width: 110,
+                    cellEditor: 'agSelectCellEditor',
+                    cellEditorParams: data,
+                    editable: true,
+                }, {
+                    headerName: 'Gold',
+                    field: 'gold',
+                    width: 100,
+                    editable: true,
+                }, {
+                    headerName: 'Silver',
+                    field: 'silver',
+                    width: 100,
+                    editable: true,
+                }, {
+                    headerName: 'Bronze',
+                    field: 'bronze',
+                    width: 100,
+                    editable: true,
+                }, {
+                    headerName: 'Total',
+                    field: 'total',
+                    width: 100,
+                    pinned: 'right',
+                    editable: true,
+                }];                
             });
 
         await this.http.get<any>('assets/server/people.json')
@@ -154,9 +156,11 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                 this.people = data;
             });
 
+        console.log(this.columnHeader);
         await this.http.get<any>('assets/server/ag-owinners.json')
             .toPromise()
             .then(data => {
+                this.gridOptions.api.setColumnDefs(this.columnHeader);            
                 this.gridOptions.api.setRowData(data);
                 this.gridOptions.api.sizeColumnsToFit();
               });
@@ -176,15 +180,17 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     }
 
     async loc_click() {
-        console.log(this.tungay);
-        console.log(this.denngay);
         var eventID = 10;
-        var params = {tungay: this.tungay, denngay: this.denngay, selectPeople: this.selectPeople};
+        var params = {tungay: this.value_test_main.tungay, denngay: this.value_test_main.denngay, selectPeople: this.selectPeople};
         console.log(params);
         await this.http.post('api/executeEvent', params, this.httpOptions)
             .toPromise()
             .then(data => {
                 console.log(data);
+/*                
+                this.gridOptions.api.setRowData(data);
+                this.gridOptions.api.sizeColumnsToFit();
+*/                
             });
     }
 }
