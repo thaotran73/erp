@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,32 +8,61 @@ using System.Threading.Tasks;
 
 namespace ERP.Models
 {
-    public class MDataAccessLayer
+    public static class MDataAccessLayer
     {
-        //string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=erp;Max Pool Size=200;Min Pool Size=20;Data Source=(localhost);";
-        string connectionString = "Data Source = localhost;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string static connectionString = "Data Source = localhost;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        //To execute event from screen on database server
-        public int executeEvent(String eventID, String jsonInput, int typeMessage, int typeAction)
+        public static int errNumber = -1;
+        public static string errDescription = "";
+        static SqlConnection connDB;
+
+        public MDataAccessLayer()
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    SqlCommand cmd = new SqlCommand("spGetAllEmployees", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    con.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
-
-                    con.Close();
-                }
-                return 1;
+                connDB = new SqlConnection(connectionString);
+                connDB.Open();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                errNumber = 1;
+                errDescription = "Connect DB! " + ex.Message;
             }
+        }
+        public Dictionary<string, object> static parseDictionary(JObject jsonValue)
+        {
+            Dictionary<string, object> ret = new Dictionary<string, object>();
+
+            foreach (JProperty property in jsonValue.Properties())
+            {
+                Type propertyType = property.Value.GetType();
+                if (propertyType.Name == "JObject")
+                {
+                    ret.Add(property.Name, parseDictionary((JObject)property.Value));
+                }
+                else
+                {
+                    ret.Add(property.Name, property.Value);
+                }
+            }
+            return ret;
+        }
+
+        //To execute event from screen on database server
+        public int exeEvent(String eventID, String jsonInput, int typeMessage, int typeAction)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("spGetAllEmployees", connDB);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader rdr = cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                errNumber = 1;
+                errDescription = "Execute StoredProcedure! " + ex.Message;
+            }
+            return 0;
         }
     }
 }
