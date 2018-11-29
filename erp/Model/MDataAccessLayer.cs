@@ -8,28 +8,42 @@ using System.Threading.Tasks;
 
 namespace ERP.Models
 {
-    public static class MDataAccessLayer
+    public class MDataAccessLayer
     {
-        string static connectionString = "Data Source = localhost;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = "Data Source = localhost;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public static int errNumber = -1;
-        public static string errDescription = "";
-        static SqlConnection connDB;
+        public int status = 0;
+
+        public int errNumber = -1;
+        public string errDescription = "";
+
+        public SqlConnection sqlConnection;
+        public SqlTransaction sqlTransaction;
+
+        int buffSizeRecordMax = 50;
+        int buffSizeRecord = 0;
+        string sqlQueryBuff = "";
+        string sqlQueryHeadBuff = "";
+        string sqlQueryFootBuff = "";
+
+        public DataSet oDataSet;
+        public DataTable oDataTable;
 
         public MDataAccessLayer()
         {
             try
             {
-                connDB = new SqlConnection(connectionString);
-                connDB.Open();
+                sqlConnection = new SqlConnection(connectionString);
+                sqlConnection.Open();
             }
             catch (Exception ex)
             {
                 errNumber = 1;
-                errDescription = "Connect DB! " + ex.Message;
+                errDescription = "MDataAccessLayer! " + ex.Message;
+                status = 1;
             }
         }
-        public Dictionary<string, object> static parseDictionary(JObject jsonValue)
+        public Dictionary<string, object> parseDictionary(JObject jsonValue)
         {
             Dictionary<string, object> ret = new Dictionary<string, object>();
 
@@ -53,16 +67,209 @@ namespace ERP.Models
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("spGetAllEmployees", connDB);
+                SqlCommand cmd = new SqlCommand("spGetAllEmployees", sqlConnection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader rdr = cmd.ExecuteReader();
             }
             catch (Exception ex)
             {
                 errNumber = 1;
-                errDescription = "Execute StoredProcedure! " + ex.Message;
+                errDescription = "exeEvent! " + ex.Message;
+                status = 1;
             }
-            return 0;
+            return status;
+        }
+
+        public int connectExecuteNonQuery(string sqlQuery, int iCommandTimeout = 1200)
+        {
+            int rowsAffected;
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            try
+            {
+                rowsAffected = sqlCommand.ExecuteNonQuery();
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                errNumber = 1;
+                errDescription = "connectExecuteNonQuery!" + ex.Message;
+                status = 1;
+            }
+
+            return status;
+        }
+
+        public int connectExecuteReader(string sqlQuery, int iCommandTimeout = 1200)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            SqlDataAdapter oDataAdapter = new SqlDataAdapter(sqlCommand);
+            oDataSet = new DataSet();
+            oDataSet.Tables.Clear();
+            try
+            {
+                oDataAdapter.Fill(oDataSet);
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                status = 1;
+                errNumber = 1;
+                errDescription = "connectExecuteReader! " + ex.Message;
+            }
+            return status;
+        }
+
+        public int connectExecuteDataTable(string sqlQuery, int iCommandTimeout = 1200)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            SqlDataAdapter oDataAdapter = new SqlDataAdapter(sqlCommand);
+            oDataTable = new DataTable();
+            oDataTable.Clear();
+            try
+            {
+                oDataAdapter.Fill(oDataTable);
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                status = 1;
+                errNumber = 1;
+                errDescription = "connectExecuteDataTable! " + ex.Message;
+            }
+            return status;
+        }
+
+        public int connectExecuteCount(string sqlQuery, int iCommandTimeout = 1200)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            SqlDataAdapter oDataAdapter = new SqlDataAdapter(sqlCommand);
+            oDataTable = new DataTable();
+            oDataTable.Clear();
+            try
+            {
+                oDataAdapter.Fill(oDataTable);
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                status = 1;
+                errNumber = 1;
+                errDescription = "connectExecuteCount! " + ex.Message;
+            }
+            return status;
+        }
+
+        public string connectExecuteFieldName(string sqlQuery, int iCommandTimeout = 1200)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            SqlDataAdapter oDataAdapter = new SqlDataAdapter(sqlCommand);
+            oDataTable = new DataTable();
+            oDataTable.Clear();
+            try
+            {
+                oDataAdapter.Fill(oDataTable);
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                status = 1;
+                errNumber = 1;
+                errDescription = "connectExecuteFieldName! " + ex.Message;
+                return "";
+            }
+            if (oDataTable.Rows.Count > 0)
+                return oDataTable.Rows[0][0].ToString();
+            else
+                return "";
+        }
+
+        public int setStartSqlQueryBuff(string sqlQuery)
+        {
+            status = 0;
+            sqlQueryHeadBuff = sqlQuery.Trim();
+            sqlQueryBuff = "";
+            buffSizeRecord = 0;
+            return status;
+        }
+
+        public int setSqlQueryBuff(string sqlQuery, string sOperator)
+        {
+            status = 0;
+            if (sqlQueryBuff == "")
+                sqlQueryBuff = sqlQuery.Trim();
+            else
+                sqlQueryBuff = sqlQueryBuff + sOperator + sqlQuery.Trim();
+            buffSizeRecord = buffSizeRecord + 1;
+            if (buffSizeRecord > buffSizeRecordMax)
+                status = stopSqlQueryBuff("");
+            return status;
+        }
+
+        public int setStopSqlQueryBuff(string sqlQuery)
+        {
+            status = 0;
+            sqlQueryFootBuff = sqlQuery.Trim();
+            return status;
+        }
+
+        public int stopSqlQueryBuff(string sqlQuery)
+        {
+            status = 0;
+            if (buffSizeRecord > 0)
+                status = connectExecuteNonQuery(sqlQueryHeadBuff + " " + sqlQueryBuff + " " + sqlQuery.Trim());
+            sqlQueryBuff = "";
+            buffSizeRecord = 0;
+            return status;
         }
     }
 }

@@ -20,6 +20,11 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="lib\log4net\log4net.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <Target Name="MyPreCompileTarget" BeforeTargets="PrepareForPublish">
     <Exec Command="npm install" />

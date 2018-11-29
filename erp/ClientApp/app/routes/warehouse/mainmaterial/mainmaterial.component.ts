@@ -181,7 +181,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     async loc_click() {
         var eventID = 10;
-        var params = {eventID: eventID, dataPost: {value_test_main_tungay: this.value_test_main.tungay, value_test_main_denngay: this.value_test_main.denngay, selectPeople: this.selectPeople}};
+        var params = {eventID: eventID, dataPost: {value_test_main__tungay: this.value_test_main.tungay, value_test_main__denngay: this.value_test_main.denngay, selectPeople: this.selectPeople}};
         console.log(params);
         await this.http.post('api/exeEvent', params, this.httpOptions)
             .toPromise()

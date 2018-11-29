@@ -9,12 +9,14 @@ using ERP.Models;
 using Newtonsoft;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
+using erp.Model;
 
 namespace ERP.Controllers
 {
     public class DataController : Controller
     {
-        MDataAccessLayer oDataAccessLayer = new MDataAccessLayer();
+        static MDataAccessLayer oDataAccessLayer = new MDataAccessLayer();
+        MEventLayer oEventLayer;
 
         [HttpPost]
         [Route("api/exeEvent")]
@@ -28,6 +30,16 @@ namespace ERP.Controllers
             {
                 eventDataDictionary = oDataAccessLayer.parseDictionary((JObject) eventData);
                 String eventID = eventDataDictionary["eventID"].ToString();
+                oEventLayer = new MEventLayer(eventID);
+                if (oEventLayer.status == 0)
+                {
+
+                }
+                else
+                {
+                    oDataAccessLayer.errNumber = 1;
+                    oDataAccessLayer.errDescription = "Không tìm thấy eventID tương ứng!";
+                }
             }
             else
             {
