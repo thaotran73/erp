@@ -11,6 +11,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class MainmaterialComponent implements OnInit, OnDestroy {
 
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+    });
+
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
 
@@ -59,10 +65,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public sport: any = [];
     public selectedCountry: any = {};
 
-
-    myAppUrl: string = '';
-
-    constructor(private http: HttpClient) {
+    public constructor(private http: HttpClient) {
         console.log('End constructor');
     }
 
@@ -126,22 +129,31 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     field: 'gold',
                     width: 100,
                     editable: true,
+                    cellClass: 'ag-number-cell',
                 }, {
                     headerName: 'Silver',
                     field: 'silver',
                     width: 100,
                     editable: true,
+                    cellClass: 'ag-number-cell',
                 }, {
                     headerName: 'Bronze',
                     field: 'bronze',
                     width: 100,
                     editable: true,
+                    cellClass: 'ag-number-cell',
                 }, {
                     headerName: 'Total',
                     field: 'total',
                     width: 100,
                     pinned: 'right',
-                    editable: true,
+                    cellClass: 'ag-number-cell',
+                    valueGetter: function(params) {
+                        return Number(params.data.gold) + Number(params.data.silver) + Number(params.data.bronze);
+                    },
+                    valueFormatter: function(params) {
+                        return formatter.format(params.value);
+                    },
                 }];                
             });
 
