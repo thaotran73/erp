@@ -58,9 +58,11 @@ export class SettingsService {
     getAppSetting(name) {
         return name ? this.app[name] : this.app;
     }
+
     getUserSetting(name) {
         return name ? this.user[name] : this.user;
     }
+
     getLayoutSetting(name) {
         return name ? this.layout[name] : this.layout;
     }
@@ -70,16 +72,19 @@ export class SettingsService {
             this.app[name] = value;
         }
     }
+
     setUserSetting(name, value) {
         if (typeof this.user[name] !== 'undefined') {
             this.user[name] = value;
         }
     }
+
     setLayoutSetting(name, value) {
         if (typeof this.layout[name] !== 'undefined') {
             return this.layout[name] = value;
         }
     }
+
     setLayoutSettingCollapsedHide(value) {
         this.setLayoutSetting('isCollapsedHide', value);
         if (this.layout['isCollapsedHide']) {
@@ -95,6 +100,7 @@ export class SettingsService {
             
         return value;    
     }
+
     setLayoutSettingCollapsed(value) {
         this.setLayoutSetting('isCollapsed', value);
         if (this.layout['isCollapsed']) {
@@ -110,6 +116,7 @@ export class SettingsService {
             
         return value;    
     }
+
     setLayoutSettingCollapsedText(value) {
         this.setLayoutSetting('isCollapsedText', value);
         if (this.layout['isCollapsedText']) {
@@ -125,9 +132,11 @@ export class SettingsService {
             
         return value;    
     }
+
     toggleLayoutSetting(name) {
         return this.setLayoutSetting(name, !this.getLayoutSetting(name));
     }
+
     toggleLayoutSideabar() {
         if (this.getLayoutSetting('isCollapsed') || this.getLayoutSetting('isCollapsedText') || this.getLayoutSetting('isCollapsedHide')) {
             this.isCollapsedPrev = false;
@@ -165,5 +174,11 @@ export class SettingsService {
             return true;
         }
     }
-
+/*
+    function createMd5(message) {
+        var crypto = require("crypto");
+        var md5 = crypto.createHash("md5");        
+        return md5.update(new Buffer(message, 'ucs-2')).digest('hex');
+    }
+*/
 }

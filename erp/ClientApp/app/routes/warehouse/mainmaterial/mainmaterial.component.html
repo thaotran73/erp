@@ -7,11 +7,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="value_test_main.tungay">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="main.tungay">
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="value_test_main.denngay">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="main.denngay">
                             </div>
                             <label class="col-sm-1 col-form-label">Mã CN</label>
                             <div class="col-sm-2">
@@ -110,16 +110,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button" (click)="loc_click()">Lọc</button>
+                        <button id="cmd_loc" class="mr-1 btn btn-primary btn-lg" type="button" (click)="loc_click()">Lọc</button>
                     </div>
                     <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Ghi</button>
+                        <button id="cmd_ghi" class="mr-1 btn btn-primary btn-lg" type="button">Ghi</button>
                     </div>
                     <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Export Excel</button>
-                    </div>
-                    <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                        <button id="cmd_export" class="mr-1 btn btn-primary btn-lg" type="button">Export Excel</button>
                     </div>
                     <div class="col">
                         <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
@@ -131,7 +128,10 @@
                         <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
                     </div>
                     <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Thoát</button>
+                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                    </div>
+                    <div class="col">
+                        <button id="cmd_thoat" class="mr-1 btn btn-primary btn-lg" type="button">Thoát</button>
                     </div>
                 </div>
             </div>           
@@ -141,9 +141,9 @@
 <!--        
         <h4 class="page-header">ag-grid Example</h4>
 -->        
-        <ag-grid-angular id="agGrid" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="gridOptions" 
-            [components]="components"
+        <ag-grid-angular id="grid01" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="grid01.gridOptions" 
+            [components]="grid01.components"
             (gridReady)="gridReady($event)"
             enableFilter>
         </ag-grid-angular>

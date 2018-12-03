@@ -29,40 +29,36 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
 
-    public value_test_main: any = {
+    public main: any = {
         tungay: null,
         denngay: null,
     }
 
+    public grid01: any = {
+        columnHeader: <any>null,
+        datagrid: <any>null,
+        gridOptions: <GridOptions> 
+            {
+                headerHeight: 40,
+                columnDefs: null,
+                rowData: null,
+                enableFilter: true,
+                singleClickEdit: true,
+                enableSorting: true,
+                enableColResize: true,
+            },
+        components: {
+            datePicker: getDatePicker(),
+            countrySelect: getCountrySelect(this)
+        },
+    }
+
     public selectPeople: any = [];
-
-    gridOptions: GridOptions = 
-        {
-            headerHeight: 40,
-            columnDefs: null,
-            rowData: null,
-            enableFilter: true,
-            singleClickEdit: true,
-            enableSorting: true,
-            enableColResize: true,
-        };
-
     public people: any = [];
     public country: any = [];
     public sport: any = [];
-    public columnHeader: any = [];
-
-
-    public value: any = {};
-    public _disabledV: string = '0';
-    public disabled: boolean = false;
-
     public selectedCountry: any = {};
 
-    components = {
-        datePicker: getDatePicker(),
-        countrySelect: getCountrySelect(this)
-    };
 
     myAppUrl: string = '';
 
@@ -83,7 +79,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             .toPromise()
             .then(data => {
                 console.log(data);
-                this.columnHeader = 
+                this.grid01.columnHeader = 
                 [{
                     headerName: 'Athlete',
                     field: 'athlete',
@@ -114,7 +110,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     editable: true,
                 }, {
                     headerName: 'Date',
-                    field: 'date',
+                    field: 'join_date',
                     width: 110, 
                     cellEditor: 'datePicker',
                     editable: true,
@@ -156,13 +152,13 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                 this.people = data;
             });
 
-        console.log(this.columnHeader);
+        console.log(this.grid01.columnHeader);
         await this.http.get<any>('assets/server/ag-owinners.json')
             .toPromise()
             .then(data => {
-                this.gridOptions.api.setColumnDefs(this.columnHeader);            
-                this.gridOptions.api.setRowData(data);
-                this.gridOptions.api.sizeColumnsToFit();
+                this.grid01.gridOptions.api.setColumnDefs(this.grid01.columnHeader);            
+                this.grid01.gridOptions.api.setRowData(data);
+                this.grid01.gridOptions.api.sizeColumnsToFit();
               });
     }
 
@@ -180,17 +176,16 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     }
 
     async loc_click() {
-        var eventID = 10;
-        var params = {eventID: eventID, dataPost: {value_test_main__tungay: this.value_test_main.tungay, value_test_main__denngay: this.value_test_main.denngay, selectPeople: this.selectPeople}};
+        var eventID = '4750a84feb05d55bfbf07ecbe8df5eec';
+        var params = {eventID: eventID, param: {main__tungay: this.main.tungay, main__denngay: this.main.denngay}, dataPost: {main: this.main}};
         console.log(params);
         await this.http.post('api/exeEvent', params, this.httpOptions)
             .toPromise()
             .then(data => {
                 console.log(data);
-/*                
-                this.gridOptions.api.setRowData(data);
-                this.gridOptions.api.sizeColumnsToFit();
-*/                
+                this.grid01.data = data;
+                this.grid01.gridOptions.api.setRowData(this.grid01.data);
+                this.grid01.gridOptions.api.sizeColumnsToFit();
             });
     }
 }

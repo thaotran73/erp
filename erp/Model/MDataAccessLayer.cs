@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ERP.Models
 {
     public class MDataAccessLayer
     {
-        string connectionString = "Data Source = localhost;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string keyEncrypt = "Tran Huynh Thai Encrypt for THAITHAO";
+        string connectionString = "Data Source = 172.16.254.19;Initial Catalog=erpdb;User ID=sa;Password=abcd1234;Max Pool Size=200;Min Pool Size=20;Connect Timeout=30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public int status = 0;
 
@@ -29,6 +32,9 @@ namespace ERP.Models
         public DataSet oDataSet;
         public DataTable oDataTable;
 
+        public DataTable oListEvent;
+        public DataTable oListParam;
+
         public MDataAccessLayer()
         {
             try
@@ -43,6 +49,11 @@ namespace ERP.Models
                 status = 1;
             }
         }
+        ~MDataAccessLayer()
+        {
+            sqlConnection.Close();
+        }
+
         public Dictionary<string, object> parseDictionary(JObject jsonValue)
         {
             Dictionary<string, object> ret = new Dictionary<string, object>();
@@ -62,17 +73,122 @@ namespace ERP.Models
             return ret;
         }
 
+        public string Encrypt(string toEncrypt, bool useHashing)
+        {
+            byte[] keyArray;
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
+
+            // Get the key from config file
+            // Syed Moshiur Murshed
+            if (useHashing)
+            {
+                MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(keyEncrypt));
+                hashmd5.Clear();
+            }
+            else
+                keyArray = UTF8Encoding.UTF8.GetBytes(keyEncrypt);
+
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            tdes.Key = keyArray;
+            tdes.Mode = CipherMode.ECB;
+            tdes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = tdes.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            tdes.Clear();
+            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+        }
+
+        public string Decrypt(string cipherString, bool useHashing)
+        {
+            byte[] keyArray;
+            byte[] toEncryptArray = Convert.FromBase64String(cipherString);
+
+            //Get your key from config file to open the lock!
+
+            if (useHashing)
+            {
+                MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(keyEncrypt));
+                hashmd5.Clear();
+            }
+            else
+                keyArray = UTF8Encoding.UTF8.GetBytes(keyEncrypt);
+
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            tdes.Key = keyArray;
+            tdes.Mode = CipherMode.ECB;
+            tdes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = tdes.CreateDecryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+
+            tdes.Clear();
+            return UTF8Encoding.UTF8.GetString(resultArray);
+        }
+
+        public string hashMD5(string inputString)
+        {
+            UnicodeEncoding UE = new UnicodeEncoding();
+            byte[] hashValue;
+            byte[] message = UE.GetBytes(inputString);
+
+            MD5 hasher = new MD5CryptoServiceProvider();
+            string hex = "";
+
+            hashValue = hasher.ComputeHash(message);
+            foreach (byte x in hashValue)
+            {
+                hex += String.Format("{0:x2}", x);
+            }
+
+            return hex.ToLower();
+        }
+
         //To execute event from screen on database server
-        public int exeEvent(String eventID, String jsonInput, int typeMessage, int typeAction)
+        public int exeEvent(String executeCMD, Dictionary<string, object> listParam, int iCommandTimeout = 1200)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("spGetAllEmployees", sqlConnection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataReader rdr = cmd.ExecuteReader();
+                SqlCommand sqlCommand = new SqlCommand(executeCMD, sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                if (getListParam(executeCMD) == 0)
+                {
+                    int orderParam = 0;
+                    foreach (JValue param in listParam.Values)
+                    {
+                        switch (oListParam.Rows[orderParam]["parameter_type"].ToString().ToLower())
+                        {
+                            case "date":
+                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), ((DateTime) (param.Value == null ? DateTime.Parse("1900/01/01") : param.Value)).ToString("yyyy/MM/dd"));
+                                break;
+                            case "datetime":
+                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), ((DateTime)(param.Value == null ? DateTime.Parse("1900/01/01") : param.Value)).ToString("yyyy/MM/dd HH:mm:ss"));
+                                break;
+                            default:
+                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), param.Value.ToString());
+                                break;
+                        }                                              
+                        orderParam = orderParam + 1;
+                    }
+                }
+
+                sqlCommand.CommandTimeout = iCommandTimeout;
+                sqlTransaction = sqlConnection.BeginTransaction();
+                sqlCommand.Transaction = sqlTransaction;
+
+                SqlDataAdapter oDataAdapter = new SqlDataAdapter(sqlCommand);
+                oDataTable = new DataTable();
+                oDataTable.Clear();
+                oDataAdapter.Fill(oDataTable);
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
             }
             catch (Exception ex)
             {
+                if (sqlTransaction.Connection != null)
+                    sqlTransaction.Rollback();
                 errNumber = 1;
                 errDescription = "exeEvent! " + ex.Message;
                 status = 1;
@@ -269,6 +385,26 @@ namespace ERP.Models
                 status = connectExecuteNonQuery(sqlQueryHeadBuff + " " + sqlQueryBuff + " " + sqlQuery.Trim());
             sqlQueryBuff = "";
             buffSizeRecord = 0;
+            return status;
+        }
+        public int getListEvent(string eventID) {
+            status = 0;
+            string sSQLQuery = "SELECT * FROM SYS_Events WHERE eventID = '" + eventID + "' ORDER BY orderEvent ASC";
+            if (connectExecuteDataTable(sSQLQuery) == 0)
+                oListEvent = oDataTable;
+            else
+                status = 1;
+            return status;
+        }
+
+        public int getListParam(string FunctionName)
+        {
+            status = 0;
+            string sSQLQuery = "SELECT name, type_name(user_type_id) AS parameter_type, parameter_id FROM sys.parameters WHERE object_id = object_id('dbo." + FunctionName + "')";
+            if (connectExecuteDataTable(sSQLQuery) == 0)
+                oListParam = oDataTable;
+            else
+                status = 1;
             return status;
         }
     }
