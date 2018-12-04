@@ -48,11 +48,6 @@ export class SettingsService {
             offsidebarOpen: false,
             asideToggled: false,
             viewAnimation: 'ng-fadeInUp',
-            timezone: 'Asia/Ho_Chi_Minh',
-            bsConfig: {
-                containerClass: 'theme-angle',
-                dateInputFormat: 'DD/MM/YYYY'
-            }
         };
 
         this.isCollapsedPrev = this.layout['isCollapsed'];

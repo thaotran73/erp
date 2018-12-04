@@ -32,7 +32,6 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
 import { NowDirective } from './directives/now/now.directive';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
-import * as Moment from 'moment-timezone';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -59,7 +58,6 @@ import * as Moment from 'moment-timezone';
         PopoverModule.forRoot(),
         TypeaheadModule.forRoot(),
         ToasterModule,
-        Moment
     ],
     providers: [
         ColorsService

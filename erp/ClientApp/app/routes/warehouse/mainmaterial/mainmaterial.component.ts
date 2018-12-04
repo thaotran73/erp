@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
     selector: 'app-mainmaterial',
@@ -111,7 +110,8 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     valueFormatter: function(params) {
                         console.log(params);
                         console.log(this.settingsScreen);
-                        var dateFormat = Moment.tz(params.value, 'Asia/Ho_Chi_Minh');
+                        var moment = require('moment-timezone').instance();
+                        var dateFormat = moment.tz(params.value, this.settingsScreen.timezone);
                         return dateFormat.format("dd/mm/yyyy");
                     },
                 }, {
