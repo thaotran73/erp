@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
     selector: 'app-mainmaterial',
@@ -11,12 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class MainmaterialComponent implements OnInit, OnDestroy {
 
-    var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-    });
-
+    settingsScreen: any;
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
 
@@ -25,12 +21,6 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
             'Content-Type':  'application/json',
             'Authorization': 'my-auth-token'
         })
-    }
-
-    // Datepicker
-    bsConfig = {
-        containerClass: 'theme-angle',
-        dateInputFormat: 'DD/MM/YYYY'
     }
 
     maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
@@ -65,8 +55,9 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public sport: any = [];
     public selectedCountry: any = {};
 
-    public constructor(private http: HttpClient) {
+    public constructor(private http: HttpClient, public settings: SettingsService) {
         console.log('End constructor');
+        let settingsScreen = settings;
     }
 
     async ngOnInit() {
@@ -117,6 +108,12 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     width: 110, 
                     cellEditor: 'datePicker',
                     editable: true,
+                    valueFormatter: function(params) {
+                        console.log(params);
+                        console.log(this.settingsScreen);
+                        var dateFormat = Moment.tz(params.value, 'Asia/Ho_Chi_Minh');
+                        return dateFormat.format("dd/mm/yyyy");
+                    },
                 }, {
                     headerName: 'Sport',
                     field: 'sport',
@@ -151,9 +148,6 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     valueGetter: function(params) {
                         return Number(params.data.gold) + Number(params.data.silver) + Number(params.data.bronze);
                     },
-                    valueFormatter: function(params) {
-                        return formatter.format(params.value);
-                    },
                 }];                
             });
 
@@ -168,6 +162,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
         await this.http.get<any>('assets/server/ag-owinners.json')
             .toPromise()
             .then(data => {
+                console.log(data);
                 this.grid01.gridOptions.api.setColumnDefs(this.grid01.columnHeader);            
                 this.grid01.gridOptions.api.setRowData(data);
                 this.grid01.gridOptions.api.sizeColumnsToFit();
