@@ -5,7 +5,7 @@ export class GlobalsService {
 	public timezone: any
 	public bsConfig: any
 
-	public aaa: any;
+	public static aaa: any;
 
 	constructor() {
 		this.timezone = 'Asia/Ho_Chi_Minh';
@@ -13,5 +13,13 @@ export class GlobalsService {
         	containerClass: 'theme-angle',
         	dateInputFormat: 'DD/MM/YYYY'
 		};
+	}
+
+	getValue() {
+		return GlobalsService.aaa;
+	}
+
+	setValue(param) {
+		let GlobalsService.aaa = param;
 	}
 }

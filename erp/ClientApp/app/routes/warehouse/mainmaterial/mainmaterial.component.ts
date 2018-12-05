@@ -56,7 +56,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 
     public constructor(private http: HttpClient, public varGlobals: GlobalsService) {
         console.log(this.varGlobals);
-        this.varGlobals.aaa = 'AAAA';
+        GlobalsService.setValue('AAAA');
         console.log('End constructor');
     }
 
@@ -110,6 +110,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     editable: true,
                     valueFormatter: function(params) {
                         console.log(params);
+                        console.log(GlobalsService);
                         var vGlobal = new GlobalsService();
                         console.log(vGlobal);
                         var moment = require('moment-timezone');
