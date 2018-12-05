@@ -6,7 +6,6 @@ import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
-import { AppGlobals } from './app.globals';
 
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
@@ -30,7 +29,6 @@ export function createTranslateLoader(http: HttpClient) {
     imports: [
         HttpClientModule,
         BrowserAnimationsModule, // required for ng2-tag-input
-        AppGlobals,
         CoreModule,
         LayoutModule,
         SharedModule.forRoot(),
@@ -43,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [AppGlobals],    
+    providers: [],    
     bootstrap: [AppComponent]
 })
 export class AppModule { }

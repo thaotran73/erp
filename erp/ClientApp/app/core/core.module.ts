@@ -14,7 +14,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
         SettingsService,
         ThemesService,
         TranslatorService,
-        MenuService
+        MenuService,
     ],
     declarations: [
     ],

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as GlobalsService from '../../../core/globals.service';
 
 @Component({
     selector: 'app-mainmaterial',
@@ -11,7 +12,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class MainmaterialComponent implements OnInit, OnDestroy {
 
-    settingsScreen: any;
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
 
@@ -54,9 +54,9 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public sport: any = [];
     public selectedCountry: any = {};
 
-    public constructor(private http: HttpClient, public settings: SettingsService) {
+    public constructor(private http: HttpClient) {
+        console.log(this.varGlobals);
         console.log('End constructor');
-        let settingsScreen = settings;
     }
 
     async ngOnInit() {
@@ -109,9 +109,10 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     editable: true,
                     valueFormatter: function(params) {
                         console.log(params);
-                        console.log(this.settingsScreen);
+                        var vGlobal = new GlobalsService();
+                        console.log(vGlobal);
                         var moment = require('moment-timezone').instance();
-                        var dateFormat = moment.tz(params.value, this.settingsScreen.timezone);
+                        var dateFormat = moment.tz(params.value, 'Asia/Ho_Chi_Minh');
                         return dateFormat.format("dd/mm/yyyy");
                     },
                 }, {
