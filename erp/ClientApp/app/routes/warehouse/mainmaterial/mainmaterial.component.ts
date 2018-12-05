@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as GlobalsService from '../../../core/globals.service';
+import { GlobalsService } from '../../../core/globals.service';
 
 @Component({
     selector: 'app-mainmaterial',
@@ -54,7 +54,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public sport: any = [];
     public selectedCountry: any = {};
 
-    public constructor(private http: HttpClient) {
+    public constructor(private http: HttpClient, public varGlobals: GlobalsService) {
         console.log(this.varGlobals);
         console.log('End constructor');
     }

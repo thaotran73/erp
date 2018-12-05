@@ -1,9 +1,16 @@
-'use strict';
+import { Injectable } from '@angular/core';
 
-export timezone = 'Asia/Ho_Chi_Minh';
+@Injectable()
+export class GlobalsService {
+	public timezone: any
 
-export bsConfig = {
-            containerClass: 'theme-angle',
-            dateInputFormat: 'DD/MM/YYYY'
+	public bsConfig: any
+
+	constructor() {
+		this.timezone = 'Asia/Ho_Chi_Minh';
+		this.bsConfig = {
+        	containerClass: 'theme-angle',
+        	dateInputFormat: 'DD/MM/YYYY'
 		};
+	}
 }
