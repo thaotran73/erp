@@ -43,7 +43,7 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                 enableColResize: true,
             },
         components: {
-            datePicker: getDatePicker(),
+            datePicker: getDatePicker(this),
             countrySelect: getCountrySelect(this)
         },
     }
@@ -53,10 +53,10 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     public country: any = [];
     public sport: any = [];
     public selectedCountry: any = {};
+    public selectDate: any = {};
 
     public constructor(private http: HttpClient, public varGlobals: GlobalsService) {
-        console.log(this.varGlobals);
-        GlobalsService.setValue('AAAA');
+        console.log(varGlobals);
         console.log('End constructor');
     }
 
@@ -109,13 +109,10 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     cellEditor: 'datePicker',
                     editable: true,
                     valueFormatter: function(params) {
-                        console.log(params);
-                        console.log(GlobalsService);
                         var vGlobal = new GlobalsService();
-                        console.log(vGlobal);
                         var moment = require('moment-timezone');
-                        var dateFormat = moment.tz(params.value, 'Asia/Ho_Chi_Minh');
-                        return dateFormat.format("dd/mm/yyyy");
+                        var dateFormat = moment.tz(params.value, vGlobal.globalRef.timezone);
+                        return dateFormat.format(vGlobal.globalRef.bsConfig.dateInputFormat);
                     },
                 }, {
                     headerName: 'Sport',
@@ -200,34 +197,50 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
     }
 }
 
-function getDatePicker() {
+function getDatePicker(screen: any) {
+    var paramsRecord: any;
 
     function DatePicker() {}
 
     DatePicker.prototype.init = function(params) {
+        console.log('DatePicker.prototype.init');
+        console.log(params);
+        paramsRecord = params;
+
+        var vGlobal = new GlobalsService();
+        var moment = require('moment-timezone');
+        var dateFormat = moment.tz(params.value, vGlobal.globalRef.timezone);
+
         this.eInput = document.createElement("INPUT");
         this.eInput = document.getElementById('col_template_date');
 
         $('#col_template_date').width($('.ag-cell-focus').width() - 4);
         $('#col_template_date').height($('.ag-cell-focus').height() - 4);
+        console.log(screen.selectDate);
 
-        this.eInput.value = params.value;
+        screen.selectDate = dateFormat.format();
+        this.eInput.value = dateFormat.format();
+        console.log(screen.selectDate);
     };
 
     DatePicker.prototype.getGui = function() {
+        console.log('DatePicker.prototype.getGui');
         return this.eInput;
     };
 
     DatePicker.prototype.afterGuiAttached = function() {
+        console.log('DatePicker.prototype.afterGuiAttached');
         this.eInput.focus();
         this.eInput.select();
     };
 
     DatePicker.prototype.getValue = function() {
+        console.log('DatePicker.prototype.getValue');
         return this.eInput.value;
     };
 
     DatePicker.prototype.destroy = function() {
+        console.log('DatePicker.prototype.destroy');
         var col_template = document.querySelector('#col_template');
         col_template.appendChild(this.eInput);
         return true;
@@ -248,12 +261,14 @@ function getCountrySelect(screen: any) {
 
     CountrySelect.prototype.init = function(params) {
         console.log("CountrySelect.prototype.init");
+
+        paramsRecord = params;
+
         screen.selectedCountry = {
             countryCode: params.node.data['country_id'],
             countryName: params.node.data['country']
         }
-        paramsRecord = params;
-        console.log(screen.selectedCountry);
+
         this.eInput = document.createElement("ng-select");
         this.eInput = document.getElementById('col_template_country');
 

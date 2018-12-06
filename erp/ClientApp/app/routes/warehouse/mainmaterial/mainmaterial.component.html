@@ -7,11 +7,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.bsConfig" [(bsValue)]="main.tungay">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.globalRef.bsConfig" [(bsValue)]="main.tungay">
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" [(bsValue)]="main.denngay">
+                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.globalRef.bsConfig" [(bsValue)]="main.denngay">
                             </div>
                             <label class="col-sm-1 col-form-label">Mã CN</label>
                             <div class="col-sm-2">
@@ -148,7 +148,7 @@
             enableFilter>
         </ag-grid-angular>
         <div id="col_template">
-            <input id="col_template_date" type="text" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+            <input id="col_template_date" type="text" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.globalRef.bsConfig" [(bsValue)]="selectDate">
             <ng-select id="col_template_country"
                 [items]="country"
                 bindLabel="countryName"
