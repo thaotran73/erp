@@ -110,9 +110,8 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     editable: true,
                     valueFormatter: function(params) {
                         var vGlobal = new GlobalsService();
-                        var moment = require('moment-timezone');
-                        var dateFormat = moment.tz(params.value, vGlobal.globalRef.timezone);
-                        return dateFormat.format(vGlobal.globalRef.bsConfig.dateInputFormat);
+                        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat), vGlobal.globalRef.timezone);
+                        return dateFormat.format(vGlobal.globalRef.dateInputFormat);
                     },
                 }, {
                     headerName: 'Sport',
@@ -198,29 +197,24 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
 }
 
 function getDatePicker(screen: any) {
-    var paramsRecord: any;
+    var vGlobal = new GlobalsService();
 
     function DatePicker() {}
 
     DatePicker.prototype.init = function(params) {
         console.log('DatePicker.prototype.init');
-        console.log(params);
-        paramsRecord = params;
 
-        var vGlobal = new GlobalsService();
-        var moment = require('moment-timezone');
-        var dateFormat = moment.tz(params.value, vGlobal.globalRef.timezone);
+        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat), vGlobal.globalRef.timezone);
+        screen.selectDate = dateFormat.toDate();
 
         this.eInput = document.createElement("INPUT");
         this.eInput = document.getElementById('col_template_date');
 
         $('#col_template_date').width($('.ag-cell-focus').width() - 4);
         $('#col_template_date').height($('.ag-cell-focus').height() - 4);
-        console.log(screen.selectDate);
 
-        screen.selectDate = dateFormat.format();
-        this.eInput.value = dateFormat.format();
-        console.log(screen.selectDate);
+        this.eInput.value = screen.selectDate;
+//        console.log(screen.selectDate);
     };
 
     DatePicker.prototype.getGui = function() {
@@ -250,6 +244,7 @@ function getDatePicker(screen: any) {
         return true;
     };
 
+    console.log(DatePicker);
     return DatePicker;
 }
 
