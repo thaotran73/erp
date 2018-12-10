@@ -27,4 +27,4 @@ const routes: Routes = [
         RouterModule
     ]
 })
-export class WarehouseModule { }
+export class MainMaterialModule { }

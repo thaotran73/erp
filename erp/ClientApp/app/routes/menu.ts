@@ -6,7 +6,6 @@ const Home = {
 
 const SYSGenerateCode = {
     text: 'System Generate Code',
-    link: '/SYSGenerateCode',
     icon: 'icon-home',
     submenu: [
         {
@@ -19,8 +18,14 @@ const SYSGenerateCode = {
 
 const WHMainMaterial = {
     text: 'Main Material Warehouse',
-    link: '/Warehouse/MainMaterial',
     icon: 'icon-home',
+        submenu: [
+        {
+            text: 'Main Material Test',
+            link: '/MainMaterial/MainMaterial',
+            icon: 'icon-home',
+        },
+    ],
 };
 
 const WHAuxiliaryMaterial = {
