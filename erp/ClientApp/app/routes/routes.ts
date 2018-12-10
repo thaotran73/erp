@@ -16,8 +16,8 @@ export const routes : Routes = [
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
-            { path: 'mainmaterial', loadChildren: './warehouse/mainmaterial.module#MainmaterialModule' },
-            { path: 'generatecode', loadChildren: './generatecode/generatecode.module#GeneratecodeModule' }
+            { path: 'Warehouse', loadChildren: './Warehouse/Warehouse.module#WarehouseModule' },
+            { path: 'SYSGenerateCode', loadChildren: './SYSGenerateCode/SYSGenerateCode.module#SYSGenerateCodeModule' }
         ]
     },
 

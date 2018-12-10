@@ -3,16 +3,32 @@ const Home = {
     link: '/home',
     icon: 'icon-home'
 };
+
+const SYSGenerateCode = {
+    text: 'System Generate Code',
+    link: '/SYSGenerateCode',
+    icon: 'icon-home',
+    submenu: [
+        {
+            text: 'Control Manager',
+            link: '/SYSGenerateCode/ControlManager',
+            icon: 'icon-home',
+        },
+    ],
+};
+
 const WHMainMaterial = {
     text: 'Main Material Warehouse',
-    link: '/mainmaterial',
+    link: '/Warehouse/MainMaterial',
     icon: 'icon-home',
 };
+
 const WHAuxiliaryMaterial = {
     text: 'Auxiliary Material Warehouse',
     link: '/auxiliarymaterial',
     icon: 'icon-home',
 }
+
 const WHFinishedProduct = {
     text: 'Finished Product Warehouse',
     link: '/wh_finished_product',
@@ -93,13 +109,16 @@ const WHFinishedProduct = {
         }
     ]
 };
+
 const WHMechanialMaterial = {
     text: 'Mechanial Material Warehouse',
     link: '/WHMechanialMaterial',
     icon: 'icon-home',
 };
+
 export const menu = [
     Home,
+    SYSGenerateCode,
     WHMainMaterial,
     WHAuxiliaryMaterial,
     WHFinishedProduct,

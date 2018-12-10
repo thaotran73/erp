@@ -4,13 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalsService } from '../../../core/globals.service';
 
 @Component({
-    selector: 'app-mainmaterial',
-    templateUrl: './mainmaterial.component.html',
-    styleUrls: ['./mainmaterial.component.scss'],
+    selector: 'app-MainMaterial',
+    templateUrl: './MainMaterial.component.html',
+    styleUrls: ['./MainMaterial.component.scss'],
     encapsulation: ViewEncapsulation.None
 }) 
 
-export class MainmaterialComponent implements OnInit, OnDestroy {
+export class MainMaterialComponent implements OnInit, OnDestroy {
 
     resizeEvent = 'resize.ag-grid';
     $win = $(window);
@@ -109,6 +109,8 @@ export class MainmaterialComponent implements OnInit, OnDestroy {
                     cellEditor: 'datePicker',
                     editable: true,
                     valueFormatter: function(params) {
+                        if (params.value == null)
+                            return null;
                         var vGlobal = new GlobalsService();
                         var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat), vGlobal.globalRef.timezone);
                         return dateFormat.format(vGlobal.globalRef.dateInputFormat);
@@ -203,9 +205,15 @@ function getDatePicker(screen: any) {
 
     DatePicker.prototype.init = function(params) {
         console.log('DatePicker.prototype.init');
-
-        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat), vGlobal.globalRef.timezone);
-        screen.selectDate = dateFormat.toDate();
+        console.log(params);
+        if (params.value == null)
+            screen.selectDate = null;
+        else {
+            var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat).toString(), vGlobal.globalRef.timezone);
+//            console.log(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat).toString());
+//            console.log(dateFormat);
+            screen.selectDate = dateFormat.toDate();
+        }
 
         this.eInput = document.createElement("INPUT");
         this.eInput = document.getElementById('col_template_date');
@@ -214,7 +222,6 @@ function getDatePicker(screen: any) {
         $('#col_template_date').height($('.ag-cell-focus').height() - 4);
 
         this.eInput.value = screen.selectDate;
-//        console.log(screen.selectDate);
     };
 
     DatePicker.prototype.getGui = function() {
@@ -230,7 +237,13 @@ function getDatePicker(screen: any) {
 
     DatePicker.prototype.getValue = function() {
         console.log('DatePicker.prototype.getValue');
-        return this.eInput.value;
+        console.log(screen.selectDate);
+        console.log(this.eInput.value);
+        if (screen.selectDate == null)
+            return null;
+        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(screen.selectDate, vGlobal.globalRef.dateInputFormat).toString(), vGlobal.globalRef.timezone);
+        console.log(dateFormat.format(vGlobal.globalRef.dateInputFormat));
+        return dateFormat.format(vGlobal.globalRef.dateInputFormat);
     };
 
     DatePicker.prototype.destroy = function() {
@@ -244,7 +257,6 @@ function getDatePicker(screen: any) {
         return true;
     };
 
-    console.log(DatePicker);
     return DatePicker;
 }
 

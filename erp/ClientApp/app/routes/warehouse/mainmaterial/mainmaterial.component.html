@@ -7,7 +7,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày vào làm việc từ</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" [textMask]="{mask: maskDate}" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.globalRef.bsConfig" [(bsValue)]="main.tungay">
+                                <input type="text" class="form-control" ui-date-mask="DD/MM/YYYY" placeholder="dd/mm/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="varGlobals.globalRef.bsConfig" [(bsValue)]="main.tungay">
                             </div>
                             <label class="col-sm-1 col-form-label">Đến ngày</label>
                             <div class="col-sm-2">
