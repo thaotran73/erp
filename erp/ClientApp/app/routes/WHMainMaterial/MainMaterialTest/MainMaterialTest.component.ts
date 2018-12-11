@@ -5,12 +5,12 @@ import { GlobalsService } from '../../../core/globals.service';
 
 @Component({
     selector: 'app-MainMaterial',
-    templateUrl: './MainMaterial.component.html',
-    styleUrls: ['./MainMaterial.component.scss'],
+    templateUrl: './MainMaterialTest.component.html',
+    styleUrls: ['./MainMaterialTest.component.scss'],
     encapsulation: ViewEncapsulation.None
 }) 
 
-export class MainMaterialComponent implements OnInit, OnDestroy {
+export class MainMaterialTestComponent implements OnInit, OnDestroy {
 
     resizeEvent = 'resize.ag-grid';
     $win = $(window);

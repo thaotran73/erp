@@ -7,22 +7,28 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 import { SharedModule } from '../../shared/shared.module';
 
-import { ControlManagerComponent } from './ControlManager/ControlManager.component';
+import { ScreenManagerComponent }  from './ScreenManager/ScreenManager.component';
+import { ZoneManagerComponent }    from './ZoneManager/ZoneManager.component';
+import { WidgetManagerComponent }  from './WidgetManager/WidgetManager.component';
+import { EventManagerComponent }   from './EventManager/EventManager.component';
 
 const routes: Routes = [
-    { path: 'ControlManager', component: ControlManagerComponent }
+    { path: 'ScreenManager',  component: ScreenManagerComponent },
+    { path: 'ZoneManager',    component: ZoneManagerComponent },
+    { path: 'WidgetManager',  component: WidgetManagerComponent },
+    { path: 'EventManager',   component: EventManagerComponent }
 ];
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
-        AgGridModule.withComponents([ControlManagerComponent]),
+        AgGridModule.withComponents([ScreenManagerComponent, ZoneManagerComponent, WidgetManagerComponent, EventManagerComponent]),
         NgSelectModule,
         TextMaskModule
     ],
 
-    declarations: [ControlManagerComponent],
+    declarations: [ScreenManagerComponent, ZoneManagerComponent, WidgetManagerComponent, EventManagerComponent],
 
     exports: [
         RouterModule

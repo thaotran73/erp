@@ -9,10 +9,25 @@ const SYSGenerateCode = {
     icon: 'icon-home',
     submenu: [
         {
-            text: 'Control Manager',
-            link: '/SYSGenerateCode/ControlManager',
+            text: 'Screen Manager',
+            link: '/SYSGenerateCode/ScreenManager',
             icon: 'icon-home',
         },
+        {
+            text: 'Zone Manager',
+            link: '/SYSGenerateCode/ZoneManager',
+            icon: 'icon-home',
+        },
+        {
+            text: 'Widget Manager',
+            link: '/SYSGenerateCode/WidgetManager',
+            icon: 'icon-home',
+        },
+        {
+            text: 'Event Manager',
+            link: '/SYSGenerateCode/EventManager',
+            icon: 'icon-home',
+        },       
     ],
 };
 
@@ -22,7 +37,7 @@ const WHMainMaterial = {
         submenu: [
         {
             text: 'Main Material Test',
-            link: '/MainMaterial/MainMaterial',
+            link: '/WHMainMaterial/MainMaterialTest',
             icon: 'icon-home',
         },
     ],

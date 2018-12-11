@@ -6,25 +6,25 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { SharedModule } from '../../shared/shared.module';
-import { MainMaterialComponent } from './MainMaterial/MainMaterial.component';
+import { MainMaterialTestComponent } from './MainMaterialTest/MainMaterialTest.component';
 
 const routes: Routes = [
-    { path: 'MainMaterial', component: MainMaterialComponent }
+    { path: 'MainMaterialTest', component: MainMaterialTestComponent }
 ];
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
-        AgGridModule.withComponents([MainMaterialComponent]),
+        AgGridModule.withComponents([MainMaterialTestComponent]),
         NgSelectModule,
         TextMaskModule       
    ],
 
-    declarations: [MainMaterialComponent],
+    declarations: [MainMaterialTestComponent],
 
     exports: [
         RouterModule
     ]
 })
-export class MainMaterialModule { }
+export class WHMainMaterialModule { }
