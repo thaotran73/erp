@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { GlobalsService } from '../../../core/globals.service';
 
 @Component({
@@ -12,16 +12,7 @@ import { GlobalsService } from '../../../core/globals.service';
 export class ScreenManagerComponent implements OnInit, OnDestroy {
 
     resizeEvent = 'resize.ag-grid';
-    $win = $(window);
-
-    httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Authorization': 'my-auth-token'
-        })
-    }
-
-    maskDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
+    $win = $(window);  
 
     public main: any = {
         screen: null,
@@ -65,6 +56,11 @@ export class ScreenManagerComponent implements OnInit, OnDestroy {
             headerName: 'Tiều đề',
             field: 'tilte',
             width: 1000,
+            editable: true,
+        }, {
+            headerName: 'Nhóm màn hình',
+            field: 'groupScreen',
+            width: 200,
             editable: true,
         }];
     }

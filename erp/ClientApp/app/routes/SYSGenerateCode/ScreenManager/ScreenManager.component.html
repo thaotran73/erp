@@ -51,9 +51,17 @@
         <ag-grid-angular id="grid01" class="ag-angle" style="width: 100%; height: 400px" 
             [gridOptions]="grid01.gridOptions" 
             [components]="grid01.components"
-            (gridReady)="gridReady($event)"
+            (gridReady)="grid01_gridReady($event)"
             enableFilter>
         </ag-grid-angular>
-        <div id="col_template">
-        </div>        
     </div>
+    <div class="grid-fluid">
+        <ag-grid-angular id="grid02" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="grid02.gridOptions" 
+            [components]="grid02.components"
+            (gridReady)="grid02_gridReady($event)"
+            enableFilter>
+        </ag-grid-angular>
+    </div>
+    <div id="col_template">
+    </div>        
