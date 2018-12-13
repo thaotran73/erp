@@ -48,18 +48,34 @@
         </div>               
     </div>
     <div class="grid-fluid">
-        <ag-grid-angular id="grid01" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="grid01.gridOptions" 
-            [components]="grid01.components"
-            (gridReady)="grid01_gridReady($event)"
+        <ag-grid-angular id="screen" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="screen.gridOptions" 
+            [components]="screen.components"
+            (gridReady)="gridReady_screen($event)"
             enableFilter>
         </ag-grid-angular>
     </div>
     <div class="grid-fluid">
-        <ag-grid-angular id="grid02" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="grid02.gridOptions" 
-            [components]="grid02.components"
-            (gridReady)="grid02_gridReady($event)"
+        <ag-grid-angular id="zone" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="zone.gridOptions" 
+            [components]="zone.components"
+            (gridReady)="gridReady_zone($event)"
+            enableFilter>
+        </ag-grid-angular>
+    </div>
+        <div class="grid-fluid">
+        <ag-grid-angular id="widget" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="widget.gridOptions" 
+            [components]="widget.components"
+            (gridReady)="gridReady_widget($event)"
+            enableFilter>
+        </ag-grid-angular>
+    </div>
+    <div class="grid-fluid">
+        <ag-grid-angular id="event" class="ag-angle" style="width: 100%; height: 400px" 
+            [gridOptions]="event.gridOptions" 
+            [components]="event.components"
+            (gridReady)="gridReady_event($event)"
             enableFilter>
         </ag-grid-angular>
     </div>

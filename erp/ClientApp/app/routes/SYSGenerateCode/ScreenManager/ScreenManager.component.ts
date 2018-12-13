@@ -19,7 +19,49 @@ export class ScreenManagerComponent implements OnInit, OnDestroy {
         tilte: null,
     }
 
-    public grid01 = {
+    public screen = {
+        columnHeader: <any> null,
+        datagrid: <any> null,
+        gridOptions: <GridOptions> {
+            headerHeight: 40,
+            enableFilter: true,
+            singleClickEdit: true,
+            enableSorting: true,
+            enableColResize: true,
+        },
+        components: {
+        },
+    }
+
+    public zone = {
+        columnHeader: <any> null,
+        datagrid: <any> null,
+        gridOptions: <GridOptions> {
+            headerHeight: 40,
+            enableFilter: true,
+            singleClickEdit: true,
+            enableSorting: true,
+            enableColResize: true,
+        },
+        components: {
+        },
+    }
+
+    public widget = {
+        columnHeader: <any> null,
+        datagrid: <any> null,
+        gridOptions: <GridOptions> {
+            headerHeight: 40,
+            enableFilter: true,
+            singleClickEdit: true,
+            enableSorting: true,
+            enableColResize: true,
+        },
+        components: {
+        },
+    }
+
+    public event = {
         columnHeader: <any> null,
         datagrid: <any> null,
         gridOptions: <GridOptions> {
@@ -40,7 +82,78 @@ export class ScreenManagerComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         console.log('Goto ngOnInit');
-        this.grid01.columnHeader = [{
+        this.screen.columnHeader = [{
+            headerName: 'ID',
+            field: 'id',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Màn hình',
+            field: 'screen',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Tiều đề',
+            field: 'tilte',
+            width: 1000,
+            editable: true,
+        }, {
+            headerName: 'Nhóm màn hình',
+            field: 'groupScreen',
+            width: 200,
+            editable: true,
+        }];
+
+        this.zone.columnHeader = [{
+            headerName: 'ID',
+            field: 'id',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Màn hình',
+            field: 'screen',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Tiều đề',
+            field: 'tilte',
+            width: 1000,
+            editable: true,
+        }, {
+            headerName: 'Nhóm màn hình',
+            field: 'groupScreen',
+            width: 200,
+            editable: true,
+        }];
+
+        this.widget.columnHeader = [{
+            headerName: 'ID',
+            field: 'id',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Màn hình',
+            field: 'screen',
+            width: 150,
+            pinned: 'left',
+            editable: true,
+        }, {
+            headerName: 'Tiều đề',
+            field: 'tilte',
+            width: 1000,
+            editable: true,
+        }, {
+            headerName: 'Nhóm màn hình',
+            field: 'groupScreen',
+            width: 200,
+            editable: true,
+        }];
+        this.event.columnHeader = [{
             headerName: 'ID',
             field: 'id',
             width: 150,
@@ -69,13 +182,49 @@ export class ScreenManagerComponent implements OnInit, OnDestroy {
         this.$win.off(this.resizeEvent);
     }
 
-    gridReady(params) {
-    	params.api.setColumnDefs(this.grid01.columnHeader);
+    gridReady_screen(params) {
+    	params.api.setColumnDefs(this.screen.columnHeader);
         params.api.sizeColumnsToFit();
 
         this.$win.on(this.resizeEvent, () => {
             setTimeout(() => { 
-            	params.api.setColumnDefs(this.grid01.columnHeader);
+            	params.api.setColumnDefs(this.screen.columnHeader);
+                params.api.sizeColumnsToFit();
+            });
+        });
+    }
+
+    gridReady_zone(params) {
+        params.api.setColumnDefs(this.zone.columnHeader);
+        params.api.sizeColumnsToFit();
+
+        this.$win.on(this.resizeEvent, () => {
+            setTimeout(() => { 
+                params.api.setColumnDefs(this.zone.columnHeader);
+                params.api.sizeColumnsToFit();
+            });
+        });
+    }
+
+    gridReady_widget(params) {
+        params.api.setColumnDefs(this.widget.columnHeader);
+        params.api.sizeColumnsToFit();
+
+        this.$win.on(this.resizeEvent, () => {
+            setTimeout(() => { 
+                params.api.setColumnDefs(this.widget.columnHeader);
+                params.api.sizeColumnsToFit();
+            });
+        });
+    }
+
+    gridReady_event(params) {
+        params.api.setColumnDefs(this.event.columnHeader);
+        params.api.sizeColumnsToFit();
+
+        this.$win.on(this.resizeEvent, () => {
+            setTimeout(() => { 
+                params.api.setColumnDefs(this.event.columnHeader);
                 params.api.sizeColumnsToFit();
             });
         });
