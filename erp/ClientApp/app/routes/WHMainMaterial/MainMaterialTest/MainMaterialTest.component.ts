@@ -41,6 +41,8 @@ export class MainMaterialTestComponent implements OnInit, OnDestroy {
                 singleClickEdit: true,
                 enableSorting: true,
                 enableColResize: true,
+                rowSelection: 'single',
+                rowDeselection: true,
             },
         components: {
             datePicker: getDatePicker(this),

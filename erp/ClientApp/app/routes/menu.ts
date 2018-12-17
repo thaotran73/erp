@@ -10,24 +10,14 @@ const SYSGenerateCode = {
     submenu: [
         {
             text: 'Screen Manager',
-            link: '/SYSGenerateCode/ScreenManager',
+            link: '/SYSGenerateCode/ScreenManagerView',
             icon: 'icon-home',
         },
         {
-            text: 'Zone Manager',
-            link: '/SYSGenerateCode/ZoneManager',
+            text: 'Screen Manager Edit',
+            link: '/SYSGenerateCode/ScreenManagerEdit',
             icon: 'icon-home',
-        },
-        {
-            text: 'Widget Manager',
-            link: '/SYSGenerateCode/WidgetManager',
-            icon: 'icon-home',
-        },
-        {
-            text: 'Event Manager',
-            link: '/SYSGenerateCode/EventManager',
-            icon: 'icon-home',
-        },       
+        },        
     ],
 };
 

@@ -7,28 +7,24 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 import { SharedModule } from '../../shared/shared.module';
 
-import { ScreenManagerComponent }  from './ScreenManager/ScreenManager.component';
-import { ZoneManagerComponent }    from './ZoneManager/ZoneManager.component';
-import { WidgetManagerComponent }  from './WidgetManager/WidgetManager.component';
-import { EventManagerComponent }   from './EventManager/EventManager.component';
+import { ScreenManagerViewComponent }  from './ScreenManagerView/ScreenManagerView.component';
+import { ScreenManagerEditComponent }  from './ScreenManagerEdit/ScreenManagerEdit.component';
 
 const routes: Routes = [
-    { path: 'ScreenManager',  component: ScreenManagerComponent },
-    { path: 'ZoneManager',    component: ZoneManagerComponent },
-    { path: 'WidgetManager',  component: WidgetManagerComponent },
-    { path: 'EventManager',   component: EventManagerComponent }
+    { path: 'ScreenManagerView',  component: ScreenManagerViewComponent },
+    { path: 'ScreenManagerEdit',  component: ScreenManagerEditComponent },
 ];
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
-        AgGridModule.withComponents([ScreenManagerComponent, ZoneManagerComponent, WidgetManagerComponent, EventManagerComponent]),
+        AgGridModule.withComponents([ScreenManagerViewComponent, ScreenManagerEditComponent]),
         NgSelectModule,
         TextMaskModule
     ],
 
-    declarations: [ScreenManagerComponent, ZoneManagerComponent, WidgetManagerComponent, EventManagerComponent],
+    declarations: [ScreenManagerViewComponent, ScreenManagerEditComponent],
 
     exports: [
         RouterModule
