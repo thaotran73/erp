@@ -346,7 +346,8 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 	}
 
     async loc_click() {
-        var eventID = '4750a84feb05d55bfbf07ecbe8df5eec';
+        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_00'));
+        var eventID = '4750a84feb05d55bfbf07ecbe8df5eec';       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
         await this.http.post('api/exeEvent', params, this.varGlobals.globalRef.httpOptions)

@@ -32,4 +32,10 @@ export class GlobalsService {
 			this.globalRef.maskInputDate = [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/];
 		}
 	}
+
+	public hashMD5(message) {
+        var crypto = require("crypto");
+        var md5 = crypto.createHash("md5");        
+        return md5.update(new Buffer(message, 'ucs-2')).digest('hex');
+    }
 }
