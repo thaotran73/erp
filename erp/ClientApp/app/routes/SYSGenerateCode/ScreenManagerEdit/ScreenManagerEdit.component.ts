@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid/main';
-import { HttpClient } from '@angular/common/http';
 import { GlobalsService } from '../../../core/globals.service';
 
 @Component({
@@ -14,9 +13,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     resizeEvent = 'resize.ag-grid';
     $win = $(window);  
 
+    public gridOrderSelect: any = [];
+
+    public varGlobals: GlobalsService;
+
     public main: any = {
         screen: null,
-        tilte: null,
+        title: null,
     }
 
     public screen = {
@@ -30,12 +33,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             enableColResize: true,
             rowSelection: 'single',
             rowDeselection: true,
+            onSelectionChanged: onSelectionChanged_screen,
         },
         components: {
         },
     }
 
-    public zone = {
+    public region = {
         columnHeader: <any> null,
         datagrid: <any> null,
         gridOptions: <GridOptions> {
@@ -45,7 +49,8 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             enableSorting: true,
             enableColResize: true,
             rowSelection: 'single',
-            rowDeselection: true,           
+            rowDeselection: true,
+            onSelectionChanged: onSelectionChanged_region,
         },
         components: {
         },
@@ -61,13 +66,14 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             enableSorting: true,
             enableColResize: true,
             rowSelection: 'single',
-            rowDeselection: true,           
+            rowDeselection: true,
+            onSelectionChanged: onSelectionChanged_widget,
         },
         components: {
         },
     }
 
-    public event = {
+    public binds = {
         columnHeader: <any> null,
         datagrid: <any> null,
         gridOptions: <GridOptions> {
@@ -77,25 +83,28 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             enableSorting: true,
             enableColResize: true,
             rowSelection: 'single',
-            rowDeselection: true,           
+            rowDeselection: true,
+            onSelectionChanged: onSelectionChanged_binds,
         },
         components: {
         },
     }
 
-    public constructor(private http: HttpClient, public varGlobals: GlobalsService) {
-        console.log(varGlobals);
+    public constructor() {
         console.log('End constructor');
     }
 
     async ngOnInit() {
+
+        this.varGlobals = new GlobalsService();
+        console.log(this.varGlobals);
+
         console.log('Goto ngOnInit');
         this.screen.columnHeader = [{
             headerName: 'ID',
             field: 'id',
             width: 150,
             pinned: 'left',
-            editable: true,
         }, {
             headerName: 'Màn hình',
             field: 'screen',
@@ -114,12 +123,11 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }];
 
-        this.zone.columnHeader = [{
+        this.region.columnHeader = [{
             headerName: 'ID',
             field: 'id',
             width: 150,
             pinned: 'left',
-            editable: true,
         }, {
             headerName: 'Màn hình',
             field: 'screen',
@@ -129,7 +137,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }, {
             headerName: 'Tên vùng',
-            field: 'zone',
+            field: 'region',
             width: 150,
             editable: true,
         }, {
@@ -149,7 +157,6 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             field: 'id',
             width: 150,
             pinned: 'left',
-            editable: true,
         }, {
             headerName: 'Màn hình',
             field: 'screen',
@@ -159,7 +166,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }, {
             headerName: 'Tên vùng',
-            field: 'zone',
+            field: 'region',
             width: 0,
             hide: true,
             editable: true,
@@ -200,12 +207,11 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }];
 
-        this.event.columnHeader = [{
+        this.binds.columnHeader = [{
             headerName: 'ID',
             field: 'id',
             width: 150,
             pinned: 'left',
-            editable: true,
         }, {
             headerName: 'Sự kiện',
             field: 'eventID',
@@ -221,7 +227,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }, {
             headerName: 'Tên vùng',
-            field: 'zone',
+            field: 'region',
             width: 0,
             hide: true,
             pinned: 'left',
@@ -235,13 +241,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }, {
             headerName: 'Hành động',
-            field: 'event',
+            field: 'binds',
             width: 200,
             pinned: 'left',
             editable: true,
         }, {
             headerName: 'Thứ tự',
-            field: 'orderEvent',
+            field: 'orderBinds',
             width: 100,
             editable: true,
         }, {
@@ -293,23 +299,23 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     gridReady_screen(params) {
     	params.api.setColumnDefs(this.screen.columnHeader);
-        params.api.sizeColumnsToFit();
+        //params.api.sizeColumnsToFit();
 
         this.$win.on(this.resizeEvent, () => {
             setTimeout(() => { 
             	params.api.setColumnDefs(this.screen.columnHeader);
-                params.api.sizeColumnsToFit();
+          //      params.api.sizeColumnsToFit();
             });
         });
     }
 
-    gridReady_zone(params) {
-        params.api.setColumnDefs(this.zone.columnHeader);
+    gridReady_region(params) {
+        params.api.setColumnDefs(this.region.columnHeader);
         params.api.sizeColumnsToFit();
 
         this.$win.on(this.resizeEvent, () => {
             setTimeout(() => { 
-                params.api.setColumnDefs(this.zone.columnHeader);
+                params.api.setColumnDefs(this.region.columnHeader);
                 params.api.sizeColumnsToFit();
             });
         });
@@ -327,14 +333,14 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         });
     }
 
-    gridReady_event(params) {
-        params.api.setColumnDefs(this.event.columnHeader);
-        //params.api.sizeColumnsToFit();
+    gridReady_binds(params) {
+        params.api.setColumnDefs(this.binds.columnHeader);
+        params.api.sizeColumnsToFit();
 
         this.$win.on(this.resizeEvent, () => {
             setTimeout(() => { 
-                params.api.setColumnDefs(this.event.columnHeader);
-                //params.api.sizeColumnsToFit();
+                params.api.setColumnDefs(this.binds.columnHeader);
+                params.api.sizeColumnsToFit();
             });
         });
     }
@@ -346,17 +352,96 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 	}
 
     async loc_click() {
-        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_00'));
-        var eventID = '4750a84feb05d55bfbf07ecbe8df5eec';       
+        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10'));
+        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10');       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
-        await this.http.post('api/exeEvent', params, this.varGlobals.globalRef.httpOptions)
+        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
             .toPromise()
-            .then(data => {
-                console.log(data);
-                this.screen.datagrid = data;
+            .then(retData => {
+                console.log(retData);
+//                this.toastrService.success('Hello world!', 'Toastr fun!');
+//                this.ts.pop(retData['messageError'], 'Title', retData['message']);
+                this.varGlobals.showMessage(retData['messageError'], '', retData['message']);
+                this.screen.datagrid = retData['data'];
                 this.screen.gridOptions.api.setRowData(this.screen.datagrid);
                 this.screen.gridOptions.api.sizeColumnsToFit();
             });
+
+        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15'));
+        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15');       
+        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+        console.log(params);
+        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+            .toPromise()
+            .then(retData => {
+                console.log(retData);
+                this.region.datagrid = retData['data'];
+                this.region.gridOptions.api.setRowData(this.region.datagrid);
+                this.region.gridOptions.api.sizeColumnsToFit();
+            });
+
+        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20'));
+        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20');       
+        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+        console.log(params);
+        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+            .toPromise()
+            .then(retData => {
+                console.log(retData);
+                this.widget.datagrid = retData['data'];
+                this.widget.gridOptions.api.setRowData(this.widget.datagrid);
+                this.widget.gridOptions.api.sizeColumnsToFit();
+            });
+
+        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25'));
+        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25');       
+        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+        console.log(params);
+        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+            .toPromise()
+            .then(retData => {
+                console.log(retData);
+                this.binds.datagrid = retData['data'];
+                this.binds.gridOptions.api.setRowData(this.binds.datagrid);
+                this.binds.gridOptions.api.sizeColumnsToFit();
+            });
+
     }
+}
+
+function onSelectionChanged_screen() {
+    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
+        return value = 'screen';
+    });
+
+    filtered.push('screen');
+    this.gridOrderSelect = filtered; 
+}
+
+function onSelectionChanged_region() {
+    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
+        return value = 'region';
+    });
+
+    filtered.push('region');
+    this.gridOrderSelect = filtered; 
+}
+
+function onSelectionChanged_widget() {
+    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
+        return value = 'widget';
+    });
+
+    filtered.push('widget');
+    this.gridOrderSelect = filtered; 
+}
+
+function onSelectionChanged_binds() {
+    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
+        return value = 'binds';
+    });
+
+    filtered.push('binds');
+    this.gridOrderSelect = filtered; 
 }

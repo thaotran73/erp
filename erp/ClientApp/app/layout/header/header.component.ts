@@ -6,6 +6,7 @@ declare var $: any;
 import { UserblockService } from '../sidebar/userblock/userblock.service';
 import { SettingsService } from '../../core/settings/settings.service';
 import { MenuService } from '../../core/menu/menu.service';
+import { GlobalsService } from '../../core/globals.service';
 
 @Component({
     selector: 'app-header',
@@ -21,10 +22,8 @@ export class HeaderComponent implements OnInit {
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
 
     constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService) {
-
         // show only a few items on demo
         this.menuItems = menu.getMenu().slice(0,4); // for horizontal layout
-
     }
 
     ngOnInit() {

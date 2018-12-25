@@ -14,26 +14,40 @@ namespace ERP.Controllers
 {
     public class DataController : Controller
     {
-        static MDataAccessLayer oDataAccessLayer = new MDataAccessLayer();
+        MDataAccessLayer oDataAccessLayer = new MDataAccessLayer();
 
         [HttpPost]
         [Route("api/exeEvent")]
         public Object exeEvent([FromBody] Object eventData)
         {
-            Object retData = null;
+            Object retData;
+            retData = 1;
+            return retData;
+        }
+
+        [HttpPost]
+        [Route("api/getValueEvent")]
+        public Object getValueEvent([FromBody] Object eventData)
+        {
+            Dictionary<string, object> retData = oDataAccessLayer.initReturnData();
             Dictionary<string, object> eventDataDictionary;
+
+            if (oDataAccessLayer.connectionEstablish() != 0)
+                return oDataAccessLayer.setReturnData(retData, "dialog", "error", oDataAccessLayer.errDescription);
 
             Type eventDataType = eventData.GetType();
             if (eventDataType.Name == "JObject")
             {
-                eventDataDictionary = oDataAccessLayer.parseDictionary((JObject) eventData);
+                eventDataDictionary = oDataAccessLayer.parseDictionary((JObject)eventData);
                 String eventID = eventDataDictionary["eventID"].ToString();
                 if (oDataAccessLayer.getListEvent(eventID) == 0)
                 {
                     String executeCMD = oDataAccessLayer.oListEvent.Rows[0]["executeCMD"].ToString();
-                    if(oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>) eventDataDictionary["param"]) == 0)
+                    if (oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>)eventDataDictionary["param"]) == 0)
                     {
-                        retData = oDataAccessLayer.oDataTable;
+                        oDataAccessLayer.errDescription = "Thực hiện " + eventID + " thành công!";
+                        retData["messageType"] = oDataAccessLayer.oListEvent.Rows[0]["typeMessage"].ToString();
+                        retData["data"] = oDataAccessLayer.oDataTable;
                     }
                 }
                 else
@@ -48,15 +62,10 @@ namespace ERP.Controllers
                 oDataAccessLayer.errDescription = "Sai kiểu dữ liệu khi gửi đến hệ thống!";
             }
 
-            return retData;
-        }
+            oDataAccessLayer.connectionClose();
 
-        [HttpPost]
-        [Route("api/getValueEvent")]
-        public Object getValueEvent([FromBody] Object eventData)
-        {
-            Object retData;
-            retData = 1;
+            retData["message"] = oDataAccessLayer.errDescription;
+
             return retData;
         }
 

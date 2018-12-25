@@ -1,83 +1,107 @@
 <div class="content-heading">SCREEN MANAGER</div>
-    <div class="container-fluid">
-        <div class="card mb-3">
-            <div class="card-body">
-                <fieldset>
-                    <div class="col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-sm-1 col-form-label">Màn hình</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" placeholder="Tên màn hình">
-                            </div>
-                            <label class="col-sm-1 col-form-label">Tiều đề</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" placeholder="Nhập tiều đề màn hình">
-                            </div>
+<div class="container-fluid">
+    <div class="card mb-3">
+        <div class="card-body">
+            <fieldset>
+                <div class="col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Màn hình</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="Tên màn hình" [(ngModel)]="main.screen">
+                        </div>
+                        <label class="col-sm-1 col-form-label">Tiều đề</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="Nhập tiều đề màn hình" [(ngModel)]="main.title">
                         </div>
                     </div>
-                </fieldset>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <button id="cmd_loc" class="mr-1 btn btn-primary btn-lg" type="button" (click)="loc_click()">Lọc</button>
-                    </div>
-                    <div class="col">
-                        <button id="cmd_ghi" class="mr-1 btn btn-primary btn-lg" type="button">Ghi</button>
-                    </div>
-                    <div class="col">
-                        <button id="cmd_export" class="mr-1 btn btn-primary btn-lg" type="button">Export Excel</button>
-                    </div>
-                    <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
-                    </div>
-                    <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
-                    </div>
-                    <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
-                    </div>
-                    <div class="col">
-                        <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
-                    </div>
-                    <div class="col">
-                        <button id="cmd_thoat" class="mr-1 btn btn-primary btn-lg" type="button">Thoát</button>
-                    </div>
                 </div>
-            </div>           
-        </div>               
+            </fieldset>
+        </div>
     </div>
-    <div class="grid-fluid">
-        <ag-grid-angular id="screen" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="screen.gridOptions" 
-            [components]="screen.components"
-            (gridReady)="gridReady_screen($event)"
-            enableFilter>
-        </ag-grid-angular>
+</div>
+<div class="container-fluid">
+    <div class="card mb-3">            
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <button id="cmd_loc" class="mr-1 btn btn-primary btn-lg" type="button" (click)="loc_click()">Lọc</button>
+                </div>
+                <div class="col">
+                    <button id="cmd_ghi" class="mr-1 btn btn-primary btn-lg" type="button">Ghi</button>
+                </div>
+                <div class="col">
+                    <button id="cmd_export" class="mr-1 btn btn-primary btn-lg" type="button">Export Excel</button>
+                </div>
+                <div class="col">
+                    <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                </div>
+                <div class="col">
+                    <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                </div>
+                <div class="col">
+                    <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                </div>
+                <div class="col">
+                    <button class="mr-1 btn btn-primary btn-lg" type="button">Large button</button>
+                </div>
+                <div class="col">
+                    <button id="cmd_thoat" class="mr-1 btn btn-primary btn-lg" type="button">Thoát</button>
+                </div>
+            </div>
+        </div>           
+    </div>               
+</div>
+<div class="container-fluid">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="page-header">List Screen</h4>
+            <ag-grid-angular id="screen" class="ag-angle" style="width: 100%; height: 400px" 
+                [gridOptions]="screen.gridOptions" 
+                [components]="screen.components"
+                (gridReady)="gridReady_screen($event)"
+                enableFilter>
+            </ag-grid-angular>
+        </div>
     </div>
-    <div class="grid-fluid">
-        <ag-grid-angular id="zone" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="zone.gridOptions" 
-            [components]="zone.components"
-            (gridReady)="gridReady_zone($event)"
-            enableFilter>
-        </ag-grid-angular>
+</div>
+<div class="container-fluid">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="page-header">List Region</h4>
+            <ag-grid-angular id="region" class="ag-angle" style="width: 100%; height: 400px" 
+                [gridOptions]="region.gridOptions" 
+                [components]="region.components"
+                (gridReady)="gridReady_region($event)"
+                enableFilter>
+            </ag-grid-angular>
+        </div>
     </div>
-        <div class="grid-fluid">
-        <ag-grid-angular id="widget" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="widget.gridOptions" 
-            [components]="widget.components"
-            (gridReady)="gridReady_widget($event)"
-            enableFilter>
-        </ag-grid-angular>
+</div>
+<div class="container-fluid">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="page-header">List Widget</h4>
+            <ag-grid-angular id="widget" class="ag-angle" style="width: 100%; height: 400px" 
+                [gridOptions]="widget.gridOptions" 
+                [components]="widget.components"
+                (gridReady)="gridReady_widget($event)"
+                enableFilter>
+            </ag-grid-angular>
+        </div>
     </div>
-    <div class="grid-fluid">
-        <ag-grid-angular id="event" class="ag-angle" style="width: 100%; height: 400px" 
-            [gridOptions]="event.gridOptions" 
-            [components]="event.components"
-            (gridReady)="gridReady_event($event)"
-            enableFilter>
-        </ag-grid-angular>
+</div>
+<div class="container-fluid">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="page-header">List Binds</h4>
+            <ag-grid-angular id="binds" class="ag-angle" style="width: 100%; height: 400px" 
+                [gridOptions]="binds.gridOptions" 
+                [components]="binds.components"
+                (gridReady)="gridReady_binds($event)"
+                enableFilter>
+            </ag-grid-angular>
+        </div>
     </div>
-    <div id="col_template">
-    </div>        
+</div>
+<div id="col_template">
+</div>        

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,7 +36,7 @@ namespace ERP.Models
         public DataTable oListEvent;
         public DataTable oListParam;
 
-        public MDataAccessLayer()
+        public int connectionEstablish()
         {
             try
             {
@@ -48,10 +49,44 @@ namespace ERP.Models
                 errDescription = "MDataAccessLayer! " + ex.Message;
                 status = 1;
             }
+            return status;
         }
-        ~MDataAccessLayer()
+
+        public int connectionClose()
         {
-            sqlConnection.Close();
+            status = 0;
+            try
+            {
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                status = 1;
+                errNumber = 1;
+                errDescription = "Không thể hiện việc ngắt kết nối đến database ! " + ex.Message;
+            }
+
+            return status;
+        }
+
+        public Dictionary<string, object> initReturnData()
+        {
+            Dictionary<string, object> ret = new Dictionary<string, object>();
+
+            ret.Add("messageType", "toast");
+            ret.Add("messageError", "info");
+            ret.Add("message", "");
+            ret.Add("data", null);
+
+            return ret;
+        }
+        public Dictionary<string, object> setReturnData(Dictionary<string, object> ret, string messageType, string messageError, string message)
+        {
+            ret["messageType"] = messageType;
+            ret["messageError"] = messageError;
+            ret["message"] = message;
+
+            return ret;
         }
 
         public Dictionary<string, object> parseDictionary(JObject jsonValue)
@@ -167,7 +202,7 @@ namespace ERP.Models
                                 sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), ((DateTime)(param.Value == null ? DateTime.Parse("1900/01/01") : param.Value)).ToString("yyyy/MM/dd HH:mm:ss"));
                                 break;
                             default:
-                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), param.Value.ToString());
+                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), (param.Value == null ? "" : param.Value.ToString()));
                                 break;
                         }                                              
                         orderParam = orderParam + 1;
@@ -389,9 +424,13 @@ namespace ERP.Models
         }
         public int getListEvent(string eventID) {
             status = 0;
-            string sSQLQuery = "SELECT * FROM SYS_Events WHERE eventID = '" + eventID + "' ORDER BY orderEvent ASC";
+            string sSQLQuery = "SELECT * FROM SYS_Binds WHERE eventID = '" + eventID + "' ORDER BY orderBinds ASC";
             if (connectExecuteDataTable(sSQLQuery) == 0)
+            {
                 oListEvent = oDataTable;
+                if (oDataTable.Rows.Count == 0)
+                    status = 1;
+            }
             else
                 status = 1;
             return status;
