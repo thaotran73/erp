@@ -14,6 +14,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     $win = $(window);  
 
     public gridOrderSelect: any = [];
+    public actGrid: any;
 
     public varGlobals: GlobalsService;
 
@@ -417,6 +418,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             });
 
     }
+    
     async ghi_click() {
 
     }
@@ -429,6 +431,7 @@ function onSelectionChanged_screen() {
 
     filtered.push('screen');
     this.gridOrderSelect = filtered; 
+    this.actGrid = this.screen;
 }
 
 function onSelectionChanged_region() {
@@ -438,6 +441,7 @@ function onSelectionChanged_region() {
 
     filtered.push('region');
     this.gridOrderSelect = filtered; 
+    this.actGrid = this.region;
 }
 
 function onSelectionChanged_widget() {
@@ -447,6 +451,7 @@ function onSelectionChanged_widget() {
 
     filtered.push('widget');
     this.gridOrderSelect = filtered; 
+    this.actGrid = this.widget;
 }
 
 function onSelectionChanged_binds() {
@@ -456,4 +461,5 @@ function onSelectionChanged_binds() {
 
     filtered.push('binds');
     this.gridOrderSelect = filtered; 
+    this.actGrid = this.binds;
 }
