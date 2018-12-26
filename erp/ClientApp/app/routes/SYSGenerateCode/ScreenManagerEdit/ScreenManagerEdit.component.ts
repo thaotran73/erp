@@ -25,6 +25,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     public screen = {
         columnHeader: <any> null,
         datagrid: <any> null,
+        dataselect: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
             enableFilter: true,
@@ -287,8 +288,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             editable: true,
         }, {
             headerName: 'Kiểu thông báo',
-            field: 'typeMessage',
+            field: 'skinMessage',
             width: 150,
+            editable: true,
+        }, {
+            headerName: 'Hành động khi lỗi',
+            field: 'errorIsStop',
+            width: 100,
             editable: true,
         }];
     }
@@ -356,13 +362,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10');       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
-        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
             .toPromise()
             .then(retData => {
                 console.log(retData);
-//                this.toastrService.success('Hello world!', 'Toastr fun!');
-//                this.ts.pop(retData['messageError'], 'Title', retData['message']);
-                this.varGlobals.showMessage(retData['messageError'], '', retData['message']);
+                retData['error']['skin'] = 'dialog';
+                retData['error']['type'] = 'none';
+                this.varGlobals.showMessage(retData['error']);
                 this.screen.datagrid = retData['data'];
                 this.screen.gridOptions.api.setRowData(this.screen.datagrid);
                 this.screen.gridOptions.api.sizeColumnsToFit();
@@ -372,10 +378,11 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15');       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
-        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
             .toPromise()
             .then(retData => {
-                console.log(retData);
+                console.log(retData);                
+                this.varGlobals.showMessage(retData['error']);
                 this.region.datagrid = retData['data'];
                 this.region.gridOptions.api.setRowData(this.region.datagrid);
                 this.region.gridOptions.api.sizeColumnsToFit();
@@ -385,10 +392,11 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20');       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
-        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
             .toPromise()
             .then(retData => {
                 console.log(retData);
+                this.varGlobals.showMessage(retData['error']);
                 this.widget.datagrid = retData['data'];
                 this.widget.gridOptions.api.setRowData(this.widget.datagrid);
                 this.widget.gridOptions.api.sizeColumnsToFit();
@@ -398,14 +406,18 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25');       
         var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
         console.log(params);
-        await this.varGlobals.globalRef.httpClient.post('api/getValueEvent', params, this.varGlobals.globalRef.httpOptions)
+        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
             .toPromise()
             .then(retData => {
                 console.log(retData);
+                this.varGlobals.showMessage(retData['error']);
                 this.binds.datagrid = retData['data'];
                 this.binds.gridOptions.api.setRowData(this.binds.datagrid);
                 this.binds.gridOptions.api.sizeColumnsToFit();
             });
+
+    }
+    async ghi_click() {
 
     }
 }

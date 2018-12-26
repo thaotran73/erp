@@ -114,8 +114,8 @@ export class MainMaterialTestComponent implements OnInit, OnDestroy {
                         if (params.value == null)
                             return null;
                         var vGlobal = new GlobalsService();
-                        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat), vGlobal.globalRef.timezone);
-                        return dateFormat.format(vGlobal.globalRef.dateInputFormat);
+                        var dateFormat = vGlobal._ref.moment.tz(vGlobal._ref.moment(params.value, vGlobal._ref.dateInputFormat), vGlobal._ref.timezone);
+                        return dateFormat.format(vGlobal._ref.dateInputFormat);
                     },
                 }, {
                     headerName: 'Sport',
@@ -211,8 +211,8 @@ function getDatePicker(screen: any) {
         if (params.value == null)
             screen.selectDate = null;
         else {
-            var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat).toString(), vGlobal.globalRef.timezone);
-//            console.log(vGlobal.globalRef.moment(params.value, vGlobal.globalRef.dateInputFormat).toString());
+            var dateFormat = vGlobal._ref.moment.tz(vGlobal._ref.moment(params.value, vGlobal._ref.dateInputFormat).toString(), vGlobal._ref.timezone);
+//            console.log(vGlobal._ref.moment(params.value, vGlobal._ref.dateInputFormat).toString());
 //            console.log(dateFormat);
             screen.selectDate = dateFormat.toDate();
         }
@@ -243,9 +243,9 @@ function getDatePicker(screen: any) {
         console.log(this.eInput.value);
         if (screen.selectDate == null)
             return null;
-        var dateFormat = vGlobal.globalRef.moment.tz(vGlobal.globalRef.moment(screen.selectDate, vGlobal.globalRef.dateInputFormat).toString(), vGlobal.globalRef.timezone);
-        console.log(dateFormat.format(vGlobal.globalRef.dateInputFormat));
-        return dateFormat.format(vGlobal.globalRef.dateInputFormat);
+        var dateFormat = vGlobal._ref.moment.tz(vGlobal._ref.moment(screen.selectDate, vGlobal._ref.dateInputFormat).toString(), vGlobal._ref.timezone);
+        console.log(dateFormat.format(vGlobal._ref.dateInputFormat));
+        return dateFormat.format(vGlobal._ref.dateInputFormat);
     };
 
     DatePicker.prototype.destroy = function() {

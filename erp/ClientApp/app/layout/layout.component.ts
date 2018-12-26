@@ -14,8 +14,8 @@ export class LayoutComponent implements OnInit {
 
     constructor(private httpClient: HttpClient, private toastrService: ToastrService) {
 		this.varGlobals = new GlobalsService();
-		this.varGlobals.globalRef.httpClient = this.httpClient;
-		this.varGlobals.globalRef.toastrService = this.toastrService;
+		this.varGlobals._ref.httpClient = this.httpClient;
+		this.varGlobals._ref.toastrService = this.toastrService;
     }
 
     ngOnInit() {

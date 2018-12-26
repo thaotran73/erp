@@ -30,10 +30,11 @@ namespace ERP.Controllers
         public Object getValueEvent([FromBody] Object eventData)
         {
             Dictionary<string, object> retData = oDataAccessLayer.initReturnData();
+            Dictionary<string, object> retError = (Dictionary<string, object>) retData["error"];
             Dictionary<string, object> eventDataDictionary;
 
             if (oDataAccessLayer.connectionEstablish() != 0)
-                return oDataAccessLayer.setReturnData(retData, "dialog", "error", oDataAccessLayer.errDescription);
+                return oDataAccessLayer.setReturnData(retData, "dialog", "error", oDataAccessLayer.errNumber, oDataAccessLayer.errDescription);
 
             Type eventDataType = eventData.GetType();
             if (eventDataType.Name == "JObject")
@@ -45,8 +46,8 @@ namespace ERP.Controllers
                     String executeCMD = oDataAccessLayer.oListEvent.Rows[0]["executeCMD"].ToString();
                     if (oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>)eventDataDictionary["param"]) == 0)
                     {
-                        oDataAccessLayer.errDescription = "Thực hiện " + eventID + " thành công!";
-                        retData["messageType"] = oDataAccessLayer.oListEvent.Rows[0]["typeMessage"].ToString();
+                        retError["message"] = oDataAccessLayer.errDescription = "Thực hiện " + eventID + " thành công!";
+                        retError["skin"] = oDataAccessLayer.oListEvent.Rows[0]["skinMessage"].ToString();
                         retData["data"] = oDataAccessLayer.oDataTable;
                     }
                 }
@@ -64,7 +65,10 @@ namespace ERP.Controllers
 
             oDataAccessLayer.connectionClose();
 
-            retData["message"] = oDataAccessLayer.errDescription;
+            retError["number"] = oDataAccessLayer.errNumber;
+            retError["message"] = oDataAccessLayer.errDescription;
+
+            retData["error"] = retError;
 
             return retData;
         }

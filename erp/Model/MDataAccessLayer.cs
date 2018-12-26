@@ -18,7 +18,7 @@ namespace ERP.Models
 
         public int status = 0;
 
-        public int errNumber = -1;
+        public int errNumber = 0;
         public string errDescription = "";
 
         public SqlConnection sqlConnection;
@@ -71,20 +71,27 @@ namespace ERP.Models
 
         public Dictionary<string, object> initReturnData()
         {
-            Dictionary<string, object> ret = new Dictionary<string, object>();
+            Dictionary<string, object> error = new Dictionary<string, object>();
+            error.Add("skin", "toast");
+            error.Add("type", "info");
+            error.Add("number", 0);
+            error.Add("message", "");
 
-            ret.Add("messageType", "toast");
-            ret.Add("messageError", "info");
-            ret.Add("message", "");
+            Dictionary<string, object> ret = new Dictionary<string, object>();
             ret.Add("data", null);
+            ret.Add("error", error);
 
             return ret;
         }
-        public Dictionary<string, object> setReturnData(Dictionary<string, object> ret, string messageType, string messageError, string message)
+        public Dictionary<string, object> setReturnData(Dictionary<string, object> ret, string skin, string type, int number, string message)
         {
-            ret["messageType"] = messageType;
-            ret["messageError"] = messageError;
-            ret["message"] = message;
+            Dictionary<string, object> error = new Dictionary<string, object>();
+            error.Add("skin", "toast");
+            error.Add("type", "info");
+            error.Add("number", number);
+            error.Add("message", "");
+
+            ret["error"] = error;
 
             return ret;
         }
