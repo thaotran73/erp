@@ -13,6 +13,14 @@ export class GlobalsService {
 	public static dateSaveFormat = 'YYYY-MM-DD';
 	public static moment;
 
+    public static retError = {
+        number: 0,
+        skin: 'none',
+        type: 'none',
+        title: '',
+        message: ''
+    };
+
     public static httpClient: HttpClient;
 	public static httpOptions = {
         headers: new HttpHeaders({
@@ -38,6 +46,7 @@ export class GlobalsService {
     public static maskInputNumberF1;
     public static maskInputNumberF2;
 
+    public static currentScreen;
     public _ref = GlobalsService;
 
 	constructor() {

@@ -13,7 +13,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     resizeEvent = 'resize.ag-grid';
     $win = $(window);  
 
-    public gridOrderSelect: any = [];
+    public gridOrderSelect = [];
     public actGrid: any;
 
     public varGlobals: GlobalsService;
@@ -99,9 +99,8 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     async ngOnInit() {
 
         this.varGlobals = new GlobalsService();
-        console.log(this.varGlobals);
+        this.varGlobals._ref.currentScreen = this;
 
-        console.log('Goto ngOnInit');
         this.screen.columnHeader = [{
             headerName: 'ID',
             field: 'id',
@@ -359,107 +358,135 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 	}
 
     async loc_click() {
-        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10'));
-        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10');       
-        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
-        console.log(params);
-        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
-            .toPromise()
-            .then(retData => {
-                console.log(retData);
-                retData['error']['skin'] = 'dialog';
-                retData['error']['type'] = 'none';
-                this.varGlobals.showMessage(retData['error']);
-                this.screen.datagrid = retData['data'];
-                this.screen.gridOptions.api.setRowData(this.screen.datagrid);
-                this.screen.gridOptions.api.sizeColumnsToFit();
-            });
+        var retError = this.varGlobals._ref.retError;
+        if (retError['number'] == 0) {
+            console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10'));
+            var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_10');       
+            var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+            console.log(params);
+            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+                .toPromise()
+                .then(retData => {
+                    retError = retData['error'];
+                    this.screen.datagrid = retData['data'];
+                });
+        }
 
-        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15'));
-        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15');       
-        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
-        console.log(params);
-        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
-            .toPromise()
-            .then(retData => {
-                console.log(retData);                
-                this.varGlobals.showMessage(retData['error']);
-                this.region.datagrid = retData['data'];
-                this.region.gridOptions.api.setRowData(this.region.datagrid);
-                this.region.gridOptions.api.sizeColumnsToFit();
-            });
+        if (retError['number'] == 0) {
+            console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15'));
+            var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_15');       
+            var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+            console.log(params);
+            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+                .toPromise()
+                .then(retData => {
+                    retError = retData['error'];
+                    this.region.datagrid = retData['data'];
+                });
+        }
 
-        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20'));
-        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20');       
-        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
-        console.log(params);
-        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
-            .toPromise()
-            .then(retData => {
-                console.log(retData);
-                this.varGlobals.showMessage(retData['error']);
-                this.widget.datagrid = retData['data'];
-                this.widget.gridOptions.api.setRowData(this.widget.datagrid);
-                this.widget.gridOptions.api.sizeColumnsToFit();
-            });
+        if (retError['number'] == 0) {
+            console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20'));
+            var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_20');       
+            var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+            console.log(params);
+            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+                .toPromise()
+                .then(retData => {
+                    retError = retData['error'];
+                    this.widget.datagrid = retData['data'];
+                });
+        }
 
-        console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25'));
-        var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25');       
-        var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
-        console.log(params);
-        await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
-            .toPromise()
-            .then(retData => {
-                console.log(retData);
-                this.varGlobals.showMessage(retData['error']);
-                this.binds.datagrid = retData['data'];
-                this.binds.gridOptions.api.setRowData(this.binds.datagrid);
-                this.binds.gridOptions.api.sizeColumnsToFit();
-            });
+        if (retError['number'] == 0) {
+            console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25'));
+            var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click_25');       
+            var params = {eventID: eventID, param: {main__screen: this.main.screen, main__title: this.main.title}, dataPost: {main: this.main}};
+            console.log(params);
+            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+                .toPromise()
+                .then(retData => {
+                    retError = retData['error'];
+                    this.binds.datagrid = retData['data'];
+                });
+        }
 
+        if (retError['number'] == 0) {
+            this.screen.gridOptions.api.setRowData(this.screen.datagrid);
+            this.screen.gridOptions.api.sizeColumnsToFit();
+            this.region.gridOptions.api.setRowData(this.region.datagrid);
+            this.region.gridOptions.api.sizeColumnsToFit();
+            this.widget.gridOptions.api.setRowData(this.widget.datagrid);
+            this.widget.gridOptions.api.sizeColumnsToFit();
+            this.binds.gridOptions.api.setRowData(this.binds.datagrid);
+            this.binds.gridOptions.api.sizeColumnsToFit();
+        }
+
+        this.varGlobals.showMessage(retError);
     }
-    
-    async ghi_click() {
 
+    async ghi_click() {
+        var retError = this.varGlobals._ref.retError;
+        if (retError['number'] == 0) {
+            console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10'));
+            var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10');       
+            var params = {eventID: eventID, param: {}, dataPost: {main: this.main}};
+            console.log(params);
+            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+                .toPromise()
+                .then(retData => {
+                    retError = retData['error'];
+                    this.screen.datagrid = retData['data'];
+                });
+        }
     }
 }
 
 function onSelectionChanged_screen() {
-    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
-        return value = 'screen';
+    var varGlobals = new GlobalsService();
+    var filtered = varGlobals._ref.currentScreen.gridOrderSelect.filter(function(value, index, arr) {
+        return value != 'screen';
     });
 
     filtered.push('screen');
-    this.gridOrderSelect = filtered; 
-    this.actGrid = this.screen;
+    varGlobals._ref.currentScreen.gridOrderSelect = filtered; 
+    varGlobals._ref.currentScreen.actGrid = varGlobals._ref.currentScreen.screen;
+    console.log(varGlobals._ref.currentScreen.gridOrderSelect);
 }
 
 function onSelectionChanged_region() {
-    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
-        return value = 'region';
+    var varGlobals = new GlobalsService();
+    var filtered = varGlobals._ref.currentScreen.gridOrderSelect.filter(function(value, index, arr) {
+        return value != 'region';
     });
 
     filtered.push('region');
-    this.gridOrderSelect = filtered; 
-    this.actGrid = this.region;
+    varGlobals._ref.currentScreen.gridOrderSelect = filtered; 
+    varGlobals._ref.currentScreen.actGrid = varGlobals._ref.currentScreen.region;
+    console.log(varGlobals._ref.currentScreen.gridOrderSelect);
 }
 
 function onSelectionChanged_widget() {
-    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
-        return value = 'widget';
+    var varGlobals = new GlobalsService();
+    var filtered = varGlobals._ref.currentScreen.gridOrderSelect.filter(function(value, index, arr) {
+        return value != 'widget';
     });
 
     filtered.push('widget');
-    this.gridOrderSelect = filtered; 
-    this.actGrid = this.widget;
+    varGlobals._ref.currentScreen.gridOrderSelect = filtered; 
+    varGlobals._ref.currentScreen.actGrid = varGlobals._ref.currentScreen.widget;
+    console.log(varGlobals._ref.currentScreen.gridOrderSelect);   
 }
 
 function onSelectionChanged_binds() {
-    var filtered = this.gridOrderSelect.filter(function(value, index, arr){
-        return value = 'binds';
+    var varGlobals = new GlobalsService();
+    var filtered = varGlobals._ref.currentScreen.gridOrderSelect.filter(function(value, index, arr) {
+        return value != 'binds';
     });
 
     filtered.push('binds');
-    this.gridOrderSelect = filtered; 
-    this.actGrid = this.binds;
+    varGlobals._ref.currentScreen.gridOrderSelect = filtered; 
+    varGlobals._ref.currentScreen.actGrid = varGlobals._ref.currentScreen.binds;
+    console.log(varGlobals._ref.currentScreen.gridOrderSelect); 
 }
+
