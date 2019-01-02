@@ -39,7 +39,7 @@ namespace ERP.Controllers
             Type eventDataType = eventData.GetType();
             if (eventDataType.Name == "JObject")
             {
-                eventDataDictionary = oDataAccessLayer.parseDictionary((JObject)eventData);
+                eventDataDictionary = oDataAccessLayer.parseDictionaryObject((JObject)eventData);
                 String eventID = eventDataDictionary["eventID"].ToString();
                 if (oDataAccessLayer.getListEvent(eventID) == 0)
                 {

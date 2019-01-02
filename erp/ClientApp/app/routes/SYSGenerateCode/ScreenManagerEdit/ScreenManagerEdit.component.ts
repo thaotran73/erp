@@ -25,8 +25,9 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     public screen = {
         columnHeader: <any> null,
-        datagrid: <any> null,
-        dataselect: <any> null,
+        dataGrid: <any> null,
+        dataSelect: <any> null,
+        gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
             enableFilter: true,
@@ -43,7 +44,9 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     public region = {
         columnHeader: <any> null,
-        datagrid: <any> null,
+        dataGrid: <any> null,
+        dataSelect: <any> null,
+        gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
             enableFilter: true,
@@ -60,7 +63,9 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     public widget = {
         columnHeader: <any> null,
-        datagrid: <any> null,
+        dataGrid: <any> null,
+        dataSelect: <any> null,
+        gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
             enableFilter: true,
@@ -77,7 +82,9 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     public binds = {
         columnHeader: <any> null,
-        datagrid: <any> null,
+        dataGrid: <any> null,
+        dataSelect: <any> null,
+        gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
             enableFilter: true,
@@ -304,6 +311,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     }
 
     gridReady_screen(params) {
+        this.screen.gridApi = params.api;
     	params.api.setColumnDefs(this.screen.columnHeader);
         //params.api.sizeColumnsToFit();
 
@@ -316,6 +324,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     }
 
     gridReady_region(params) {
+        this.region.gridApi = params.api;
         params.api.setColumnDefs(this.region.columnHeader);
         params.api.sizeColumnsToFit();
 
@@ -328,6 +337,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     }
 
     gridReady_widget(params) {
+        this.widget.gridApi = params.api;
         params.api.setColumnDefs(this.widget.columnHeader);
         params.api.sizeColumnsToFit();
 
@@ -340,6 +350,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     }
 
     gridReady_binds(params) {
+        this.binds.gridApi = params.api;
         params.api.setColumnDefs(this.binds.columnHeader);
         params.api.sizeColumnsToFit();
 
@@ -368,7 +379,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];
-                    this.screen.datagrid = retData['data'];
+                    this.screen.dataGrid = retData['data'];
                 });
         }
 
@@ -381,7 +392,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];
-                    this.region.datagrid = retData['data'];
+                    this.region.dataGrid = retData['data'];
                 });
         }
 
@@ -394,7 +405,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];
-                    this.widget.datagrid = retData['data'];
+                    this.widget.dataGrid = retData['data'];
                 });
         }
 
@@ -407,18 +418,18 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];
-                    this.binds.datagrid = retData['data'];
+                    this.binds.dataGrid = retData['data'];
                 });
         }
 
         if (retError['number'] == 0) {
-            this.screen.gridOptions.api.setRowData(this.screen.datagrid);
+            this.screen.gridOptions.api.setRowData(this.screen.dataGrid);
             this.screen.gridOptions.api.sizeColumnsToFit();
-            this.region.gridOptions.api.setRowData(this.region.datagrid);
+            this.region.gridOptions.api.setRowData(this.region.dataGrid);
             this.region.gridOptions.api.sizeColumnsToFit();
-            this.widget.gridOptions.api.setRowData(this.widget.datagrid);
+            this.widget.gridOptions.api.setRowData(this.widget.dataGrid);
             this.widget.gridOptions.api.sizeColumnsToFit();
-            this.binds.gridOptions.api.setRowData(this.binds.datagrid);
+            this.binds.gridOptions.api.setRowData(this.binds.dataGrid);
             this.binds.gridOptions.api.sizeColumnsToFit();
         }
 
@@ -426,19 +437,22 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
     }
 
     async ghi_click() {
+        this.screen.dataSelect = this.varGlobals.getRowSelect(this.screen);
         var retError = this.varGlobals._ref.retError;
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10'));
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10');       
-            var params = {eventID: eventID, param: {}, dataPost: {main: this.main}};
+            var params = {eventID: eventID, param: {}, dataPost: {screen__dataSelect: this.screen.dataSelect}};
             console.log(params);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];
-                    this.screen.datagrid = retData['data'];
+                    this.screen.dataGrid = retData['data'];
                 });
         }
+        
+        this.varGlobals.showMessage(retError);
     }
 }
 

@@ -86,17 +86,17 @@ namespace ERP.Models
         public Dictionary<string, object> setReturnData(Dictionary<string, object> ret, string skin, string type, int number, string message)
         {
             Dictionary<string, object> error = new Dictionary<string, object>();
-            error.Add("skin", "toast");
-            error.Add("type", "info");
+            error.Add("skin", skin);
+            error.Add("type", type);
             error.Add("number", number);
-            error.Add("message", "");
+            error.Add("message", message);
 
             ret["error"] = error;
 
             return ret;
         }
 
-        public Dictionary<string, object> parseDictionary(JObject jsonValue)
+        public Dictionary<string, object> parseDictionaryObject(JObject jsonValue)
         {
             Dictionary<string, object> ret = new Dictionary<string, object>();
 
@@ -105,12 +105,40 @@ namespace ERP.Models
                 Type propertyType = property.Value.GetType();
                 if (propertyType.Name == "JObject")
                 {
-                    ret.Add(property.Name, parseDictionary((JObject)property.Value));
+                    ret.Add(property.Name, parseDictionaryObject((JObject)property.Value));
+                }
+                else if (propertyType.Name == "JArray")
+                {
+                    ret.Add(property.Name, parseDictionaryArray((JArray)property.Value));
                 }
                 else
                 {
                     ret.Add(property.Name, property.Value);
                 }
+            }
+            return ret;
+        }
+
+        public Dictionary<string, object> parseDictionaryArray(JArray jsonValue)
+        {
+            Dictionary<string, object> ret = new Dictionary<string, object>();
+            int iKey = 0;
+
+            foreach (Object iTem in jsonValue) {
+                Type propertyType = iTem.GetType();
+                if (propertyType.Name == "JObject")
+                {
+                    ret.Add(iKey.ToString("0000000000"), parseDictionaryObject((JObject)iTem));
+                }
+                else if (propertyType.Name == "JArray")
+                {
+                    ret.Add(iKey.ToString("0000000000"), parseDictionaryArray((JArray)iTem));
+                }
+                else
+                {
+                    ret.Add(iKey.ToString("0000000000"), iTem);
+                }
+                iKey = iKey + 1;
             }
             return ret;
         }

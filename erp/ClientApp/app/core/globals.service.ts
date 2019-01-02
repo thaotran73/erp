@@ -67,6 +67,7 @@ export class GlobalsService {
     }
 
     public showMessage(error) {
+        console.log(error);
         switch (error['skin']) {
             case 'toast':
                 switch (error['type']) {
@@ -109,4 +110,13 @@ export class GlobalsService {
         }
     }
 
+    public getRowSelect(gridRegion) {
+        return gridRegion.gridApi.getSelectedRows();
+    }
+
+    public getRowData(gridRegion) {
+        let rowData = [];
+        gridRegion.gridApi.forEachNode(node => rowData.push(node.data));
+        return rowData;
+    }    
 }
