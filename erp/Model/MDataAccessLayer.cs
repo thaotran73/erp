@@ -19,7 +19,7 @@ namespace ERP.Models
         public int status = 0;
 
         public int errNumber = 0;
-        public string errDescription = "";
+        public String errDescription = "";
 
         public SqlConnection sqlConnection;
         public SqlTransaction sqlTransaction;
@@ -33,6 +33,7 @@ namespace ERP.Models
         public DataSet oDataSet;
         public DataTable oDataTable;
 
+        public DataTable oDBError;
         public DataTable oListEvent;
         public DataTable oListParam;
 
@@ -42,6 +43,7 @@ namespace ERP.Models
             {
                 sqlConnection = new SqlConnection(connectionString);
                 sqlConnection.Open();
+                initDBError();
             }
             catch (Exception ex)
             {
@@ -463,6 +465,27 @@ namespace ERP.Models
             if (connectExecuteDataTable(sSQLQuery) == 0)
             {
                 oListEvent = oDataTable;
+                if (oDataTable.Rows.Count == 0)
+                    status = 1;
+            }
+            else
+                status = 1;
+            return status;
+        }
+        public void initDBError()
+        {
+            status = 0;
+            string sSQLQuery = "CREATE TABLE #ERROR ([id] bigint IDENTITY(1,1) NOT NULL, [skin] nvarchar(50), [type] nvarchar(50), [number] int, [message] nvarchar(255))";
+            connectExecuteNonQuery(sSQLQuery);
+        }
+
+        public int getDBError()
+        {
+            status = 0;
+            string sSQLQuery = "SELECT * FROM #ERROR ORDER BY id DESC";
+            if (connectExecuteDataTable(sSQLQuery) == 0)
+            {
+                oDBError = oDataTable;
                 if (oDataTable.Rows.Count == 0)
                     status = 1;
             }

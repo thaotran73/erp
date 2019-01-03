@@ -50,6 +50,13 @@ namespace ERP.Controllers
                         retError["skin"] = oDataAccessLayer.oListEvent.Rows[0]["skinMessage"].ToString();
                         retData["data"] = oDataAccessLayer.oDataTable;
                     }
+                    if (oDataAccessLayer.getDBError() == 0)
+                    {
+                        retError["skin"] = (oDataAccessLayer.oDBError.Rows[0]["skin"].ToString() == "") ? retError["skin"] : oDataAccessLayer.oDBError.Rows[0]["skin"].ToString();
+                        retError["type"] = (oDataAccessLayer.oDBError.Rows[0]["type"].ToString() == "") ? retError["type"] : oDataAccessLayer.oDBError.Rows[0]["type"].ToString();
+                        retError["number"] = (oDataAccessLayer.oDBError.Rows[0]["number"].ToString() == "") ? retError["number"] : oDataAccessLayer.oDBError.Rows[0]["number"].ToString();
+                        retError["message"] = oDataAccessLayer.errDescription = (oDataAccessLayer.oDBError.Rows[0]["message"].ToString() == "") ? retError["message"].ToString() : oDataAccessLayer.oDBError.Rows[0]["message"].ToString();
+                    }
                 }
                 else
                 {
@@ -63,13 +70,12 @@ namespace ERP.Controllers
                 oDataAccessLayer.errDescription = "Sai kiểu dữ liệu khi gửi đến hệ thống!";
             }
 
-            oDataAccessLayer.connectionClose();
-
             retError["number"] = oDataAccessLayer.errNumber;
             retError["message"] = oDataAccessLayer.errDescription;
 
             retData["error"] = retError;
 
+            oDataAccessLayer.connectionClose();
             return retData;
         }
 

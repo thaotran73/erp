@@ -27,6 +27,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         columnHeader: <any> null,
         dataGrid: <any> null,
         dataSelect: <any> null,
+        dataRow: <any> null,
         gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
@@ -46,6 +47,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         columnHeader: <any> null,
         dataGrid: <any> null,
         dataSelect: <any> null,
+        dataRow: <any> null,
         gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
@@ -65,6 +67,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         columnHeader: <any> null,
         dataGrid: <any> null,
         dataSelect: <any> null,
+        dataRow: <any> null,
         gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
@@ -84,6 +87,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         columnHeader: <any> null,
         dataGrid: <any> null,
         dataSelect: <any> null,
+        dataRow: <any> null,
         gridApi: <any> null,
         gridOptions: <GridOptions> {
             headerHeight: 40,
@@ -438,11 +442,13 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
 
     async ghi_click() {
         this.screen.dataSelect = this.varGlobals.getRowSelect(this.screen);
+        this.screen.dataRow = this.varGlobals.getRowData(this.screen);
+        this.widget.dataRow = this.varGlobals.getRowData(this.widget);
         var retError = this.varGlobals._ref.retError;
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10'));
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click_10');       
-            var params = {eventID: eventID, param: {}, dataPost: {screen__dataSelect: this.screen.dataSelect}};
+            var params = {eventID: eventID, param: {}, dataPost: {screen__dataSelect: this.screen.dataSelect, screen__dataRow: this.screen.dataRow, widget__dataRow: this.widget.dataRow}};
             console.log(params);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
                 .toPromise()
