@@ -52,9 +52,9 @@ namespace ERP.Controllers
                     }
                     if (oDataAccessLayer.getDBError() == 0)
                     {
-                        retError["skin"] = (oDataAccessLayer.oDBError.Rows[0]["skin"].ToString() == "") ? retError["skin"] : oDataAccessLayer.oDBError.Rows[0]["skin"].ToString();
-                        retError["type"] = (oDataAccessLayer.oDBError.Rows[0]["type"].ToString() == "") ? retError["type"] : oDataAccessLayer.oDBError.Rows[0]["type"].ToString();
-                        retError["number"] = (oDataAccessLayer.oDBError.Rows[0]["number"].ToString() == "") ? retError["number"] : oDataAccessLayer.oDBError.Rows[0]["number"].ToString();
+                        retError["skin"] = (oDataAccessLayer.oDBError.Rows[0]["skin"].ToString() == "") ? retError["skin"].ToString() : oDataAccessLayer.oDBError.Rows[0]["skin"].ToString();
+                        retError["type"] = (oDataAccessLayer.oDBError.Rows[0]["type"].ToString() == "") ? retError["type"].ToString() : oDataAccessLayer.oDBError.Rows[0]["type"].ToString();
+                        retError["number"] = (oDataAccessLayer.oDBError.Rows[0]["number"].ToString() == "") ? retError["number"].ToString() : oDataAccessLayer.oDBError.Rows[0]["number"].ToString();
                         retError["message"] = oDataAccessLayer.errDescription = (oDataAccessLayer.oDBError.Rows[0]["message"].ToString() == "") ? retError["message"].ToString() : oDataAccessLayer.oDBError.Rows[0]["message"].ToString();
                     }
                 }
