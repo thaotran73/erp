@@ -377,7 +377,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_10');
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_10';       
-            var params_10 = {eventID: eventID, param: {_screen: this.main.screen, _title: this.main.title}, dataPost: {}};
+            var params_10 = {eventID: eventID, param: {screen: this.main.screen, title: this.main.title}, dataPost: {}};
             console.log(params_10);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params_10, this.varGlobals._ref.httpOptions)
                 .toPromise()
@@ -390,7 +390,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_15');
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_15';
-            var params_15 = {eventID: eventID, param: {_screen: this.main.screen, _title: this.main.title}, dataPost: {}};
+            var params_15 = {eventID: eventID, param: {screen: this.main.screen, title: this.main.title}, dataPost: {}};
             console.log(params_15);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params_15, this.varGlobals._ref.httpOptions)
                 .toPromise()
@@ -403,7 +403,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_20');            
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_20';
-            var params_20 = {eventID: eventID, param: {_screen: this.main.screen, _title: this.main.title}, dataPost: {}};
+            var params_20 = {eventID: eventID, param: {screen: this.main.screen, title: this.main.title}, dataPost: {}};
             console.log(params_20);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params_20, this.varGlobals._ref.httpOptions)
                 .toPromise()
@@ -416,7 +416,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
         if (retError['number'] == 0) {
             console.log(this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_25');
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_loc__click') + '_25';
-            var params_25 = {eventID: eventID, param: {_screen: this.main.screen, _title: this.main.title}, dataPost: {}};
+            var params_25 = {eventID: eventID, param: {screen: this.main.screen, title: this.main.title}, dataPost: {}};
             console.log(params_25);
             await this.varGlobals._ref.httpClient.post('api/getValueEvent', params_25, this.varGlobals._ref.httpOptions)
                 .toPromise()
@@ -450,7 +450,7 @@ export class ScreenManagerEditComponent implements OnInit, OnDestroy {
             var eventID = this.varGlobals.hashMD5('ScreenManagerEdit__main__cmd_ghi__click') + '_10';
             var params = {eventID: eventID, param: {}, dataPost: {screen__dataSelect: this.screen.dataSelect, screen__dataRow: this.screen.dataRow, widget__dataRow: this.widget.dataRow}};
             console.log(params);
-            await this.varGlobals._ref.httpClient.post('api/getValueEvent', params, this.varGlobals._ref.httpOptions)
+            await this.varGlobals._ref.httpClient.post('api/executeEvent', params, this.varGlobals._ref.httpOptions)
                 .toPromise()
                 .then(retData => {
                     retError = retData['error'];

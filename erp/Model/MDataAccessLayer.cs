@@ -223,26 +223,34 @@ namespace ERP.Models
         {
             try
             {
+                JValue param;
                 SqlCommand sqlCommand = new SqlCommand(executeCMD, sqlConnection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 if (getListParam(executeCMD) == 0)
                 {
-                    int orderParam = 0;
-                    foreach (JValue param in listParam.Values)
+                    foreach (DataRow row in oListParam.Rows)
                     {
-                        switch (oListParam.Rows[orderParam]["parameter_type"].ToString().ToLower())
+                        String paramName = row["name"].ToString();
+                        param = (JValue) null;
+                        if (listParam.ContainsKey(paramName.Replace("@", string.Empty)))
                         {
-                            case "date":
-                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), ((DateTime) (param.Value == null ? DateTime.Parse("1900/01/01") : param.Value)).ToString("yyyy/MM/dd"));
-                                break;
-                            case "datetime":
-                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), ((DateTime)(param.Value == null ? DateTime.Parse("1900/01/01") : param.Value)).ToString("yyyy/MM/dd HH:mm:ss"));
-                                break;
-                            default:
-                                sqlCommand.Parameters.AddWithValue(oListParam.Rows[orderParam]["name"].ToString(), (param.Value == null ? "" : param.Value.ToString()));
-                                break;
-                        }                                              
-                        orderParam = orderParam + 1;
+                            param = (JValue)listParam[paramName.Replace("@", string.Empty)];
+                            if (param.Value != null)
+                                switch (row["parameter_type"].ToString().ToLower())
+                                {
+                                    case "date":
+                                        sqlCommand.Parameters.AddWithValue(paramName, ((DateTime) param.Value).ToString("yyyy/MM/dd"));
+                                        break;
+                                    case "datetime":
+                                        sqlCommand.Parameters.AddWithValue(paramName, ((DateTime)param.Value).ToString("yyyy/MM/dd HH:mm:ss"));
+                                        break;
+                                    default:
+                                        sqlCommand.Parameters.AddWithValue(paramName, param.Value.ToString());
+                                        break;
+                                }
+                        }
+                        if (param.Value == null)
+                           sqlCommand.Parameters.AddWithValue(paramName, DBNull.Value);
                     }
                 }
 
