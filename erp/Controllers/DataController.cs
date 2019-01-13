@@ -93,6 +93,11 @@ namespace ERP.Controllers
                 String eventID = eventDataDictionary["eventID"].ToString();
                 if (oDataAccessLayer.getListEvent(eventID) == 0)
                 {
+                    String beforeDB_CMD = oDataAccessLayer.oListEvent.Rows[0]["beforeDB"].ToString();
+
+                    if (beforeDB_CMD != null && beforeDB_CMD.Replace(" ", String.Empty) != "")
+                        oDataAccessLayer.connectExecuteNonQuery(beforeDB_CMD);
+
                     String executeCMD = oDataAccessLayer.oListEvent.Rows[0]["executeCMD"].ToString();
                     if (oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>)eventDataDictionary["param"]) == 0)
                     {
