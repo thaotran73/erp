@@ -469,7 +469,7 @@ namespace ERP.Models
         }
         public int getListEvent(string eventID) {
             status = 0;
-            string sSQLQuery = "SELECT * FROM SYS_Binds WHERE eventID = '" + eventID + "' ORDER BY orderBinds ASC";
+            string sSQLQuery = @"SELECT * FROM SYS_Binds WHERE eventID = '" + eventID + "' ORDER BY orderBinds ASC";
             if (connectExecuteDataTable(sSQLQuery) == 0)
             {
                 oListEvent = oDataTable;
@@ -483,14 +483,14 @@ namespace ERP.Models
         public void initDBError()
         {
             status = 0;
-            string sSQLQuery = "CREATE TABLE #ERROR ([id] bigint IDENTITY(1,1) NOT NULL, [skin] nvarchar(50), [type] nvarchar(50), [number] int, [message] nvarchar(255))";
+            string sSQLQuery = @"CREATE TABLE #ERROR ([id] bigint IDENTITY(1,1) NOT NULL, [skin] nvarchar(50), [type] nvarchar(50), [number] int, [message] nvarchar(255))";
             connectExecuteNonQuery(sSQLQuery);
         }
 
         public int getDBError()
         {
             status = 0;
-            string sSQLQuery = "SELECT * FROM #ERROR ORDER BY id DESC";
+            string sSQLQuery = @"SELECT * FROM #ERROR ORDER BY id DESC";
             if (connectExecuteDataTable(sSQLQuery) == 0)
             {
                 oDBError = oDataTable;
@@ -502,14 +502,94 @@ namespace ERP.Models
             return status;
         }
 
-        public int getListParam(string FunctionName)
+        public int getListParam(string functionName)
         {
             status = 0;
-            string sSQLQuery = "SELECT name, type_name(user_type_id) AS parameter_type, parameter_id FROM sys.parameters WHERE object_id = object_id('dbo." + FunctionName + "')";
+            string sSQLQuery = @"SELECT name, type_name(user_type_id) AS parameter_type, parameter_id FROM sys.parameters WHERE object_id = object_id('dbo." + functionName + "')";
             if (connectExecuteDataTable(sSQLQuery) == 0)
                 oListParam = oDataTable;
             else
                 status = 1;
+            return status;
+        }
+
+        public int getListColumn(string tableName)
+        {
+            status = 0;
+            string sSQLQuery = @"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + tableName + "'";
+            connectExecuteDataTable(sSQLQuery);
+            return status;
+        }
+        public int insertList2Table(string tableName, Dictionary<string, object> recList, int iCommandTimeout = 1200)
+        {
+            DataTable oListColumn = new DataTable();
+
+            if (getListColumn(tableName) == 0)
+                oListColumn = oDataTable;
+
+            if (oListColumn.Rows.Count > 0)
+                foreach (DataRow rowData in oListColumn.Rows)
+                {
+                    if (recList.ContainsKey((string) rowData["column_name"]))
+                    {
+
+                    }
+                }
+            else
+                foreach (Object itemRow in recList)
+                    foreach (Object item in itemRow)
+                    {
+
+                    }
+/*
+
+                    int rowsAffected;
+            SqlCommand sqlCommand = new SqlCommand();
+
+            sqlCommand.CommandText = sqlQuery;
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+
+            foreach (Object item in recList)
+            {
+                if (iCounter == 0)
+                {
+                    cmd.BeginTransaction;
+                }
+                string sql = @"INSERT INTO Mytable (id, name, salary) values ('@id', '@name', '@salary')";
+                //add parameters
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+                iCounter++;
+                if (iCounter >= 500)
+                {
+                    cmd.CommitTransaction;
+                    iCounter = 0;
+                }
+            }
+
+            if (iCounter > 0)
+                cmd.CommitTransaction;
+
+
+            sqlTransaction = sqlConnection.BeginTransaction();
+            sqlCommand.Transaction = sqlTransaction;
+
+            try
+            {
+                rowsAffected = sqlCommand.ExecuteNonQuery();
+                sqlTransaction.Commit();
+                sqlCommand.Parameters.Clear();
+            }
+            catch (Exception ex)
+            {
+                sqlTransaction.Rollback();
+                errNumber = 1;
+                errDescription = "connectExecuteNonQuery!" + ex.Message;
+                status = 1;
+            }
+            */
             return status;
         }
     }

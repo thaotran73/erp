@@ -30,7 +30,8 @@ namespace ERP.Controllers
             Type eventDataType = eventData.GetType();
             if (eventDataType.Name == "JObject")
             {
-                eventDataDictionary = oDataAccessLayer.parseDictionaryObject((JObject)eventData);
+                eventDataDictionary = oDataAccessLayer.parseDictionaryObject((JObject) eventData);
+
                 String eventID = eventDataDictionary["eventID"].ToString();
                 if (oDataAccessLayer.getListEvent(eventID) == 0)
                 {
@@ -39,8 +40,14 @@ namespace ERP.Controllers
                     if (beforeDB_CMD != null && beforeDB_CMD.Replace(" ", String.Empty) != "")
                         oDataAccessLayer.connectExecuteNonQuery(beforeDB_CMD);
 
+                    if (eventDataDictionary.ContainsKey("dataPost"))
+                        foreach (var item in (Dictionary<string, object>) eventDataDictionary["dataPost"])
+                        {
+                            oDataAccessLayer.insertList2Table("#" + item.Key, (Dictionary<string, object>) item.Value);
+                        }
+
                     String executeCMD = oDataAccessLayer.oListEvent.Rows[0]["executeCMD"].ToString();
-                    if (oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>)eventDataDictionary["param"]) == 0)
+                    if (oDataAccessLayer.exeEvent(executeCMD, (Dictionary<string, object>) eventDataDictionary["param"]) == 0)
                     {
                         retError["message"] = oDataAccessLayer.errDescription = "Thực hiện " + eventID + " thành công!";
                         retError["skin"] = oDataAccessLayer.oListEvent.Rows[0]["skinMessage"].ToString();
