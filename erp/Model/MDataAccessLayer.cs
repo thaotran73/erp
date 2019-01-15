@@ -524,6 +524,11 @@ namespace ERP.Models
         {
             DataTable oListColumn = new DataTable();
 
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandTimeout = iCommandTimeout;
+
             if (getListColumn(tableName) == 0)
                 oListColumn = oDataTable;
 
@@ -536,60 +541,62 @@ namespace ERP.Models
                     }
                 }
             else
-                foreach (Object itemRow in recList)
-                    foreach (Object item in itemRow)
+                foreach (string itemRowKey in recList.Keys)
+                {
+                    foreach (string itemKey in ((Dictionary<string, object>)recList[itemRowKey]).Keys)
                     {
 
                     }
-/*
-
-                    int rowsAffected;
-            SqlCommand sqlCommand = new SqlCommand();
-
-            sqlCommand.CommandText = sqlQuery;
-            sqlCommand.CommandType = CommandType.Text;
-            sqlCommand.Connection = sqlConnection;
-            sqlCommand.CommandTimeout = iCommandTimeout;
-
-            foreach (Object item in recList)
-            {
-                if (iCounter == 0)
-                {
-                    cmd.BeginTransaction;
                 }
-                string sql = @"INSERT INTO Mytable (id, name, salary) values ('@id', '@name', '@salary')";
-                //add parameters
-                cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
-                iCounter++;
-                if (iCounter >= 500)
-                {
-                    cmd.CommitTransaction;
-                    iCounter = 0;
-                }
-            }
+            /*
 
-            if (iCounter > 0)
-                cmd.CommitTransaction;
+                                int rowsAffected;
+                        SqlCommand sqlCommand = new SqlCommand();
+
+                        sqlCommand.CommandText = sqlQuery;
+                        sqlCommand.CommandType = CommandType.Text;
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandTimeout = iCommandTimeout;
+
+                        foreach (Object item in recList)
+                        {
+                            if (iCounter == 0)
+                            {
+                                cmd.BeginTransaction;
+                            }
+                            string sql = @"INSERT INTO Mytable (id, name, salary) values ('@id', '@name', '@salary')";
+                            //add parameters
+                            cmd.CommandText = sql;
+                            cmd.ExecuteNonQuery();
+                            iCounter++;
+                            if (iCounter >= 500)
+                            {
+                                cmd.CommitTransaction;
+                                iCounter = 0;
+                            }
+                        }
+
+                        if (iCounter > 0)
+                            cmd.CommitTransaction;
 
 
-            sqlTransaction = sqlConnection.BeginTransaction();
-            sqlCommand.Transaction = sqlTransaction;
+                        sqlTransaction = sqlConnection.BeginTransaction();
+                        sqlCommand.Transaction = sqlTransaction;
 
-            try
-            {
-                rowsAffected = sqlCommand.ExecuteNonQuery();
-                sqlTransaction.Commit();
-                sqlCommand.Parameters.Clear();
-            }
-            catch (Exception ex)
-            {
-                sqlTransaction.Rollback();
-                errNumber = 1;
-                errDescription = "connectExecuteNonQuery!" + ex.Message;
-                status = 1;
-            }
-            */
+                        try
+                        {
+                            rowsAffected = sqlCommand.ExecuteNonQuery();
+                            sqlTransaction.Commit();
+                            sqlCommand.Parameters.Clear();
+                        }
+                        catch (Exception ex)
+                        {
+                            sqlTransaction.Rollback();
+                            errNumber = 1;
+                            errDescription = "connectExecuteNonQuery!" + ex.Message;
+                            status = 1;
+                        }
+                        */
             return status;
         }
     }
