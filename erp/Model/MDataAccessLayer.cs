@@ -524,6 +524,17 @@ namespace ERP.Models
         {
             DataTable oListColumn = new DataTable();
 
+            Dictionary<string, object> dataList = new Dictionary<string, object>();
+            Dictionary<string, object> keyList = new Dictionary<string, object>();
+
+            if (recList.ContainsKey("data"))
+                dataList = (Dictionary<string, object>) recList["data"];
+            else
+                dataList = recList;
+
+            if (recList.ContainsKey("keys"))
+                dataList = (Dictionary<string, object>)recList["keys"];
+
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.CommandType = CommandType.Text;
             sqlCommand.Connection = sqlConnection;
@@ -535,15 +546,15 @@ namespace ERP.Models
             if (oListColumn.Rows.Count > 0)
                 foreach (DataRow rowData in oListColumn.Rows)
                 {
-                    if (recList.ContainsKey((string) rowData["column_name"]))
+                    if (dataList.ContainsKey((string) rowData["column_name"]))
                     {
 
                     }
                 }
             else
-                foreach (string itemRowKey in recList.Keys)
+                foreach (string itemRowKey in dataList.Keys)
                 {
-                    foreach (string itemKey in ((Dictionary<string, object>)recList[itemRowKey]).Keys)
+                    foreach (string itemKey in ((Dictionary<string, object>)dataList[itemRowKey]).Keys)
                     {
 
                     }
