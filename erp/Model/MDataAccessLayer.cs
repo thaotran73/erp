@@ -556,7 +556,8 @@ namespace ERP.Models
                 {
                     foreach (string itemKey in ((Dictionary<string, object>)dataList[itemRowKey]).Keys)
                     {
-
+                        sqlQHeader = sqlQHeader + itemKey
+                        sqlQData = sqlQData
                     }
                 }
             /*
