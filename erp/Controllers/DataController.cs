@@ -40,8 +40,8 @@ namespace ERP.Controllers
                     if (beforeDB_CMD != null && beforeDB_CMD.Replace(" ", String.Empty) != "")
                         oDataAccessLayer.connectExecuteNonQuery(beforeDB_CMD);
 
-                    if (eventDataDictionary.ContainsKey("dataPost"))
-                        foreach (var item in (Dictionary<string, object>) eventDataDictionary["dataPost"])
+                    if (eventDataDictionary.ContainsKey("postData"))
+                        foreach (var item in (Dictionary<string, object>) eventDataDictionary["postData"])
                         {
                             oDataAccessLayer.insertList2Table("#" + item.Key, (Dictionary<string, object>) item.Value);
                         }
